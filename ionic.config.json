@@ -1,0 +1,7 @@
+{
+  "name": "AngularJoin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
