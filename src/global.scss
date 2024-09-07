@@ -34,7 +34,7 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";
 
 /* tailwind */
 @tailwind base;
@@ -44,6 +44,39 @@
 /* fonts */
 @import './fonts';
 
+.font-inter {
+    font-family: 'Inter';
+}
+
+/* regular */
+ion-button {
+    --background: none !important;
+    --background-hover: none !important;
+    --background-activated: none !important;
+}
 
 
 
+ion-checkbox {
+    --border-radius: 2px !important;
+    --checkbox-background-checked: #2A3647;
+    --border-color-checked: #2A3647;
+}
+
+
+
+ion-input {
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #ccc;
+    --border-radius: 4px;
+    --background: white;
+    --padding-start: 10px;
+    --padding-end: 10px;
+}
+
+ion-item { 
+    --border-color: #d1d1d1b6;
+    --border-width: 1px; 
+    --border-radius: 10px; 
+}
