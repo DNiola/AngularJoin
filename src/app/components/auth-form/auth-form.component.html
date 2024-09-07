@@ -1,0 +1,57 @@
+<ion-grid class="flex items-center justify-center h-dvh">
+  <ion-row class="justify-center">
+    <ion-col size-sm="18">
+      <div class="bg-white rounded-2xl shadow-smallShadow p-8">
+        <div class="flex justify-center items-center mb-6 ">
+          <b class="flex flex-col items-center text-5xl font-inter text-black">Log in
+            <div class="bg-lightBlue h-[0.1rem] w-4/5 mt-2 rounded-xl"></div>
+          </b>
+        </div>
+
+        <form class="flex flex-col items-center space-y-8">
+          <!-- Email input -->
+          <ion-item lines="full" class="w-full">
+            <ion-input placeholder="Email" type="email" required></ion-input>
+            <ion-img src="../../assets/img/email.svg"></ion-img>
+          </ion-item>
+
+          <!-- Password input with eye icon -->
+          <ion-item lines="full" class="w-full">
+            <ion-input placeholder="Password" name="password" [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="password" required>
+            </ion-input>
+
+            <!-- Password icon is only displayed if the password field is empty -->
+            <ion-img *ngIf="!password" src="../../assets/img/password.svg"></ion-img>
+
+            <!-- Eye icon is displayed when a password has been entered -->
+            <ion-icon *ngIf="password" name="{{ showPassword ? 'eye-off' : 'eye' }}" slot="end"
+              class="h-6 -mr-1 text-[#b8b8b8]" (click)="this.showPassword = !this.showPassword;">
+            </ion-icon>
+          </ion-item>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="flex justify-around w-full items-center font-inter">
+            <div class="flex items-center space-x-2">
+              <ion-checkbox></ion-checkbox>
+              <span>Remember me</span>
+            </div>
+            <a href="" class="text-lightBlue hover:underline">Forgot my password</a>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex items-center justify-around w-full mt-4">
+            <ion-button
+              class=" flex border-2 px-6 border-[#2A3647] hover:border-[#29ABE2]  font-bold   items-center bg-darkBlue   text-white rounded-md   text-sm hover:bg-lightBlue hover:shadow-lightShadow  ">
+              Login
+            </ion-button>
+            <ion-button
+              class=" flex border-2 px-2 h-12 border-[#2A3647] hover:border-[#29ABE2] font-inter  font-bold  items-center bg-white   text-darkBlue hover:text-lightBlue rounded-md     hover:shadow-lightShadow  ">
+              Guest Log in
+            </ion-button>
+          </div>
+        </form>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
