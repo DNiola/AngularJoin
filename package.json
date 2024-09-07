@@ -30,7 +30,7 @@
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "^0.15.0"
+    "zone.js": "0.14.10"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.0",
@@ -47,8 +47,8 @@
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
-    "eslint": "^9.9.1",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint": "^8.6.0",
+    "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-jsdoc": "^50.2.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "jasmine-core": "^5.2.0",
