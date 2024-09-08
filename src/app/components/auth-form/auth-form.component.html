@@ -34,17 +34,15 @@
           </app-auth-input-fields>
 
           <!-- Confirm Password input -->
-          <app-auth-input-fields *ngIf="!isLogin" class="w-full"  [type]="'password'" [placeholder]="'Confirm Password'"
+          <app-auth-input-fields *ngIf="!isLogin" class="w-full" [type]="'password'" [placeholder]="'Confirm Password'"
             [required]="true" [isPasswordField]="true">
           </app-auth-input-fields>
 
           <!-- Remember Me & Forgot Password -->
-          <div *ngIf="isLogin" class="flex justify-around w-full items-center font-inter">
-            <div class="flex items-center space-x-2">
-              <ion-checkbox></ion-checkbox>
-              <span>Remember me</span>
-            </div>
-            <a href="" class="text-lightBlue hover:underline">Forgot my password</a>
+          <div class="flex justify-around w-full items-center font-inter">
+            <app-auth-checkbox *ngIf="isLogin" [text]="'Remember me'"></app-auth-checkbox>
+            <app-auth-checkbox *ngIf="!isLogin" [text]="'I accept the'" [linkText]="'Privacy policy'" [link]="'/privacy-policy'" ></app-auth-checkbox>
+            <a *ngIf="isLogin" href="" class="text-lightBlue hover:underline">Forgot my password</a>
           </div>
 
           <!-- Buttons -->
