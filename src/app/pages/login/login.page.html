@@ -1,23 +1,6 @@
 <ion-content [fullscreen]="true">
   <div class="bg-whiteSmoke">
-    <ion-grid class="h-dvh absolute w-dvw">
-      <ion-row class="p-16">
-        <ion-col size="12" size-md="6">
-          <a href="">
-            <ion-img class="w-20" src="../../assets/img/logo.svg"></ion-img>
-          </a>
-        </ion-col>
-        <ion-col size="12" size-md="6" class="flex items-center justify-end gap-10">
-          <span><b class="font-inter">Not a Join user?</b></span>
-          <ion-button fill="solid" [routerLink]="['/sign-up']"
-            class="bg-darkBlue text-white rounded-md h-10 w-24 text-sm hover:bg-lightBlue hover:shadow-lightShadow">
-            Sign up
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+    <app-auth-header [isLogin]="true"></app-auth-header>
     <app-auth-form [isLogin]="true"></app-auth-form>
-
   </div>
 </ion-content>

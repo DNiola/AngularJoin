@@ -6,19 +6,23 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./auth-form.component.scss'],
 })
 export class AuthFormComponent {
-  @Input() isLogin = true;
+  @Input() isLogin = false;
   public email = '';
   public password = '';
   public confirmPassword = '';
   public showPassword = false;
 
- 
+  public isSingUp = false;
+
+
 
   onSubmit() {
     if (this.isLogin) {
-      // Login Logik
+      this.isLogin = true;
     } else {
-      // Sign-Up Logik
+      console.log(this.isSingUp);
+      this.isSingUp = true;
+      console.log(this.isSingUp);
     }
   }
 }
