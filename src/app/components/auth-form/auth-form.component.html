@@ -40,8 +40,9 @@
 
           <!-- Remember Me & Forgot Password -->
           <div class="flex justify-around w-full items-center font-inter">
-            <app-auth-checkbox *ngIf="isLogin" [text]="'Remember me'"></app-auth-checkbox>
-            <app-auth-checkbox *ngIf="!isLogin" [text]="'I accept the'" [linkText]="'Privacy policy'" [link]="'/privacy-policy'" ></app-auth-checkbox>
+            <app-auth-checkbox *ngIf="isLogin" [text]="'Remember me'" [isRequired]="false"></app-auth-checkbox>
+            <app-auth-checkbox *ngIf="!isLogin" [text]="'I accept the'" [isRequired]="true"
+              [linkText]="'Privacy policy'" [link]="'/privacy-policy'"></app-auth-checkbox>
             <a *ngIf="isLogin" href="" class="text-lightBlue hover:underline">Forgot my password</a>
           </div>
 
