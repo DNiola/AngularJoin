@@ -8,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AuthInputFieldsComponent implements OnInit {
   @Input() isLogin = false;
   @Input() type = '';
+  @Input() name = '';
   @Input() placeholder = '';
-  @Input() required = false;
   @Input() icon = '';
   @Input() isPasswordField = false;
 
@@ -18,5 +18,9 @@ export class AuthInputFieldsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  getValue() {
+    return this.inputValue;  
+  }
 
 }

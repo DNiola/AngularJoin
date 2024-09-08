@@ -1,7 +1,7 @@
 <ion-item lines="full" class="w-full">
 
   <ion-input [type]="isPasswordField ? (showPassword ? 'text' : 'password') : type" [placeholder]="placeholder"
-    [(ngModel)]="inputValue" [required]="required">
+    [(ngModel)]="inputValue">
   </ion-input>
 
   <ion-img *ngIf="!isPasswordField" [src]="'../../assets/img/' + icon"></ion-img>

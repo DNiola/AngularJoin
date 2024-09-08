@@ -12,4 +12,7 @@ export class SignUpPage implements OnInit {
   ngOnInit() {
   }
 
+
+
+  
 }

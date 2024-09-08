@@ -8,10 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AuthCheckboxComponent {
   @Input() text = '';
   @Input() link = '';
-  @Input() linkText = '';
-  @Input() isRequired = false;
+  @Input() linkText = ''; 
 
-  checkboxValue = false;
+ public checkboxValue = false;
 
   constructor() { }
 
