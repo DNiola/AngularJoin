@@ -1,0 +1,14 @@
+<ion-item lines="full" class="w-full">
+
+  <ion-input [type]="isPasswordField ? (showPassword ? 'text' : 'password') : type" [placeholder]="placeholder"
+    [(ngModel)]="inputValue" [required]="required">
+  </ion-input>
+
+  <ion-img *ngIf="!isPasswordField" [src]="'../../assets/img/' + icon"></ion-img>
+
+  <ion-img *ngIf="isPasswordField && !inputValue" src="../../assets/img/password.svg"></ion-img>
+
+  <ion-icon *ngIf="isPasswordField && inputValue" name="{{ showPassword ? 'eye-off' : 'eye' }}" slot="end"
+    class="h-6 -mr-1 text-[#b8b8b8]" (click)=" this.showPassword = !this.showPassword;">
+  </ion-icon>
+</ion-item>

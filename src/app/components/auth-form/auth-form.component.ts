@@ -11,7 +11,7 @@ export class AuthFormComponent {
   public password = '';
   public confirmPassword = '';
   public showPassword = false;
-
+  public showConfirmPassword = false;
   public isSingUp = false;
 
 

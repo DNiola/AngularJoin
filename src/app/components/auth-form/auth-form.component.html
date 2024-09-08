@@ -1,8 +1,7 @@
 <ion-grid class="flex items-center justify-center h-dvh ">
   <ion-row class="justify-center">
-    <ion-col class=" ">
-      <div class="bg-white rounded-2xl shadow-smallShadow p-8 w-[31.25rem] h-[27.5rem]">
-
+    <ion-col size-lg="20">
+      <div class="bg-white rounded-2xl shadow-smallShadow p-8">
 
         <!-- Back button -->
         <div *ngIf="!isLogin" class="group cursor-pointer absolute">
@@ -10,8 +9,6 @@
             class="w-6 transition duration-300 group-hover:filter group-hover:brightness-0"
             src="../../assets/img/back.svg"></ion-img>
         </div>
-
-
 
         <!-- Title -->
         <div class="flex justify-center items-center mb-6 ">
@@ -22,31 +19,24 @@
 
         <form class="flex flex-col items-center space-y-8">
           <!-- Name input -->
-          <ion-item *ngIf="!isLogin" lines="full" class="w-full">
-            <ion-input placeholder="Name" type="name" required></ion-input>
-            <ion-img src="../../assets/img/user.svg"></ion-img>
-          </ion-item>
+          <app-auth-input-fields *ngIf="!isLogin" class="w-full" [type]="'name'" [placeholder]="'Name'"
+            [required]="true" [icon]="'user.svg'">
+          </app-auth-input-fields>
 
           <!-- Email input -->
-          <ion-item lines="full" class="w-full">
-            <ion-input placeholder="Email" type="email" required></ion-input>
-            <ion-img src="../../assets/img/email.svg"></ion-img>
-          </ion-item>
+          <app-auth-input-fields class="w-full" [type]="'email'" [placeholder]="'Email'" [required]="true"
+            [icon]="'email.svg'">
+          </app-auth-input-fields>
 
-          <!-- Password input with eye icon -->
-          <ion-item lines="full" class="w-full">
-            <ion-input placeholder="Password" name="password" [type]="showPassword ? 'text' : 'password'"
-              [(ngModel)]="password" required>
-            </ion-input>
+          <!-- Password input -->
+          <app-auth-input-fields class="w-full" [type]="'password'" [placeholder]="'Password'" [required]="true"
+            [isPasswordField]="true">
+          </app-auth-input-fields>
 
-            <!-- Password icon is only displayed if the password field is empty -->
-            <ion-img *ngIf="!password" src="../../assets/img/password.svg"></ion-img>
-
-            <!-- Eye icon is displayed when a password has been entered -->
-            <ion-icon *ngIf="password" name="{{ showPassword ? 'eye-off' : 'eye' }}" slot="end"
-              class="h-6 -mr-1 text-[#b8b8b8]" (click)="this.showPassword = !this.showPassword;">
-            </ion-icon>
-          </ion-item>
+          <!-- Confirm Password input -->
+          <app-auth-input-fields *ngIf="!isLogin" class="w-full"  [type]="'password'" [placeholder]="'Confirm Password'"
+            [required]="true" [isPasswordField]="true">
+          </app-auth-input-fields>
 
           <!-- Remember Me & Forgot Password -->
           <div *ngIf="isLogin" class="flex justify-around w-full items-center font-inter">
