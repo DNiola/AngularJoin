@@ -10,6 +10,7 @@ module.exports = {
         'darkBlue': '#2A3647',
         'lightBlue': '#29ABE2',
         'whiteSmoke': '#F5F5F5', 
+        'lightGray': '#A8A8A8',
       },
       boxShadow: {
         'lightShadow': '0px 4px 6px 0px rgba(0, 0, 0, 0.33);',
