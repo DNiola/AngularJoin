@@ -32,12 +32,12 @@ export class AuthFormComponent {
     if (!this.isLogin) {
       this.getSignUpData();
     } else {
-      this.login();
+      this.getLoginData();
     }
   }
 
 
-  private async getSignUpData(): Promise<void> {
+  private getSignUpData(): void {
     const name = this.nameField.getValue();
     const email = this.emailField.getValue();
     const password = this.passwordField.getValue();
@@ -49,6 +49,43 @@ export class AuthFormComponent {
       this.isError = false;
     } else {
       this.signUp(email, password);
+    }
+  }
+
+
+  private async signUp(email: string, password: string): Promise<void> {
+    try {
+      const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      alert('Registration successful!');
+      this.EmptyInputFields();
+      this.router.navigate(['/login']);
+    }
+    catch (error) {
+      this.handleErrorFromFirebase(error);
+      return;
+    }
+  }
+
+
+  private getLoginData(): void {
+    const email = this.emailField.getValue();
+    const password = this.passwordField.getValue();
+    this.checkLoginInputFields(email, password);
+    if (this.isError) {
+      this.isError = false;
+    } else {
+      this.login(email, password);
+    }
+  }
+
+
+  private async login(email: string, password: string) {
+    try {
+      const result = await this.afAuth.signInWithEmailAndPassword(email, password);
+      alert('Login successful!');
+      this.router.navigate(['/home']);
+    } catch (error) {
+      this.handleErrorFromFirebase(error);
     }
   }
 
@@ -91,21 +128,7 @@ export class AuthFormComponent {
   }
 
 
-  private async signUp(email: string, password: string): Promise<void> {
-    try {
-      const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      alert('Registration successful!');
-      this.EmptyInputFields();
-      this.router.navigate(['/login']);
-    }
-    catch (error) {
-      this.handleSignUpError(error);
-      return;
-    }
-  }
-
-
-  private handleSignUpError(error: any): void {
+  private handleErrorFromFirebase(error: any): void {
     if (error.code === 'auth/email-already-in-use') {
       this.emailField.errorMessage = 'This email is already in use. Please try again.';
     }
@@ -114,24 +137,22 @@ export class AuthFormComponent {
       this.emailField.errorMessage = 'This email is invalid. Please try again.';
     }
 
+    if (error.code === 'auth/invalid-credential') {
+      this.passwordField.errorMessage = 'Check your email and password. Please try again.';
+      this.emailField.errorMessage = 'Check your email and password. Please try again.';
+    }
+    
     if (this.errorMessage) {
       this.errorMessage = 'An unknown error occurred. Please try again.';
     }
   }
 
+  private checkLoginInputFields(email: string, password: string) {
+    this.isError = false;
 
-  private async login(): Promise<void> {
-    const email = this.emailField.getValue();
-    const password = this.passwordField.getValue();
-
-    try {
-      const result = await this.afAuth.signInWithEmailAndPassword(email, password);
-      alert('Login successful!');
-      this.router.navigate(['/home']);
-    } catch (error) {
-    }
+    if (!this.validateField(this.emailField, email, { required: true })) this.isError = true;
+    if (!this.validateField(this.passwordField, password, { required: true })) this.isError = true;
   }
-
 
   public EmptyInputFields(): void {
     this.nameField.inputValue = '';
