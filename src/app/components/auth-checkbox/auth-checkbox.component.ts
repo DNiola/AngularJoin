@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'; 
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-auth-checkbox',
@@ -8,9 +8,10 @@ import { Component, Input } from '@angular/core';
 export class AuthCheckboxComponent {
   @Input() text = '';
   @Input() link = '';
-  @Input() linkText = ''; 
-
- public checkboxValue = false;
+  @Input() linkText = '';
+  @Input() errorMessage = '';
+  
+  public checkboxValue = false;
 
   constructor() { }
 

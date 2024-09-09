@@ -2,3 +2,4 @@
   <ion-checkbox [(ngModel)]="checkboxValue"></ion-checkbox>
   <span>{{text}} <a class="text-lightBlue hover:underline" href="{{link}}">{{linkText}}</a></span>
 </div>
+<span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1">{{errorMessage}}</span>

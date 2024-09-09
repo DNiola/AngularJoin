@@ -12,3 +12,4 @@
     class="h-6 -mr-1 text-[#b8b8b8]" (click)=" this.showPassword = !this.showPassword;">
   </ion-icon>
 </ion-item>
+<span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1">{{errorMessage}}</span>

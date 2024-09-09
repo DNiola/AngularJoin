@@ -13,6 +13,8 @@ export class AuthInputFieldsComponent implements OnInit {
   @Input() icon = '';
   @Input() isPasswordField = false;
 
+  @Input() errorMessage = '';
+
   public showPassword = false;
   public inputValue = '';
   constructor() { }
