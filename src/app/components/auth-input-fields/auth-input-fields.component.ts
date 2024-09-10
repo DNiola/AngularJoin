@@ -21,8 +21,12 @@ export class AuthInputFieldsComponent implements OnInit {
 
   ngOnInit() { }
 
-  getValue() {
-    return this.inputValue;  
+  getValue(): string {
+    return this.inputValue;
+  }
+
+  setValue(value: string): void {
+    this.inputValue = value;
   }
 
 }
