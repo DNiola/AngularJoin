@@ -8,9 +8,11 @@ import { RouterModule } from '@angular/router';
 import { AuthInputFieldsComponent } from '../components/auth-input-fields/auth-input-fields.component';
 import { AuthCheckboxComponent } from '../components/auth-checkbox/auth-checkbox.component';
 import { AuthFooterComponent } from '../components/auth-footer/auth-footer.component';
+import { ButtonFilledComponent } from '../components/button-filled/button-filled.component';
+import { ButtonEdgeComponent } from '../components/button-edge/button-edge.component';
 @NgModule({
-  declarations: [AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent],
+  declarations: [AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
   imports: [CommonModule, IonicModule, FormsModule, RouterModule],
-  exports: [AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent]
+  exports: [AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
 })
 export class SharedModule { }

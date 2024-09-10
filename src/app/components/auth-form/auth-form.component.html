@@ -47,15 +47,8 @@
 
           <!-- Buttons -->
           <div class="flex items-center justify-around w-full mt-4">
-            <ion-button type="submit"
-              class=" flex border-2 px-6 border-[#2A3647] hover:border-[#29ABE2]  font-bold items-center bg-darkBlue text-white rounded-md text-sm hover:bg-lightBlue hover:shadow-lightShadow  ">
-              {{ isLogin ? 'Login' : 'Sign Up' }}
-            </ion-button>
-            <ion-button *ngIf="isLogin"
-              class=" flex border-2 px-2 h-12 border-[#2A3647] hover:border-[#29ABE2] font-inter  font-bold  items-center bg-white   text-darkBlue hover:text-lightBlue rounded-md     hover:shadow-lightShadow  ">
-              Guest Log in
-            </ion-button>
-
+            <app-button-filled [text]=" isLogin ? 'Login' : 'Sign Up'"></app-button-filled>
+            <app-button-edge *ngIf="isLogin" [text]="'Guest Log in'"></app-button-edge>
           </div>
         </form>
       </div>

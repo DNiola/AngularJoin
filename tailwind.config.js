@@ -7,9 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'darkBlue': '#2A3647',
+        'normalBlue': '#2A3647',
         'lightBlue': '#29ABE2',
-        'whiteSmoke': '#F5F5F5', 
+        'darkBlue': '#091931', // the button color after click
+        'whiteSmoke': '#F5F5F5',
         'lightGray': '#A8A8A8',
         'lightRed': '#FF8190',
       },
