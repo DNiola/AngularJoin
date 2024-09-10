@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component';
-
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
@@ -16,6 +15,7 @@ export class AuthFormComponent {
   @ViewChild('confirmPasswordField') confirmPasswordField!: AuthInputFieldsComponent;
 
   @ViewChild('privacyCheckbox') privacyCheckbox!: AuthCheckboxComponent;
+  @ViewChild('rememberMeCheckbox') rememberMeCheckbox!: AuthCheckboxComponent;
 
   @Input() isLogin = false;
 
@@ -24,9 +24,21 @@ export class AuthFormComponent {
   public errorMessage = '';
 
   private isError = false;
+  public isAnimation = false;
 
 
   constructor(private afAuth: AngularFireAuth, private router: Router) { }
+
+  ngAfterViewInit() {
+    const savedEmail = localStorage.getItem('email');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+    if (savedEmail && this.emailField) {
+      this.emailField.setValue(savedEmail);  
+      this.rememberMeCheckbox.checkboxValue = rememberMe;
+    }
+  }
+
 
   public onSubmit(): void {
     if (!this.isLogin) {
@@ -56,9 +68,11 @@ export class AuthFormComponent {
   private async signUp(email: string, password: string): Promise<void> {
     try {
       const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      alert('Registration successful!');
-      this.EmptyInputFields();
-      this.router.navigate(['/login']);
+      this.isAnimation = true;
+      setTimeout(() => {
+        this.EmptyInputFields();
+        this.router.navigate(['/login']);
+      }, 1000);
     }
     catch (error) {
       this.handleErrorFromFirebase(error);
@@ -67,28 +81,43 @@ export class AuthFormComponent {
   }
 
 
-  private getLoginData(): void {
+  private async getLoginData() {
     const email = this.emailField.getValue();
     const password = this.passwordField.getValue();
+    const rememberMe = this.rememberMeCheckbox.checkboxValue;
+
+    this.persistenceRememberMe(rememberMe, email)
     this.checkLoginInputFields(email, password);
     if (this.isError) {
       this.isError = false;
     } else {
-      this.login(email, password);
+      await this.login(email, password, rememberMe);
     }
   }
 
 
-  private async login(email: string, password: string) {
+  private async login(email: string, password: string, rememberMe: boolean) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
-      alert('Login successful!');
       this.router.navigate(['/home']);
     } catch (error) {
       this.handleErrorFromFirebase(error);
     }
   }
 
+  // Set the persistence based on the "Remember Me" option
+  private async persistenceRememberMe(rememberMe: boolean, email: string) {
+    await this.afAuth.setPersistence(rememberMe ? 'local' : 'session');
+
+    if (rememberMe) {
+      localStorage.setItem('email', email);
+      localStorage.setItem('rememberMe', 'true');
+    } else {
+      localStorage.removeItem('email');
+      localStorage.removeItem('rememberMe');
+    }
+  }
+  
 
   private checkValueInputFields(name: string, email: string, password: string, confirmPassword: string, checkbox: boolean): void {
     this.isError = false;
@@ -141,11 +170,12 @@ export class AuthFormComponent {
       this.passwordField.errorMessage = 'Check your email and password. Please try again.';
       this.emailField.errorMessage = 'Check your email and password. Please try again.';
     }
-    
+
     if (this.errorMessage) {
       this.errorMessage = 'An unknown error occurred. Please try again.';
     }
   }
+
 
   private checkLoginInputFields(email: string, password: string) {
     this.isError = false;
@@ -153,6 +183,7 @@ export class AuthFormComponent {
     if (!this.validateField(this.emailField, email, { required: true })) this.isError = true;
     if (!this.validateField(this.passwordField, password, { required: true })) this.isError = true;
   }
+
 
   public EmptyInputFields(): void {
     this.nameField.inputValue = '';
@@ -162,6 +193,7 @@ export class AuthFormComponent {
     this.showPassword = false;
     this.showConfirmPassword = false;
     this.privacyCheckbox.checkboxValue = false;
+    this.isAnimation = false;
   }
 
 

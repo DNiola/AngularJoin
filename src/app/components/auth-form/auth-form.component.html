@@ -1,4 +1,9 @@
 <ion-grid class="flex items-center justify-center h-dvh ">
+
+  <div *ngIf="isAnimation" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10">
+    <div class="p-4 rounded-lg bg-normalBlue text-white slide-up">You Signed Up sucessfully</div>
+  </div>
+
   <ion-row class="justify-center">
     <ion-col size-lg="20">
       <div class="bg-white rounded-2xl shadow-smallShadow p-8">
@@ -39,8 +44,10 @@
 
           <!-- Remember Me & Forgot Password -->
           <div class="flex justify-around w-full items-center font-inter">
-            <app-auth-checkbox *ngIf="isLogin" [text]="'Remember me'"></app-auth-checkbox>
+            <app-auth-checkbox *ngIf="isLogin" #rememberMeCheckbox [text]="'Remember me'"></app-auth-checkbox>
+
             <a *ngIf="isLogin" href="" class="text-lightBlue hover:underline">Forgot my password</a>
+
             <app-auth-checkbox *ngIf="!isLogin" (ionChange)="EmptyErrorField(privacyCheckbox)" #privacyCheckbox
               [text]="'I accept the'" [linkText]="'Privacy policy'" [link]="'/privacy-policy'"></app-auth-checkbox>
           </div>
