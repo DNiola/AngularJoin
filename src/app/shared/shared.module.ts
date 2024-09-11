@@ -10,9 +10,11 @@ import { AuthCheckboxComponent } from '../components/auth-checkbox/auth-checkbox
 import { AuthFooterComponent } from '../components/auth-footer/auth-footer.component';
 import { ButtonFilledComponent } from '../components/button-filled/button-filled.component';
 import { ButtonEdgeComponent } from '../components/button-edge/button-edge.component';
+import { HeaderComponent } from '../components/header/header.component';
+import { SidebarComponent } from '../components/sidebar/sidebar.component';
 @NgModule({
-  declarations: [AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
+  declarations: [SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
   imports: [CommonModule, IonicModule, FormsModule, RouterModule],
-  exports: [AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
+  exports: [SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
 })
 export class SharedModule { }
