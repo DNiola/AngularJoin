@@ -22,9 +22,14 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-  },  {
+  },
+  {
     path: 'summary',
     loadChildren: () => import('./pages/summary/summary.module').then( m => m.SummaryPageModule)
+  },
+  {
+    path: 'addTask',
+    loadChildren: () => import('./pages/add-task/add-task.module').then( m => m.AddTaskPageModule)
   },
 
 ];
