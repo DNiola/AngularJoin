@@ -108,7 +108,7 @@ export class AuthFormComponent {
   private async login(email: string, password: string) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/summary']);
     } catch (error) {
       this.handleErrorFromFirebase(error);
     }
