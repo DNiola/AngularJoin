@@ -1,12 +1,14 @@
-<div class="flex flex-col justify-center h-dvh absolute left-0 top-0 w-52 bg-normalBlue text-white ">
-  <div class="flex flex-col justify-center p-4 ">
-    <span>Summary</span>
-    <span>Add Task</span>
-    <span>Board</span>
-    <span>Contacts</span>
+<div class="flex flex-col items-center h-dvh absolute left-0 top-0 w-60 bg-normalBlue text-white ">
+
+  <ion-img class="w-32 p-5 pt-12" src="../../../assets/img/sideLogo.svg"></ion-img>
+
+  <div class="flex flex-col justify-center py-4 my-auto gap-2 w-full ">
+    <app-sidebar-button [text]="'Summary'" [icon]="'summaryIcon.svg'" [link]="'/summary'"></app-sidebar-button>
+    <app-sidebar-button [text]="'Add Task'" [icon]="'addTaskIcon.svg'" [link]="'/addTask'"></app-sidebar-button>
+    <app-sidebar-button [text]="'Board'" [icon]="'boardIcon.svg'" [link]="'/board'"></app-sidebar-button>
+    <app-sidebar-button [text]="'Contacts'" [icon]="'contactsIcon.svg'" [link]="'/contacts'"></app-sidebar-button>
   </div>
+
   <div class="mt-auto p-4 flex flex-col">
-    <span>Privacy Policy</span>
-    <span>Legal Notice</span>
-  </div>
+  <app-auth-footer [leftFooter]="true"></app-auth-footer>
 </div>

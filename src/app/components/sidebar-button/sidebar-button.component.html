@@ -1,3 +1,7 @@
-<p>
-  sidebar-button works!
-</p>
+<a [routerLink]="link">
+  <div [ngClass]="{ 'bg-darkBlue': active ,  ' hover:bg-[#2a2a54]' : !active }"
+    class="w-full py-2 flex items-center pl-16 gap-3 font-inter">
+    <ion-img class="w-7" src="../../../assets/img/{{icon}}"></ion-img>
+    <span>{{text}}</span>
+  </div>
+</a>
