@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
@@ -27,14 +29,14 @@ export class AuthFormComponent {
   public isAnimation = false;
 
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) { }
 
   ngAfterViewInit() {
     const savedEmail = localStorage.getItem('email');
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
 
     if (savedEmail && this.emailField) {
-      this.emailField.setValue(savedEmail);  
+      this.emailField.setValue(savedEmail);
       this.rememberMeCheckbox.checkboxValue = rememberMe;
     }
   }
@@ -60,14 +62,21 @@ export class AuthFormComponent {
     if (this.isError) {
       this.isError = false;
     } else {
-      this.signUp(email, password);
+      this.signUp(name, email, password);
     }
   }
 
 
-  private async signUp(email: string, password: string): Promise<void> {
+  private async signUp(name: string, email: string, password: string): Promise<void> {
     try {
       const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const userID = result.user?.uid;
+
+      const initials = this.getInitials(name);
+      const color = this.getRandomColor();
+
+      await this.saveUserToFirestore(userID, name, email, initials, color);
+
       this.isAnimation = true;
       setTimeout(() => {
         this.EmptyInputFields();
@@ -91,12 +100,12 @@ export class AuthFormComponent {
     if (this.isError) {
       this.isError = false;
     } else {
-      await this.login(email, password, rememberMe);
+      await this.login(email, password);
     }
   }
 
 
-  private async login(email: string, password: string, rememberMe: boolean) {
+  private async login(email: string, password: string) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.router.navigate(['/home']);
@@ -117,7 +126,7 @@ export class AuthFormComponent {
       localStorage.removeItem('rememberMe');
     }
   }
-  
+
 
   private checkValueInputFields(name: string, email: string, password: string, confirmPassword: string, checkbox: boolean): void {
     this.isError = false;
@@ -194,6 +203,31 @@ export class AuthFormComponent {
     this.showConfirmPassword = false;
     this.privacyCheckbox.checkboxValue = false;
     this.isAnimation = false;
+  }
+
+
+
+  private getInitials(name: string): string {
+    const names = name.split(' ');
+    const initials = names[0][0] + (names[1] ? names[1][0] : '');
+    return initials.toUpperCase();
+  }
+
+
+  private getRandomColor(): string {
+    const colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+
+  private saveUserToFirestore(userID: string | undefined, name: string, email: string, initials: string, color: string): Promise<void> {
+    return this.firestore.collection('users').doc(userID).set({
+      userID: userID,
+      name: name,
+      email: email,
+      initials: initials,
+      color: color
+    });
   }
 
 
