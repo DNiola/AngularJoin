@@ -2,10 +2,44 @@
   <div class="main-content ml-60 h-dvh bg-whiteSmoke">
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
-    <div class="flex items-center gap-6 p-4 px-20 pt-20 font-inter">
-      <span class="font-bold text-5xl">Join 360</span>
-      <span class="bg-lightBlue rounded-full h-12 w-[3px]"></span>
-      <span class="text-3xl">Key Metrics at a Glance</span>
+    <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
+      <div class="flex items-center  gap-6 ">
+        <span class="font-bold text-6xl">Join 360</span>
+        <span class="bg-lightBlue rounded-full h-12 w-[3px]"></span>
+        <span class="text-3xl">Key Metrics at a Glance</span>
+      </div>
+
+      <div class="flex gap-14 ">
+
+        <div>
+          <div class="flex pb-8 gap-8">
+            <app-overview-box class="w-full" [text]="'To-do'" [icon]="'pen.svg'" [number]="'1'"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Done'" [icon]="'done.svg'" [number]="'2'"></app-overview-box>
+          </div>
+
+          <div class="flex pb-8 gap-8">
+            <app-overview-box class="w-full" [longBox]="true" [text]="'Urgent'" [icon]="'urgent.svg'" [number]="'3'">
+            </app-overview-box>
+          </div>
+
+          <div class="flex gap-8">
+            <app-overview-box class="w-full" [text]="'Tasks in Board'" [number]="'4'"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Tasks in Progress'" [number]="'5'"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Awaiting Feedback'" [number]="'6'"></app-overview-box>
+          </div>
+
+        </div>
+
+
+
+        <div class="flex items-center ">
+          <div class="text-4xl flex flex-col gap-4">
+            <span>Good morning,</span>
+            <span class="text-5xl text-lightBlue">{{currentUser?.name}}</span>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </ion-content>

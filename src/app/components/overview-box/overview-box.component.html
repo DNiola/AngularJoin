@@ -1,0 +1,19 @@
+<div class="flex border border-gray-200 rounded-3xl shadow-overviewShadow h-40 w-full bg-white">
+  <div class="flex items-center gap-4 p-4   justify-center w-full">
+    <ion-img *ngIf="icon" class="w-12" src="../../../assets/img/{{icon}}"></ion-img>
+    <div class="flex flex-col text-center">
+      <span class="text-4xl font-bold">{{number}}</span>
+      <span>{{text}}</span>
+    </div>
+
+    <div *ngIf="longBox" class="flex items-center  gap-4">
+
+      <div class="bg-[#D1D1D1] rounded-full h-12 w-[3px]"></div>
+      <div class="flex flex-col">
+        <span>October 16, 2022</span>
+        <span>Upcoming Deadline</span>
+      </div>
+    </div>
+
+   
+  </div>
