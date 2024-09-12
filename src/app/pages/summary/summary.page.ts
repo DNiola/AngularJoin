@@ -9,13 +9,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SummaryPage implements OnInit {
 
-  public userData: User | null = null;
+  public currentUser: User | null = null;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userData = this.userService.getUser();
-    console.log(this.userData);
+    this.currentUser = this.userService.getUser();
   }
 
 }

@@ -1,5 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title size="large">Kanban Project Management Tool</ion-title>
-  </ion-toolbar>
+<ion-header class="shadow-headerShadow p-4 px-20"> 
+  <div class="flex items-center justify-between">
+    
+    <span size="large" class="font-inter text-2xl font-bold">Kanban Project Management Tool</span>
+
+    <div class="flex items-center gap-8">
+
+      <ion-img class="w-7 hover:w-8" src="../../../assets/img/help.svg"></ion-img>
+      <span class="p-4 border-4 bg-[{{currentUser?.color}}] rounded-full">{{currentUser?.initials}}</span>
+      
+    </div>
+  </div> 
 </ion-header>
