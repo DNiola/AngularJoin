@@ -1,16 +1,28 @@
-<ion-header class="shadow-headerShadow p-4 px-20">
+<ion-header class="shadow-headerShadow p-4 px-20 z-50">
   <div class="flex items-center justify-between ">
     <span size="large" class="font-inter text-2xl font-bold">Kanban Project Management Tool</span>
     <div class="flex items-center gap-8">
-
       <a href="/help" class="w-10 justify-center flex">
-        <ion-img class="w-7 hover:w-8" src="../../../assets/img/help.svg"> </ion-img>
+        <ion-img class="w-7 hover:w-8" src="../../../assets/img/help.svg"></ion-img>
       </a>
 
-      <span *ngIf="!currentUser?.initials" class="p-4 border-4 bg-gray-800 rounded-full">X X</span>
-      <span *ngIf="currentUser?.initials" class="p-4 border-4 bg-[{{currentUser?.color}}] rounded-full">
-        {{currentUser?.initials}}
-      </span>
+       <div #userInitials class="relative flex items-center gap-8 cursor-pointer" (click)=" this.isDropdownOpen = !this.isDropdownOpen;">
+        <span *ngIf="!currentUser?.color" class="p-4 border-4 bg-gray-800 rounded-full">
+          {{currentUser?.initials ? currentUser?.initials : 'X X'}}
+        </span>
+
+        <span *ngIf="currentUser?.color" [ngStyle]="{'background-color': currentUser?.color}" 
+              class="p-4 border-4 rounded-full hover:border-gray-300">
+          {{currentUser?.initials}}
+        </span>
+      </div>
     </div>
   </div>
 </ion-header>
+
+ <div #dropdownMenu *ngIf="isDropdownOpen"
+  class="dropdown-menu absolute slide-up right-20 top-24 w-48 bg-normalBlue text-smokeGray rounded-lg rounded-tr-none shadow-[#0000001A] inter p-3 z-40 cursor-pointer">
+  <a *ngFor="let items of menuItems" href="/{{items.href}}"
+    class="block px-4 py-2 hover:bg-menuHoverBlue cursor-pointer">{{items.text}}</a>
+  <a (click)="logout()" class="block px-4 py-2 hover:bg-[#3b3d59]">Log out</a>
+</div>
