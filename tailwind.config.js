@@ -21,6 +21,7 @@ module.exports = {
         'headerShadow': '0px 4px 4px 0px rgba(0, 0, 0, 0.1)',
         'smallShadow': '0px 0px 14px 3px rgba(0, 0, 0, 0.04);',
         'overviewShadow': '0px 0px 4px 0px rgba(0, 0, 0, 0.1)',
+        'overviewShadowHover': 'box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);',
       }
     },
 

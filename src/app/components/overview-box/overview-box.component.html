@@ -1,19 +1,22 @@
-<div class="flex border border-gray-200 rounded-3xl shadow-overviewShadow h-40 w-full bg-white">
+<div
+  class="flex border border-gray-200 rounded-3xl shadow-overviewShadow hover:shadow-overviewShadowHover h-44 w-full bg-white hover:bg-normalBlue  hover:scale-105 transition-transform hover:text-white">
   <div class="flex items-center gap-4 p-4   justify-center w-full">
-    <ion-img *ngIf="icon" class="w-12" src="../../../assets/img/{{icon}}"></ion-img>
+    <ion-img *ngIf="icon" class="w-14 hover:text-w" src="../../../assets/img/{{icon}}"></ion-img>
     <div class="flex flex-col text-center">
-      <span class="text-4xl font-bold">{{number}}</span>
-      <span>{{text}}</span>
+      <span class="text-6xl font-bold">{{number}}</span>
+      <span class="text-xl">{{text}}</span>
     </div>
 
-    <div *ngIf="longBox" class="flex items-center  gap-4">
+    <div *ngIf="longBox" class="flex items-center ml-4 gap-8">
 
-      <div class="bg-[#D1D1D1] rounded-full h-12 w-[3px]"></div>
-      <div class="flex flex-col">
-        <span>October 16, 2022</span>
+      <div class="bg-[#D1D1D1] rounded-full h-24 w-[2px]"></div>
+
+      <div class="flex flex-col text-xl">
+        <span class="font-bold">October 16, 2022</span>
         <span>Upcoming Deadline</span>
       </div>
+      
     </div>
 
-   
+
   </div>
