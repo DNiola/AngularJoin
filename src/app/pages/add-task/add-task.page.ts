@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-task',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-task.page.scss'],
 })
 export class AddTaskPage implements OnInit {
+  public currentUser: User | null = null;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
   }
+
 
 }

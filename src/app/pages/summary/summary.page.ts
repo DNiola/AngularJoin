@@ -14,7 +14,9 @@ export class SummaryPage implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.currentUser = this.userService.getUser();
+    this.userService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
 }
