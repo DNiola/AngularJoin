@@ -37,7 +37,7 @@ export class AuthFormComponent {
     const savedEmail = localStorage.getItem('email');
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
 
-    if (savedEmail && this.emailField) {
+    if (savedEmail && this.emailField && this.isLogin) {
       this.emailField.setValue(savedEmail);
       this.rememberMeCheckbox.checkboxValue = rememberMe;
     }
@@ -226,9 +226,10 @@ export class AuthFormComponent {
 
   private getInitials(name: string): string {
     const names = name.split(' ');
-    const initials = names[0][0] + (names[1] ? names[1][0] : '');
+    const initials = names[0][0] + (names[1] ? ' ' + names[1][0] : '');
     return initials.toUpperCase();
   }
+  
 
 
   private getRandomColor(): string {
