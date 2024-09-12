@@ -48,8 +48,11 @@ export class UserService {
     return this.currentUserSubject.getValue();
   }
 
-
   clearUser() {
-    this.currentUserSubject.next(null);
+    this.afAuth.signOut().then(() => {
+      this.currentUserSubject.next(null);
+    }).catch((error) => {
+      console.error('Error signing out:', error);
+    });
   }
 }
