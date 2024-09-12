@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-auth-form',
@@ -29,7 +31,7 @@ export class AuthFormComponent {
   public isAnimation = false;
 
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService) { }
 
   ngAfterViewInit() {
     const savedEmail = localStorage.getItem('email');
@@ -107,7 +109,22 @@ export class AuthFormComponent {
 
   private async login(email: string, password: string) {
     try {
+
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
+      const user = result.user;
+
+
+      const userDataSnapshot = await this.firestore.collection('users').doc(user?.uid).get().toPromise();
+      const userData = userDataSnapshot?.data() as User;
+
+      this.userService.setUser({
+        userId: user?.uid || '',
+        name: userData.name || '',
+        email: user?.email || '',
+        initials: userData.initials,
+        color: userData.color
+      });
+
       this.router.navigate(['/summary']);
     } catch (error) {
       this.handleErrorFromFirebase(error);

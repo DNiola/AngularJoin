@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-summary',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SummaryPage implements OnInit {
 
-  constructor() { }
+  public userData: User | null = null;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userData = this.userService.getUser();
+    console.log(this.userData);
   }
 
 }
