@@ -34,6 +34,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskPageModule),
     canActivate: [authGuard]
   },
+  {
+    path: 'board',
+    loadChildren: () => import('./pages/board/board.module').then( m => m.BoardPageModule),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'contacts',
+    loadChildren: () => import('./pages/contacts/contacts.module').then( m => m.ContactsPageModule),
+    canActivate: [authGuard]
+  },
+
 
 ];
 
