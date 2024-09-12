@@ -10,9 +10,11 @@ module.exports = {
         'normalBlue': '#2A3647',
         'lightBlue': '#29ABE2',
         'darkBlue': '#091931', // the button color after click
+        'smokeGray': '#CDCDCD',
         'whiteSmoke': '#F5F5F5',
         'lightGray': '#A8A8A8',
         'lightRed': '#FF8190',
+        'menuHoverBlue': '#3b3d59',
       },
       boxShadow: {
         'lightShadow': '0px 4px 6px 0px rgba(0, 0, 0, 0.33);',

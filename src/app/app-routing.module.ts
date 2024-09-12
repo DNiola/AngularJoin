@@ -26,7 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'summary',
-    loadChildren: () => import('./pages/summary/summary.module').then(m => m.SummaryPageModule)
+    loadChildren: () => import('./pages/summary/summary.module').then(m => m.SummaryPageModule),
+    canActivate: [authGuard]
   },
   {
     path: 'addTask',
