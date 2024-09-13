@@ -11,6 +11,8 @@ export class OverviewBoxComponent implements OnInit {
   @Input() number = ''
   @Input() longBox =  false
 
+  public isHovered = false;
+
   constructor() { }
 
   ngOnInit() { }
