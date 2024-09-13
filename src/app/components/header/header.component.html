@@ -12,7 +12,7 @@
         </span>
 
         <span *ngIf="currentUser?.color" [ngStyle]="{'background-color': currentUser?.color}" 
-              class="p-4 border-4 rounded-full hover:border-gray-300">
+              class="p-4 border-4 rounded-full hover:border-gray-300 w-16 h-16 whitespace-nowrap flex justify-center items-center">
           {{currentUser?.initials}}
         </span>
       </div>

@@ -54,7 +54,7 @@ export class AuthFormComponent {
 
 
   private getSignUpData(): void {
-    const name = this.nameField.getValue();
+    const name = this.capitalizeName(this.nameField.getValue());
     const email = this.emailField.getValue();
     const password = this.passwordField.getValue();
     const confirmPassword = this.confirmPasswordField ? this.confirmPasswordField.getValue() : '';
@@ -231,7 +231,13 @@ export class AuthFormComponent {
   }
   
 
+  private capitalizeName(name: string): string {
+    return name.split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  }
 
+  
   private getRandomColor(): string {
     const colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
     return colors[Math.floor(Math.random() * colors.length)];
