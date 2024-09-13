@@ -2,8 +2,89 @@
   <div class="main-content ml-60 h-dvh bg-whiteSmoke">
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
-    <div class="flex items-center gap-6 p-4 px-20 pt-20 font-inter">
-      <span class="font-bold text-5xl">Add Task</span>
+    <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
+      <span class="font-bold text-6xl">Add Task</span>
+
+      <div class="flex gap-14 ">
+        <ion-grid>
+          <ion-row class="flex flex-col w-4/6 max-2xl:w-full">
+            <div class="flex gap-16 ">
+
+              <!-- Left side -->
+              <div class="w-full flex flex-col gap-8">
+                <!-- Task Title -->
+                <app-default-input-field [fieldRequired]="true" [label]="'Title'">
+                </app-default-input-field>
+                <!-- Description -->
+                <app-default-input-field [fieldRequired]="true" [label]="'Description'" [type]="'textarea'">
+                </app-default-input-field>
+                <!-- Assigned to -->
+                <app-default-input-field [fieldRequired]="false" [label]="'Assigned to'" [dropDown]="true"
+                  [contacts]="contacts" [placeholder]="'Select contacts to assign'">
+                </app-default-input-field>
+              </div>
+
+              <!-- Middle Line -->
+              <div class="bg-[#D1D1D1] rounded-full min-h-full w-[2px]"></div>
+              <!-- Right side -->
+               
+              <div class="w-full flex flex-col gap-8">
+                <!-- Due Date -->
+                <app-default-input-field [fieldRequired]="true" [label]="'Due date'"
+                  [type]="'date'"></app-default-input-field>
+                <!-- prio -->
+                <div>
+                  <ion-label position="floating font-medium w-full">
+                    Prio
+                  </ion-label>
+                  <div class="flex gap-4">
+                    <app-prio-button [text]="'Urgent'" [icon]="'prio-high.svg'" class="w-full"></app-prio-button>
+                    <app-prio-button [text]="'Medium'" [icon]="'prio-normal.svg'" class="w-full"></app-prio-button>
+                    <app-prio-button [text]="'Low'" [icon]="'prio-low.svg'" class="w-full"></app-prio-button>
+                  </div>
+                </div>
+
+                <!-- Category -->
+                <app-default-input-field [fieldRequired]="true" [label]="'Category'"> </app-default-input-field>
+                <!-- <ion-col size="12" size="6">
+                  <ion-label position="floating font-medium">
+                    Category
+                    <span class="text-lightRed ">*</span>
+                  </ion-label>
+                  <ion-select class="bg-white">
+                    <ion-select-option value="category1">Category 1</ion-select-option>
+                    <ion-select-option value="category2">Category 2</ion-select-option>
+                  </ion-select>
+                </ion-col> -->
+
+                <!-- Subtasks -->
+                <app-default-input-field [fieldRequired]="false" [label]="'Subtasks'"> </app-default-input-field>
+
+                <!-- <ion-col size="12" size="6">
+                  <ion-label position="floating font-medium">Subtasks</ion-label>
+                  <ion-input class="bg-white" required></ion-input> <ion-button slot="end" fill="outline">+</ion-button>
+                </ion-col> -->
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center font-inter">
+              <ion-col size="12" size="6">
+                <span class="text-lightRed ">*</span>
+                This field is required
+              </ion-col>
+              <!-- Buttons -->
+              <ion-col size="12" size="6">
+                <div class="flex justify-end">
+                  <ion-button fill="outline" color="medium">Clear</ion-button>
+                  <ion-button fill="solid" color="primary">Create Task</ion-button>
+                </div>
+              </ion-col>
+            </div>
+          </ion-row>
+        </ion-grid>
+
+      </div>
+
     </div>
   </div>
 </ion-content>

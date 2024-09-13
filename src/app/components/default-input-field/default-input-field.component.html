@@ -1,0 +1,48 @@
+<ion-label position="floating font-medium">
+  {{label}}
+  <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
+</ion-label>
+
+<textarea *ngIf="type === 'textarea'" class="bg-white textareaTest "></textarea>
+<ion-input *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10"
+  (click)="toggleDropdown()" (input)="filterContacts()" [(ngModel)]="searchTerm" placeholder="{{placeholder}}">
+  <ion-icon *ngIf="!isDropdownOpen && dropDown" name="chevron-down-outline" slot="end"
+    (click)="toggleDropdown()"></ion-icon>
+  <ion-icon *ngIf="isDropdownOpen && dropDown" name="chevron-up-outline" slot="end"
+    (click)="toggleDropdown()"></ion-icon>
+</ion-input>
+
+<!-- Custom dropdown list -->
+<div *ngIf="isDropdownOpen && dropDown"
+  class="-mt-2  border-[#d1d1d1] border rounded-b-lg max-h-40 overflow-auto transition-transform">
+
+  <div *ngFor="let contact of filteredContacts | filter:searchTerm:['name']" (click)="toggleContact(contact)"
+    class="flex items-center bg-white last:rounded-b-lg py-1 px-3 justify-between cursor-pointer first:pt-3 last:pb-2 hover:bg-slate-500">
+
+    <div class="flex items-center gap-3">
+
+      <span *ngIf="contact?.color" [ngStyle]="{'background-color': contact?.color}"
+        class="p-4 border-2 rounded-full w-12 h-12 text-sm whitespace-nowrap flex justify-center items-center">
+        {{contact?.initials}}
+      </span>
+
+      <ion-label>{{ contact.name }}</ion-label>
+
+    </div>
+    <ion-checkbox (click)="toggleContact(contact)" [(ngModel)]="contact.selected"></ion-checkbox>
+  </div>
+
+  <div *ngIf="this.filteredContacts.length === 0" class="text-xs text-lightRed p-2 bg-white pt-4">
+    No Contacts found
+  </div>
+</div>
+
+<!-- Selected contacts displayed -->
+<div *ngIf="dropDown" class="flex gap-4 flex-wrap mt-4">
+  <div *ngFor="let contact of selectedContacts">
+    <span *ngIf="contact?.color" [ngStyle]="{'background-color': contact?.color}" name="close-circle"
+      class="p-4 border-2 rounded-full w-12 h-12 text-sm whitespace-nowrap flex justify-center items-center">
+      {{contact?.initials}}
+    </span>
+  </div>
+</div>
