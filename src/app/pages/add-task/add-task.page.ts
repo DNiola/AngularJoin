@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
+  public activeButton = '';
 
   public contacts: Array<any> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange' },
@@ -27,4 +28,11 @@ export class AddTaskPage implements OnInit {
     });
   }
 
+  setActiveButton(button: string) {
+    this.activeButton = button;
+  }
+
+  isButtonActive(button: string): boolean {
+    return this.activeButton === button;
+  }
 }

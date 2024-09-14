@@ -9,6 +9,7 @@ export class PrioButtonComponent implements OnInit {
   @Input() color = ''; 
   @Input() text = '';
   @Input() icon = '';
+  @Input() isActive = false;
   constructor() { }
 
   ngOnInit() { }
