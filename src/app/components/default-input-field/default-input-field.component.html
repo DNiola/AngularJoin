@@ -4,45 +4,45 @@
 </ion-label>
 
 <textarea *ngIf="type === 'textarea'" class="bg-white textareaTest "></textarea>
-<ion-input *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10"
-  (click)="toggleDropdown()" (input)="filterContacts()" [(ngModel)]="searchTerm" placeholder="{{placeholder}}">
+
+<ion-input *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" (click)="toggleDropdown()"
+  (input)="filterItems()" [(ngModel)]="searchTerm" placeholder="{{placeholder}}">
   <ion-icon *ngIf="!isDropdownOpen && dropDown" name="chevron-down-outline" slot="end"
     (click)="toggleDropdown()"></ion-icon>
   <ion-icon *ngIf="isDropdownOpen && dropDown" name="chevron-up-outline" slot="end"
     (click)="toggleDropdown()"></ion-icon>
+  <ion-icon *ngIf="label === 'Subtasks' && !isSubtask" name="add-outline" slot="end" class="text-lg"></ion-icon>
+
+
+  <ion-icon *ngIf="label === 'Subtasks' && isSubtask" (click)="searchTerm = ''" slot="end" class="text-lg" name="close-outline"></ion-icon>
+  <ion-icon *ngIf="label === 'Subtasks' && isSubtask" name="checkmark-outline" slot="end" class="text-lg"></ion-icon>
+
 </ion-input>
 
-<!-- Custom dropdown list -->
+<!-- Dropdown List -->
 <div *ngIf="isDropdownOpen && dropDown"
-  class="-mt-2  border-[#d1d1d1] border rounded-b-lg max-h-40 overflow-auto transition-transform">
-
-  <div *ngFor="let contact of filteredContacts | filter:searchTerm:['name']" (click)="toggleContact(contact)"
-    class="flex items-center bg-white last:rounded-b-lg py-1 px-3 justify-between cursor-pointer first:pt-3 last:pb-2 hover:bg-slate-500">
-
-    <div class="flex items-center gap-3">
-
-      <span *ngIf="contact?.color" [ngStyle]="{'background-color': contact?.color}"
-        class="p-4 border-2 rounded-full w-12 h-12 text-sm whitespace-nowrap flex justify-center items-center">
-        {{contact?.initials}}
-      </span>
-
-      <ion-label>{{ contact.name }}</ion-label>
-
-    </div>
-    <ion-checkbox (click)="toggleContact(contact)" [(ngModel)]="contact.selected"></ion-checkbox>
+  class="bg-white border border-gray-300 rounded-b-lg max-h-40 overflow-auto -mt-2">
+  <div *ngFor="let item of filteredItems" (click)="toggleItem(item)" (click)="selectItem(item)"
+    class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500">
+    <span *ngIf="item.color" [ngStyle]="{'background-color': item.color}"
+      class="p-4 border-2 rounded-full w-12 h-12 flex justify-center items-center whitespace-nowrap text-sm">
+      {{item.initials || item.text}}
+    </span>
+    <ion-label class="text-gray-700">{{ item.name || item.text }}</ion-label>
+    <ion-checkbox *ngIf="item.initials" [(ngModel)]="item.selected" class="ml-auto"></ion-checkbox>
   </div>
 
-  <div *ngIf="this.filteredContacts.length === 0" class="text-xs text-lightRed p-2 bg-white pt-4">
-    No Contacts found
+  <div *ngIf="filteredItems.length === 0" class="p-4 text-sm text-red-500">
+    Search not found
   </div>
 </div>
 
-<!-- Selected contacts displayed -->
-<div *ngIf="dropDown" class="flex gap-4 flex-wrap mt-4">
-  <div *ngFor="let contact of selectedContacts">
-    <span *ngIf="contact?.color" [ngStyle]="{'background-color': contact?.color}" name="close-circle"
-      class="p-4 border-2 rounded-full w-12 h-12 text-sm whitespace-nowrap flex justify-center items-center">
-      {{contact?.initials}}
+<!-- Display Selected Items (Contact Bubble) -->
+<div class="flex gap-4 flex-wrap mt-4">
+  <div *ngFor="let item of selectedItems">
+    <span *ngIf="item.color" [ngStyle]="{'background-color': item.color}"
+      class="p-4 border-2 border-white rounded-full w-12 h-12 text-sm flex justify-center items-center whitespace-nowrap ">
+      {{item.initials || item.text}}
     </span>
   </div>
 </div>

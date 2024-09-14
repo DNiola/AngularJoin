@@ -16,11 +16,11 @@
                 <app-default-input-field [fieldRequired]="true" [label]="'Title'">
                 </app-default-input-field>
                 <!-- Description -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Description'" [type]="'textarea'">
+                <app-default-input-field [label]="'Description'" [type]="'textarea'">
                 </app-default-input-field>
                 <!-- Assigned to -->
-                <app-default-input-field [fieldRequired]="false" [label]="'Assigned to'" [dropDown]="true"
-                  [contacts]="contacts" [placeholder]="'Select contacts to assign'">
+                <app-default-input-field [label]="'Assigned to'" [dropDown]="true" [items]="contacts"
+                  [placeholder]="'Select contacts to assign'">
                 </app-default-input-field>
               </div>
 
@@ -48,25 +48,16 @@
                 </div>
 
                 <!-- Category -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Category'"> </app-default-input-field>
-                <!-- <ion-col size="12" size="6">
-                  <ion-label position="floating font-medium">
-                    Category
-                    <span class="text-lightRed ">*</span>
-                  </ion-label>
-                  <ion-select class="bg-white">
-                    <ion-select-option value="category1">Category 1</ion-select-option>
-                    <ion-select-option value="category2">Category 2</ion-select-option>
-                  </ion-select>
-                </ion-col> -->
+                <app-default-input-field [items]="categories" [fieldRequired]="true" [dropDown]="true"
+                  [label]="'Category'" [placeholder]="'Select task category'">
+                </app-default-input-field>
+
 
                 <!-- Subtasks -->
-                <app-default-input-field [fieldRequired]="false" [label]="'Subtasks'"> </app-default-input-field>
+                <app-default-input-field [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"
+                  [type]="'subtask'"> </app-default-input-field>
 
-                <!-- <ion-col size="12" size="6">
-                  <ion-label position="floating font-medium">Subtasks</ion-label>
-                  <ion-input class="bg-white" required></ion-input> <ion-button slot="end" fill="outline">+</ion-button>
-                </ion-col> -->
+
               </div>
             </div>
 
