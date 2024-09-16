@@ -13,13 +13,11 @@
               <!-- Left side -->
               <div class="w-full flex flex-col gap-8">
                 <!-- Task Title -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Title'"></app-default-input-field>
+                <app-default-input-field [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'"></app-default-input-field>
                 <!-- Description -->
-                <app-default-input-field [label]="'Description'" [type]="'textarea'"></app-default-input-field>
+                <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'"></app-default-input-field>
                 <!-- Assigned to -->
-                <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts"
-                  [placeholder]="'Select contacts to assign'" (selectedData)="onDisplayedBubble($event)">
-                </app-dropdown-input-field>
+                <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (selectedData)="onDisplayedBubble($event)"></app-dropdown-input-field>
                 <div class="flex flex-wrap gap-4">
                   <div *ngFor="let item of selectedData">
                     <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'"
@@ -33,8 +31,7 @@
               <!-- Right side -->
               <div class="w-full flex flex-col gap-8">
                 <!-- Due Date -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Due date'"
-                  [type]="'date'"></app-default-input-field>
+                <app-default-input-field [fieldRequired]="true" [label]="'Due date'" [type]="'date'"></app-default-input-field>
                 <!-- prio -->
                 <div>
                   <ion-label position="floating font-medium w-full">
@@ -49,22 +46,11 @@
                       (click)="setActiveButton('low')" [color]="'#7AE229'" class="w-full"></app-prio-button>
                   </div>
                 </div>
-
                 <!-- Category -->
-                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true"
-                  [placeholder]="'Select contacts to assign'">
-                </app-dropdown-input-field>
-
-
+                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'"></app-dropdown-input-field>
                 <!-- Subtasks -->
-                <app-default-input-field [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"
-                  [type]="'subtask'"> </app-default-input-field>
-
-
-                <!-- <ion-icon *ngIf="label === 'Subtasks' && isSubtask" (click)="searchTerm = ''" slot="end" class="text-lg" -->
-                <!-- name="close-outline"></ion-icon> -->
-                <!-- <ion-icon *ngIf="label === 'Subtasks' && isSubtask" name="checkmark-outline" slot="end" class="text-lg"></ion-icon> -->
-              </div>
+                <app-creator-input-field  [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
+               </div>
             </div>
 
             <div class="flex justify-between items-center font-inter">
@@ -82,9 +68,7 @@
             </div>
           </ion-row>
         </ion-grid>
-
       </div>
-
     </div>
   </div>
 </ion-content>

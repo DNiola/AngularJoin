@@ -3,4 +3,4 @@
   <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
 <ion-input *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" placeholder="{{placeholder}}"></ion-input>
-<textarea *ngIf="type === 'textarea'" class="bg-white textareaTest "></textarea>
+<textarea *ngIf="type === 'textarea'" class="bg-white textareaTest " placeholder="{{placeholder}}"></textarea>
