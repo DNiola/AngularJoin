@@ -6,21 +6,18 @@
         <ion-img class="w-7 hover:w-8" src="../../../assets/img/help.svg"></ion-img>
       </a>
 
-       <div #userInitials class="relative flex items-center gap-8 cursor-pointer" (click)=" this.isDropdownOpen = !this.isDropdownOpen;">
-        <span *ngIf="!currentUser?.color" class="p-4 border-4 bg-gray-800 rounded-full">
-          {{currentUser?.initials ? currentUser?.initials : 'X X'}}
-        </span>
+      <div #userInitials class="relative flex items-center gap-8 cursor-pointer"
+        (click)=" this.isDropdownOpen = !this.isDropdownOpen;">
 
-        <span *ngIf="currentUser?.color" [ngStyle]="{'background-color': currentUser?.color}" 
-              class="p-4 border-4 rounded-full hover:border-gray-300 w-16 h-16 whitespace-nowrap flex justify-center items-center">
-          {{currentUser?.initials}}
-        </span>
+        <app-user-bubble [color]="currentUser?.color" [text]="currentUser?.initials ? currentUser?.initials : 'X X'"
+          [size]="'64px'" [borderWidth]="'4px'">
+        </app-user-bubble>
       </div>
     </div>
   </div>
 </ion-header>
 
- <div #dropdownMenu *ngIf="isDropdownOpen"
+<div #dropdownMenu *ngIf="isDropdownOpen"
   class="dropdown-menu absolute slide-up right-20 top-24 w-48 bg-normalBlue text-smokeGray rounded-lg rounded-tr-none shadow-[#0000001A] inter p-3 z-40 cursor-pointer">
   <a *ngFor="let items of menuItems" href="/{{items.href}}"
     class="block px-4 py-2 hover:bg-menuHoverBlue cursor-pointer">{{items.text}}</a>

@@ -9,6 +9,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  @ViewChild('dropdownMenu') dropdownMenu!: ElementRef;
+  @ViewChild('userInitials') userInitials!: ElementRef;
 
   @Input() currentUser: User | null = null;
 
@@ -19,28 +21,26 @@ export class HeaderComponent {
   ]
 
   public isDropdownOpen = false
-  @ViewChild('dropdownMenu') dropdownMenu!: ElementRef;
-  @ViewChild('userInitials') userInitials!: ElementRef;
+
 
   constructor(private userService: UserService, private router: Router) { }
 
   @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent) {
-    // make sure the elements exist before accessing them
+  handleClickOutside(event: MouseEvent): void {
     if (!this.dropdownMenu || !this.userInitials) {
-      return;  // exit if the elements do not exist
+      return;
     }
 
-    const clickedOutsideDropdown = !this.dropdownMenu?.nativeElement.contains(event.target); // check if clicked outside the dropdown
-    const clickedOutsideInitials = !this.userInitials?.nativeElement.contains(event.target); // check if clicked outside the initials
+    const clickedOutsideDropdown = !this.dropdownMenu?.nativeElement.contains(event.target);
+    const clickedOutsideInitials = !this.userInitials?.nativeElement.contains(event.target);
 
     if (clickedOutsideDropdown && clickedOutsideInitials) {
-      this.isDropdownOpen = false; // close the dropdown if clicked outside
+      this.isDropdownOpen = false;
     }
   }
 
 
-  logout() {
+  logout(): void {
     this.userService.clearUser();
     this.router.navigate(['/login']);
   }

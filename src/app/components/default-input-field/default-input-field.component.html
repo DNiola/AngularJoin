@@ -2,47 +2,5 @@
   {{label}}
   <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
-
+<ion-input *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" placeholder="{{placeholder}}"></ion-input>
 <textarea *ngIf="type === 'textarea'" class="bg-white textareaTest "></textarea>
-
-<ion-input *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" (click)="toggleDropdown()"
-  (input)="filterItems()" [(ngModel)]="searchTerm" placeholder="{{placeholder}}">
-  <ion-icon *ngIf="!isDropdownOpen && dropDown" name="chevron-down-outline" slot="end"
-    (click)="toggleDropdown()"></ion-icon>
-  <ion-icon *ngIf="isDropdownOpen && dropDown" name="chevron-up-outline" slot="end"
-    (click)="toggleDropdown()"></ion-icon>
-  <ion-icon *ngIf="label === 'Subtasks' && !isSubtask" name="add-outline" slot="end" class="text-lg"></ion-icon>
-
-
-  <ion-icon *ngIf="label === 'Subtasks' && isSubtask" (click)="searchTerm = ''" slot="end" class="text-lg" name="close-outline"></ion-icon>
-  <ion-icon *ngIf="label === 'Subtasks' && isSubtask" name="checkmark-outline" slot="end" class="text-lg"></ion-icon>
-
-</ion-input>
-
-<!-- Dropdown List -->
-<div *ngIf="isDropdownOpen && dropDown"
-  class="bg-white border border-gray-300 rounded-b-lg max-h-40 overflow-auto -mt-2">
-  <div *ngFor="let item of filteredItems" (click)="toggleItem(item)" (click)="selectItem(item)"
-    class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500">
-    <span *ngIf="item.color" [ngStyle]="{'background-color': item.color}"
-      class="p-4 border-2 rounded-full w-12 h-12 flex justify-center items-center whitespace-nowrap text-sm">
-      {{item.initials || item.text}}
-    </span>
-    <ion-label class="text-gray-700">{{ item.name || item.text }}</ion-label>
-    <ion-checkbox *ngIf="item.initials" [(ngModel)]="item.selected" class="ml-auto"></ion-checkbox>
-  </div>
-
-  <div *ngIf="filteredItems.length === 0" class="p-4 text-sm text-red-500">
-    Search not found
-  </div>
-</div>
-
-<!-- Display Selected Items (Contact Bubble) -->
-<div class="flex gap-4 flex-wrap mt-4">
-  <div *ngFor="let item of selectedItems">
-    <span *ngIf="item.color" [ngStyle]="{'background-color': item.color}"
-      class="p-4 border-2 border-white rounded-full w-12 h-12 text-sm flex justify-center items-center whitespace-nowrap ">
-      {{item.initials || item.text}}
-    </span>
-  </div>
-</div>

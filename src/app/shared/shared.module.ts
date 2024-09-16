@@ -17,9 +17,11 @@ import { OverviewBoxComponent } from '../components/overview-box/overview-box.co
 import { FilterPipe } from './pipes/filter.pipe';
 import { DefaultInputFieldComponent } from '../components/default-input-field/default-input-field.component';
 import { PrioButtonComponent } from '../components/prio-button/prio-button.component';
+import { UserBubbleComponent } from '../components/user-bubble/user-bubble.component';
+import { DropdownInputFieldComponent } from '../components/dropdown-input-field/dropdown-input-field.component';
 @NgModule({
-  declarations: [PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
+  declarations: [DropdownInputFieldComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
   imports: [CommonModule, IonicModule, FormsModule, RouterModule],
-  exports: [PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
+  exports: [DropdownInputFieldComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
 })
 export class SharedModule { }

@@ -1,0 +1,31 @@
+<ion-label position="floating font-medium">
+  {{label}}
+  <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
+</ion-label>
+
+<ion-input class="inputField cursor-pointer z-10" (click)="toggleDropdown()" (input)="filterItems()"
+  [(ngModel)]="searchTerm" placeholder="{{placeholder}}">
+  <ion-icon *ngIf="!isDropdownOpen" name="chevron-down-outline" slot="end" (click)="toggleDropdown()"></ion-icon>
+  <ion-icon *ngIf="isDropdownOpen" name="chevron-up-outline" slot="end" (click)="toggleDropdown()"></ion-icon>
+</ion-input>
+
+<!-- Dropdown List -->
+<div *ngIf="isDropdownOpen" class="bg-white border border-gray-300 rounded-b-lg max-h-40 overflow-auto -mt-2">
+  <div *ngFor="let item of filteredItems" 
+  (click)="toggleItem(item)"
+  (click)="selectItem(item)"
+  [ngClass]="this.selectedItems.includes(item) && label !== 'Category'? 'bg-slate-500' : ''"
+  class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500"
+  >
+    <app-user-bubble *ngIf="item.initials" [color]="item.color" [text]="item.initials" [size]="'48px'"
+      [borderWidth]="'3px'" [borderColor]="'white'">
+    </app-user-bubble>
+
+    <ion-label class="text-gray-700">{{ item.name || item.text }}</ion-label>
+    <ion-checkbox *ngIf="item.initials" [(ngModel)]="item.selected" class="ml-auto"></ion-checkbox>
+  </div>
+  <!-- Search Not Found -->
+  <div *ngIf="filteredItems.length === 0" class="p-4 text-sm text-red-500">
+    Search not found
+  </div>
+</div>

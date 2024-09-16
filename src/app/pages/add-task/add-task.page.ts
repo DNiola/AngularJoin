@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -9,6 +9,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-task.page.scss'],
 })
 export class AddTaskPage implements OnInit {
+  @Input() selectedData: Contact[] = [];
+
   public currentUser: User | null = null;
   public activeButton = '';
 
@@ -34,11 +36,16 @@ export class AddTaskPage implements OnInit {
     });
   }
 
-  setActiveButton(button: string) {
+  public onDisplayedBubble(selectedContacts: Contact[]): void {
+    this.selectedData = selectedContacts;
+    console.log(this.selectedData);
+  }
+
+  public setActiveButton(button: string) {
     this.activeButton = button;
   }
 
-  isButtonActive(button: string): boolean {
+  public isButtonActive(button: string): boolean {
     return this.activeButton === button;
   }
 }
