@@ -12,39 +12,13 @@
   </ion-icon>
 
   <div *ngIf="newSubtask" class="flex z-10 absolute right-2 top-3 gap-1 items-center">
-    <ion-icon (click)="addSubtask()" name="checkmark-outline" slot="end" class="text-lg"></ion-icon>
-    <span>|</span>
-    <ion-icon (click)="newSubtask = ''" slot="end" class="text-lg" name="close-outline"></ion-icon>
+    <ion-icon (click)="addSubtask()" slot="end" class="text-lg hover:bg-slate-400 rounded-full p-1 cursor-pointer"
+      name="checkmark-outline"></ion-icon>
+    <span class="text-slate-300">|</span>
+    <ion-icon (click)="newSubtask = ''" slot="end" class="text-lg hover:bg-slate-400  rounded-full p-1 cursor-pointer"
+      name="close-outline"></ion-icon>
   </div>
 </div>
 
 
 
-<div *ngFor="let subtask of subtasks; let i = index" class="flex justify-between items-center">
-  <!-- show and edit task -->
-  <div *ngIf="editIndex !== i"
-    class="cursor-pointer pl-4 pr-2 w-full flex items-center mt-2 hover:bg-menuHoverBlue rounded-lg">
-    <span (dblclick)="editSubtask(i)" class="w-full ">{{ subtask }}</span>
-
-    <div class="flex items-center gap-2">
-      <ion-icon name="pencil-outline" class="cursor-pointer" (click)="editSubtask(i)"></ion-icon>
-      <span>|</span>
-      <ion-icon name="trash-outline" class="cursor-pointer" (click)="deleteSubtask(i)"></ion-icon>
-    </div>
-
-  </div>
-
-  <!-- editfield  -->
-  <div *ngIf="editIndex === i" class="flex w-full items-center mt-2 ">
-    <ion-input [(ngModel)]="subtasks[i]" class="w-full bg-white">
-    </ion-input>
-
-    <div (click)="saveEdit()" class="bg-green-500 text-white rounded p-2">
-      <ion-icon name="checkmark-outline"></ion-icon>
-    </div>
-    <div (click)="cancelEdit()" class="bg-gray-500 text-white rounded p-2">
-      <ion-icon name="close-outline"></ion-icon>
-    </div>
-
-  </div>
-</div>

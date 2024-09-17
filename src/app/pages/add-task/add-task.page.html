@@ -13,11 +13,15 @@
               <!-- Left side -->
               <div class="w-full flex flex-col gap-8">
                 <!-- Task Title -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'"></app-default-input-field>
+                <app-default-input-field [fieldRequired]="true" [label]="'Title'"
+                  [placeholder]="'Enter a title'"></app-default-input-field>
                 <!-- Description -->
-                <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'"></app-default-input-field>
+                <app-default-input-field [label]="'Description'" [type]="'textarea'"
+                  [placeholder]="'Enter a description'"></app-default-input-field>
                 <!-- Assigned to -->
-                <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (selectedData)="onDisplayedBubble($event)"></app-dropdown-input-field>
+                <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts"
+                  [placeholder]="'Select contacts to assign'"
+                  (selectedData)="onDisplayedBubble($event)"></app-dropdown-input-field>
                 <div class="flex flex-wrap gap-4">
                   <div *ngFor="let item of selectedData">
                     <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'"
@@ -31,7 +35,8 @@
               <!-- Right side -->
               <div class="w-full flex flex-col gap-8">
                 <!-- Due Date -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Due date'" [type]="'date'"></app-default-input-field>
+                <app-default-input-field [fieldRequired]="true" [label]="'Due date'"
+                  [type]="'date'"></app-default-input-field>
                 <!-- prio -->
                 <div>
                   <ion-label position="floating font-medium w-full">
@@ -47,10 +52,45 @@
                   </div>
                 </div>
                 <!-- Category -->
-                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'"></app-dropdown-input-field>
+                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true"
+                  [placeholder]="'Select contacts to assign'"></app-dropdown-input-field>
                 <!-- Subtasks -->
-                <app-creator-input-field  [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
-               </div>
+                <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks"
+                  [fieldRequired]="false" [label]="'Subtasks'"
+                  [placeholder]="'Add new subtask'"></app-creator-input-field>
+                <div>
+                  <div *ngFor="let subtask of subtasks; let i = index" class="flex justify-between items-center">
+                    <!-- Subtask anzeigen oder bearbeiten -->
+                    <div *ngIf="editIndex !== i" (mouseenter)="isHoverOboveSubtask[i] = true"
+                      (mouseleave)="isHoverOboveSubtask[i] = false"
+                      class="cursor-pointer pl-4 pr-2 w-full flex items-center mt-2 hover:bg-slate-300 rounded-lg">
+                      <span (dblclick)="editSubtask(i)" class="w-full">{{ subtask }}</span>
+
+                      <div class="flex items-center gap-2" *ngIf="isHoverOboveSubtask[i]">
+                        <ion-icon name="pencil-outline" class="cursor-pointer text-lg"
+                          (click)="editSubtask(i)"></ion-icon>
+                        <span>|</span>
+                        <ion-icon name="trash-outline" class="cursor-pointer text-lg"
+                          (click)="deleteSubtask(i)"></ion-icon>
+                      </div>
+                    </div>
+
+                    <!-- Editierfeld für den Subtask -->
+                    <div *ngIf="editIndex === i" class="flex w-full items-center mt-2 relative">
+                      <ion-input [(ngModel)]="subtasks[i]" class="w-full bg-white"></ion-input>
+                      <div class="flex z-10 absolute right-2 top-2 gap-1 items-center">
+                        <ion-icon (click)="cancelEdit()"
+                          class="text-lg cursor-pointer hover:bg-slate-400 rounded-full p-1"
+                          name="close-outline"></ion-icon>
+                        <span class="text-slate-300">|</span>
+                        <ion-icon (click)="saveEdit(subtasks[i])"
+                          class="text-lg cursor-pointer hover:bg-slate-400 rounded-full p-1"
+                          name="checkmark-outline"></ion-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="flex justify-between items-center font-inter">

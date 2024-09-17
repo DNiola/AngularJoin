@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
+import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,9 +11,13 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddTaskPage implements OnInit {
   @Input() selectedData: Contact[] = [];
+  @Input() subtasks: string[] = [];
 
   public currentUser: User | null = null;
   public activeButton = '';
+
+  public editIndex: number | null = null;
+  public isHoverOboveSubtask: boolean[] = [];
 
   public contacts: Array<Contact> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange' },
@@ -28,24 +33,58 @@ export class AddTaskPage implements OnInit {
     { text: 'User history' },
   ];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private subtaskService: SubtaskService) { }
 
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+
+    this.subtaskService.subtasks$.subscribe((subtasks) => {
+      this.subtasks = subtasks;
+    });
   }
+
 
   public onDisplayedBubble(selectedContacts: Contact[]): void {
     this.selectedData = selectedContacts;
-    console.log(this.selectedData);
   }
 
-  public setActiveButton(button: string) {
+
+  public setActiveButton(button: string): void {
     this.activeButton = button;
   }
+
 
   public isButtonActive(button: string): boolean {
     return this.activeButton === button;
   }
+
+
+  public onDisplayedSubtask(newSubtasks: string[]): void {
+    this.subtaskService.updateSubtasks(newSubtasks);
+  }
+
+
+  public deleteSubtask(index: number): void {
+    this.subtaskService.deleteSubtask(index);
+  }
+
+
+  public editSubtask(index: number): void {
+    this.editIndex = index;
+  }
+
+
+  public saveEdit(updatedSubtask: string): void {
+    if (this.editIndex !== null) {
+      this.subtaskService.updateSubtask(this.editIndex, updatedSubtask);
+      this.editIndex = null;
+    }
+  }
+
+  public cancelEdit(): void {
+    this.editIndex = null;
+  }
 }
+

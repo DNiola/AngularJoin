@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-creator-input-field',
@@ -10,31 +10,26 @@ export class CreatorInputFieldComponent {
   @Input() label = '';
   @Input() placeholder = '';
 
-  subtasks: string[] = [];
-  newSubtask: string = '';
-  editIndex: number | null = null;
+  @Input() subtasks: string[] = [];
+  @Output() selectedData = new EventEmitter<string[]>();
 
-  isClicked = false;
-  addSubtask() {
+  public newSubtask: string = '';
+  public isClicked = false;
+
+  
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['subtasks']) {
+      this.subtasks = [...changes['subtasks'].currentValue];
+    }
+  }
+
+
+  public addSubtask(): void {
     if (this.newSubtask.trim()) {
       this.subtasks.push(this.newSubtask.trim());
+      this.selectedData.emit([...this.subtasks]);
       this.newSubtask = '';
     }
   }
 
-  deleteSubtask(index: number) {
-    this.subtasks.splice(index, 1);
-  }
-
-  editSubtask(index: number) {
-    this.editIndex = index;
-  }
-
-  saveEdit() {
-    this.editIndex = null;
-  }
-
-  cancelEdit() {
-    this.editIndex = null;
-  }
 }
