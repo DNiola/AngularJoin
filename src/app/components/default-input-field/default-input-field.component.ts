@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-default-input-field',
@@ -12,5 +12,13 @@ export class DefaultInputFieldComponent {
   @Input() placeholder = '';
   @Input() type = '';
 
- 
+  @Output() outputValue = new EventEmitter<string>();
+
+  public inputValue: string = '';
+
+  onInputChange(event: any): void {
+    this.inputValue = event.target.value;
+    this.outputValue.emit(this.inputValue);
+  }
+
 }
