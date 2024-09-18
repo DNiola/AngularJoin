@@ -87,7 +87,8 @@ export class AddTaskPage implements OnInit {
   }
 
   public cancelEdit(): void {
-    this.editIndex = null; this.editedSubtask = '';
+    this.editIndex = null;
+    this.editedSubtask = '';
   }
 }
 

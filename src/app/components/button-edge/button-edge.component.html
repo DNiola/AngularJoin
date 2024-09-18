@@ -1,4 +1,6 @@
 <ion-button
-  class=" flex border-2 px-2 h-12 border-[#2A3647] hover:border-[#29ABE2] font-inter  font-bold  items-center bg-white   text-normalBlue hover:text-lightBlue rounded-md     hover:shadow-lightShadow  ">
+  class="flex border-2 px-2 h-12 border-[#2A3647] hover:border-[#29ABE2] font-inter font-bold items-center bg-white   text-normalBlue hover:text-lightBlue rounded-md hover:shadow-lightShadow  ">
   {{text}}
+
+  <ion-icon *ngIf="iconName" slot="end" name="{{iconName}}" class="text-xl"></ion-icon>
 </ion-button>
