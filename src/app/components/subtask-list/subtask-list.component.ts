@@ -37,6 +37,6 @@ export class SubtaskListComponent implements OnInit {
   }
 
   public deleteSubtask(index: number): void {
-    this.subtaskService.deleteSubtask(index);
+    this.subtaskService.deleteSubtask(index);  
   }
 }

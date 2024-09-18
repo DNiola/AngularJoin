@@ -12,19 +12,21 @@ import { UserService } from 'src/app/services/user.service';
 export class AddTaskPage implements OnInit {
   @Input() selectedData: Contact[] = [];
   @Input() subtasks: string[] = [];
+  @Input() outputValue: any = {};
 
+  public currentTask: any = {};
   public currentUser: User | null = null;
   public activeButton = '';
 
 
 
   public contacts: Array<Contact> = [
-    { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange' },
-    { name: 'Anton Mayer', initials: 'A M', color: 'red' },
-    { name: 'Anja Schulz', initials: 'A S', color: 'yellow' },
-    { name: 'Benedikt Ziegler', initials: 'B Z', color: 'green' },
-    { name: 'David Eisenberg', initials: 'D E', color: 'gray' },
-    { name: 'Elon Dust', initials: 'E D', color: 'darkBlue' },
+    { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange', userId: 1 },
+    { name: 'Anton Mayer', initials: 'A M', color: 'red', userId: 2 },
+    { name: 'Anja Schulz', initials: 'A S', color: 'yellow', userId: 3 },
+    { name: 'Benedikt Ziegler', initials: 'B Z', color: 'green', userId: 4 },
+    { name: 'David Eisenberg', initials: 'D E', color: 'gray', userId: 5 },
+    { name: 'Elon Dust', initials: 'E D', color: 'darkBlue', userId: 6 },
   ];
 
   public categories: Array<any> = [
@@ -45,13 +47,15 @@ export class AddTaskPage implements OnInit {
   }
 
 
-  public onDisplayedBubble(selectedContacts: Contact[]): void {
+  public onDisplayedBubble(selectedContacts: Contact[], section: string): void { 
     this.selectedData = selectedContacts;
+    this.setTaskData(selectedContacts, section);
   }
 
 
   public setActiveButton(button: string): void {
     this.activeButton = button;
+    this.setTaskData(this.activeButton, 'prio');
   }
 
 
@@ -62,7 +66,20 @@ export class AddTaskPage implements OnInit {
 
   public onDisplayedSubtask(newSubtasks: string[]): void {
     this.subtaskService.updateSubtasks(newSubtasks);
+    this.setTaskData(newSubtasks, 'subtasks');
   }
 
+  public setTaskData(data: any, section: string): void {
+    this.currentTask[section] = data;
+  }
+
+  public createTask(): void {
+    console.log('Task wird erstellt:', this.currentTask);
+  }
+
+  public clearTask(): void {
+    this.currentTask = {};
+    // this.subtaskService.clearSubtasks();  // Falls du die Subtasks ebenfalls zurücksetzen möchtest
+  }
 }
 
