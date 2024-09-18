@@ -58,13 +58,13 @@
                 <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks"
                   [fieldRequired]="false" [label]="'Subtasks'"
                   [placeholder]="'Add new subtask'"></app-creator-input-field>
-                <div>
+                <div class="-mt-8">
                   <div *ngFor="let subtask of subtasks; let i = index" class="flex justify-between items-center">
-                    <!-- Subtask anzeigen oder bearbeiten -->
-                    <div *ngIf="editIndex !== i" (mouseenter)="isHoverOboveSubtask[i] = true"
+                    <!-- displayed subtasks -->
+                    <ul *ngIf="editIndex !== i" (mouseenter)="isHoverOboveSubtask[i] = true"
                       (mouseleave)="isHoverOboveSubtask[i] = false"
-                      class="cursor-pointer pl-4 pr-2 w-full flex items-center mt-2 hover:bg-slate-300 rounded-lg">
-                      <span (dblclick)="editSubtask(i)" class="w-full">{{ subtask }}</span>
+                      class="cursor-pointer pl-9 pr-2 w-full flex items-center mt-2 hover:bg-slate-300 rounded-lg">
+                      <li (dblclick)="editSubtask(i)" class="w-full">{{ subtask }}</li>
 
                       <div class="flex items-center gap-2" *ngIf="isHoverOboveSubtask[i]">
                         <ion-icon name="pencil-outline" class="cursor-pointer text-lg"
@@ -73,17 +73,17 @@
                         <ion-icon name="trash-outline" class="cursor-pointer text-lg"
                           (click)="deleteSubtask(i)"></ion-icon>
                       </div>
-                    </div>
+                    </ul>
 
-                    <!-- Editierfeld für den Subtask -->
+                    <!-- editfield for subtask -->
                     <div *ngIf="editIndex === i" class="flex w-full items-center mt-2 relative">
-                      <ion-input [(ngModel)]="subtasks[i]" class="w-full bg-white"></ion-input>
+                      <ion-input [(ngModel)]="editedSubtask" class="w-full bg-white inputField border-b border-lightBlue"></ion-input>
                       <div class="flex z-10 absolute right-2 top-2 gap-1 items-center">
                         <ion-icon (click)="cancelEdit()"
                           class="text-lg cursor-pointer hover:bg-slate-400 rounded-full p-1"
                           name="close-outline"></ion-icon>
                         <span class="text-slate-300">|</span>
-                        <ion-icon (click)="saveEdit(subtasks[i])"
+                        <ion-icon (click)="saveEdit()"
                           class="text-lg cursor-pointer hover:bg-slate-400 rounded-full p-1"
                           name="checkmark-outline"></ion-icon>
                       </div>
