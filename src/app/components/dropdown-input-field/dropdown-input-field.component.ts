@@ -11,7 +11,7 @@ export class DropdownInputFieldComponent {
   @Input() placeholder = '';
   @Input() fieldRequired = false;
 
-  @Output() selectedData = new EventEmitter<Array<any>>();
+  @Output() outputValue = new EventEmitter<Array<any>>();
 
   public filteredItems: any[] = [];
   public isDropdownOpen = false;
@@ -47,8 +47,7 @@ export class DropdownInputFieldComponent {
       item.selected = true;
       this.selectedItems.push(item);
     }
-    this.selectedData.emit(this.selectedItems);
-
+    this.outputValue.emit(this.selectedItems);
   }
 
 
