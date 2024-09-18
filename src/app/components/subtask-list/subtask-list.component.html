@@ -1,0 +1,25 @@
+<div *ngFor="let subtask of subtasks; let i = index" class="flex justify-between items-center">
+  <!-- displayed subtasks -->
+  <ul *ngIf="editIndex !== i" (mouseenter)="isHoverOboveSubtask[i] = true" (mouseleave)="isHoverOboveSubtask[i] = false" class="cursor-pointer pl-9 pr-2 w-full flex items-center mt-2 hover:bg-slate-300 rounded-lg">
+  
+  <li (dblclick)="editSubtask(i)" class="w-full">{{ subtask }}</li>
+
+    <div class="flex items-center gap-2" *ngIf="isHoverOboveSubtask[i]">
+      <ion-icon name="pencil-outline" class="cursor-pointer text-lg"
+        (click)="editSubtask(i)"></ion-icon>
+      <span>|</span>
+      <ion-icon name="trash-outline" class="cursor-pointer text-lg"
+        (click)="deleteSubtask(i)"></ion-icon>
+    </div>
+  </ul>
+  <!-- editfield for subtask -->
+  <div *ngIf="editIndex === i" class="flex w-full items-center mt-2 relative">
+    <ion-input [(ngModel)]="editedSubtask" class="w-full bg-white inputField border-b border-lightBlue"></ion-input>
+
+    <div class="flex z-10 absolute right-2 top-2 gap-1 items-center"> 
+      <ion-icon (click)="cancelEdit()" class="text-lg cursor-pointer hover:bg-slate-400 rounded-full p-1" name="close-outline"></ion-icon>
+      <span class="text-slate-300">|</span>
+      <ion-icon (click)="saveEdit()" class="text-lg cursor-pointer hover:bg-slate-400 rounded-full p-1" name="checkmark-outline"></ion-icon>
+    </div>
+  </div>
+</div>

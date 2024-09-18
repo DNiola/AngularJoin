@@ -16,9 +16,7 @@ export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
   public activeButton = '';
 
-  public editIndex: number | null = null;
-  public editedSubtask: string = '';
-  public isHoverOboveSubtask: boolean[] = [];
+
 
   public contacts: Array<Contact> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange' },
@@ -66,29 +64,5 @@ export class AddTaskPage implements OnInit {
     this.subtaskService.updateSubtasks(newSubtasks);
   }
 
-
-  public deleteSubtask(index: number): void {
-    this.subtaskService.deleteSubtask(index);
-  }
-
-
-  public editSubtask(index: number): void {
-    this.editIndex = index;
-    this.editedSubtask = this.subtasks[index];
-  }
-
-  public saveEdit(): void {
-    if (this.editIndex !== null) {
-      this.subtaskService.updateSubtask(this.editIndex, this.editedSubtask);
-      this.subtasks[this.editIndex] = this.editedSubtask;
-      this.editIndex = null;
-      this.editedSubtask = '';
-    }
-  }
-
-  public cancelEdit(): void {
-    this.editIndex = null;
-    this.editedSubtask = '';
-  }
 }
 
