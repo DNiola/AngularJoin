@@ -6,6 +6,7 @@ import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-auth-form',
@@ -31,7 +32,7 @@ export class AuthFormComponent {
   public isAnimation = false;
 
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService) { }
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, private helperService: HelperService) { }
 
   ngAfterViewInit() {
     const savedEmail = localStorage.getItem('email');
@@ -75,7 +76,7 @@ export class AuthFormComponent {
       const userID = result.user?.uid;
 
       const initials = this.getInitials(name);
-      const color = this.getRandomColor();
+      const color = this.helperService.getRandomColor();
 
       await this.saveUserToFirestore(userID, name, email, initials, color);
 
@@ -223,24 +224,17 @@ export class AuthFormComponent {
   }
 
 
-
   private getInitials(name: string): string {
     const names = name.split(' ');
     const initials = names[0][0] + (names[1] ? ' ' + names[1][0] : '');
     return initials.toUpperCase();
   }
-  
+
 
   private capitalizeName(name: string): string {
     return name.split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
-  }
-
-  
-  private getRandomColor(): string {
-    const colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
-    return colors[Math.floor(Math.random() * colors.length)];
   }
 
 
