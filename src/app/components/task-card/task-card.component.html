@@ -1,7 +1,8 @@
 <div class="flex flex-col">
-  <span class="font-medium bg-green-400 p-2 px-4 rounded-lg w-max text-white">{{ cardTitle }}</span>
+  <span [ngStyle]="{ 'background-color': colorTitle }" class="font-medium p-2 px-4 rounded-lg w-max text-white">{{
+    cardTitle }}</span>
   <span class="pt-4 font-medium text-normalBlue">{{task?.title}}</span>
-  <span class="text-lightGray">{{task?.description}}</span>
+  <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description}}</span>
 </div>
 <div class="flex pt-2">
   <div>Balken</div>
@@ -16,5 +17,4 @@
       <ion-img src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>
     </div>
   </div>
-
 </div>
