@@ -93,8 +93,10 @@ export class AddTaskPage implements OnInit {
     }
   }
 
+
   public onCreateTask(): void {
     this.isError = { title: false, dueDate: false, category: false };
+
     if (this.currentTask.title === '') {
       this.isError.title = true;
     }
@@ -108,13 +110,19 @@ export class AddTaskPage implements OnInit {
       console.error('Fehler beim Erstellen des Tasks:', this.isError);
       return;
     }
-    this.currentTask.subtasks = this.subtasks;
+
+
     this.currentTask.prio = this.activeButton
+    if (this.currentTask.prio === '') {
+      this.currentTask.prio = 'low';
+    }
+
     if (this.currentUser) {
       this.currentTask.creatorId = this.currentUser.userId;
     }
+    
+    this.currentTask.subtasks = this.subtasks;
     this.createTask();
-
   }
 
 

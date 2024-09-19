@@ -26,8 +26,8 @@
     <ion-checkbox *ngIf="item.initials" [(ngModel)]="item.selected" class="ml-auto"></ion-checkbox>
   </div>
   <!-- Search Not Found -->
-  <div *ngIf="filteredItems.length === 0" class="p-4 text-sm text-red-500">
+  <div *ngIf="filteredItems.length === 0" class="p-4 -mb-2 text-sm text-red-500">
     Search not found
   </div>
 </div>
-<span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1">This field is required</span>
+<span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1 mb-1">This field is required</span>

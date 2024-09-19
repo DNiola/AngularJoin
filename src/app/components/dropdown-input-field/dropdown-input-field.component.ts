@@ -44,6 +44,11 @@ export class DropdownInputFieldComponent {
     if (this.searchTerm) {
       this.isDropdownOpen = true;
     }
+    if (!this.searchTerm && this.isDropdownOpen === false && this.fieldRequired) {
+      this.errorMessage = true;
+      this.selectedItems = [];
+      this.outputValue.emit(this.selectedItems);
+    }
   }
 
   public filterItems(): void {
