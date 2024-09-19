@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
 import { Task } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-add-task',
@@ -12,15 +13,13 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-task.page.scss'],
 })
 export class AddTaskPage implements OnInit {
-  @Input() selectedData: Contact[] = [];
-  @Input() subtasks: string[] = [];
-  @Input() outputValue: any = {};
-
-  public currentTask: Task = { title: '', dueDate: '', category: [] };
   public currentUser: User | null = null;
+  public currentTask: Task = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId || '' };
+  public selectedBubble: Contact[] = [];
+  public subtasks: string[] = [];
   public activeButton = '';
 
-
+  public resetTrigger = false;
 
   public contacts: Array<Contact> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange', userId: 1 },
@@ -36,7 +35,7 @@ export class AddTaskPage implements OnInit {
     { text: 'User history', selected: false },
   ];
 
-  constructor(private userService: UserService, private subtaskService: SubtaskService) { }
+  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService,) { }
 
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
@@ -50,7 +49,7 @@ export class AddTaskPage implements OnInit {
 
 
   public onDisplayedBubble(selectedContacts: Contact[], section: string): void {
-    this.selectedData = selectedContacts;
+    this.selectedBubble = selectedContacts;
     this.setTaskData(selectedContacts, section);
   }
 
@@ -95,18 +94,37 @@ export class AddTaskPage implements OnInit {
 
 
 
-  public createTask(): void {
+  public onCreateTask(): void {
     this.currentTask.subtasks = this.subtasks;
     this.currentTask.prio = this.activeButton
     if (this.currentUser) {
-      this.currentTask.creator = this.currentUser;
+      this.currentTask.creatorId = this.currentUser.userId;
     }
-    console.log('Task wird erstellt:', this.currentTask);
+    this.createTask();
+
   }
 
+
+  private createTask(): void {
+    this.taskService.createTask(this.currentTask)
+      .then(() => {
+        console.log('Task erfolgreich erstellt und gespeichert:', this.currentTask);
+      })
+      .catch(error => {
+        console.error('Fehler beim Speichern des Tasks:', error);
+      });
+  }
+
+
   public clearTask(): void {
-    this.currentTask = { title: '', dueDate: '', category: [] };
+    this.activeButton = '';
+    this.selectedBubble = [];
+    this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });  
+    this.resetTrigger = true;   
+    setTimeout(() => this.resetTrigger = false, 0);  
     this.subtaskService.clearSubtasks();
+    this.currentTask = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId ?? '' };
+
   }
 }
 

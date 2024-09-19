@@ -9,7 +9,7 @@ export interface Task {
     dueDate: string;
     prio?: string;
     category: Category[];
-    creator?: User;
+    creatorId: string;
     subtasks?: string[];
 }
 

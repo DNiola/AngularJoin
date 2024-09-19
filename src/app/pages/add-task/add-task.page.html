@@ -13,14 +13,14 @@
               <!-- Left side -->
               <div class="w-full flex flex-col gap-8">
                 <!-- Task Title -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'" (outputValue)="setTaskData($event, 'title')"></app-default-input-field>
+                <app-default-input-field [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'title')"></app-default-input-field>
                 <!-- Description -->
-                <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
+                <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
                 <!-- Assigned to -->
                 <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
 
                 <div class="flex flex-wrap gap-4">
-                  <div *ngFor="let item of selectedData">
+                  <div *ngFor="let item of selectedBubble">
                     <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'" [borderColor]="'white'"></app-user-bubble>
                   </div>
                 </div>
@@ -29,7 +29,7 @@
               <div class="bg-[#D1D1D1] rounded-full min-h-full w-[2px]"></div>
               <!-- Right side -->
               <div class="w-full flex flex-col gap-8">
-                <app-default-input-field [fieldRequired]="true" [label]="'Due date'" [type]="'date'" (outputValue)="setTaskData($event, 'dueDate')"></app-default-input-field>
+                <app-default-input-field [fieldRequired]="true" [label]="'Due date'" [type]="'date'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'dueDate')"></app-default-input-field>
                 <!-- Prio -->
                 <div>
                   <ion-label position="floating font-medium w-full">Prio</ion-label>
@@ -40,7 +40,7 @@
                   </div>
                 </div>
                 <!-- Category -->
-                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
+                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
                 <!-- Subtasks -->
                 <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
                 <div class="-mt-8">
@@ -59,7 +59,7 @@
         <ion-col size="12" size="6">
           <div class="flex justify-end gap-4">
             <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="clearTask()"></app-button-edge>
-            <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="createTask()"></app-button-filled>
+            <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onCreateTask()"></app-button-filled>
           </div>
         </ion-col>
       </div> 
