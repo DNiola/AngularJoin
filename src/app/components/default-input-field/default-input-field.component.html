@@ -2,6 +2,6 @@
   {{label}}
   <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
-<ion-input (input)="onInputChange($event)" (input)="errorMessage = false" ngModel="{{inputValue}}" *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" placeholder="{{placeholder}}"></ion-input>
+<ion-input (input)="onInputChange($event)" (input)="errorMessage = false" ngModel="{{inputValue}}" *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" placeholder="{{placeholder}}" [min]="minDate"></ion-input>
 <textarea (input)="onInputChange($event)" ngModel="{{inputValue}}" *ngIf="type === 'textarea'" class="bg-white textareaTest " placeholder="{{placeholder}}"></textarea>
 <span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1">This field is required</span>
