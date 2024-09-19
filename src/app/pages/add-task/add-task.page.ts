@@ -14,7 +14,7 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public currentTask: Task = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId || '' };
+  public currentTask: Task = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId || '', status: 'todo' };
   public selectedBubble: Contact[] = [];
   public subtasks: string[] = [];
   public activeButton = '';
@@ -71,7 +71,7 @@ export class AddTaskPage implements OnInit {
   }
 
 
-  public setTaskData(data: string | User | Category[] | Contact[], section: string): void {
+  public setTaskData(data: string | Category[] | Contact[], section: string): void {
     switch (section) {
       case 'title':
         this.currentTask.title = data as string;
@@ -95,6 +95,31 @@ export class AddTaskPage implements OnInit {
 
 
   public onCreateTask(): void {
+    this.checkRequiredFields();
+    if (this.isError.title || this.isError.dueDate || this.isError.category) {
+      console.error('Fehler beim Erstellen des Tasks:', this.isError);
+      return;
+    }
+    this.getTaskData();
+    this.createTask();
+  }
+
+  
+  private getTaskData(): void {
+    this.currentTask.prio = this.activeButton
+    if (this.currentTask.prio === '') {
+      this.currentTask.prio = 'low';
+    }
+
+    if (this.currentUser) {
+      this.currentTask.creatorId = this.currentUser.userId;
+    }
+
+    this.currentTask.subtasks = this.subtasks;
+  }
+
+
+  private checkRequiredFields() {
     this.isError = { title: false, dueDate: false, category: false };
 
     if (this.currentTask.title === '') {
@@ -106,25 +131,7 @@ export class AddTaskPage implements OnInit {
     if (this.currentTask.category.length === 0) {
       this.isError.category = true;
     }
-    if (this.isError.title || this.isError.dueDate || this.isError.category) {
-      console.error('Fehler beim Erstellen des Tasks:', this.isError);
-      return;
-    }
-
-
-    this.currentTask.prio = this.activeButton
-    if (this.currentTask.prio === '') {
-      this.currentTask.prio = 'low';
-    }
-
-    if (this.currentUser) {
-      this.currentTask.creatorId = this.currentUser.userId;
-    }
-    
-    this.currentTask.subtasks = this.subtasks;
-    this.createTask();
   }
-
 
 
   private createTask(): void {
@@ -145,7 +152,7 @@ export class AddTaskPage implements OnInit {
     this.resetTrigger = true;
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
-    this.currentTask = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId ?? '' };
+    this.currentTask = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId ?? '', status: 'todo' };
     setTimeout(() => this.resetTrigger = false, 0);
   }
 }
