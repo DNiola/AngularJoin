@@ -8,10 +8,10 @@
         <ion-grid>
           <ion-row class="flex flex-col  ">
             <div class="flex gap-16 flex-grow">
-              <app-board-section [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section>
-              <app-board-section [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section>
-              <app-board-section [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section>
-              <app-board-section [title]="'Done'" class="w-full"></app-board-section>
+              <app-board-section [tasks]="todoTasks" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section>
+              <app-board-section [tasks]="inProgressTasks" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section>
+              <app-board-section [tasks]="awaitFeedbackTasks" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section>
+              <app-board-section [tasks]="doneTasks" [title]="'Done'" class="w-full"></app-board-section>
             </div>
           </ion-row>
         </ion-grid>

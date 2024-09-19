@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
   <app-big-title [title]="title" [icon]="icon"></app-big-title>
-  <div class=" bg-white shadow-taskShadow p-4 border-0 rounded-lg">
-    <app-task-card></app-task-card>
+  <div *ngFor="let task of tasks" class="bg-white shadow-taskShadow p-4 border-0 rounded-lg">
+    <app-task-card [task]="task"></app-task-card>
   </div>
 </div>

@@ -7,7 +7,7 @@ export interface Task {
     assignedTo?: Contact[];
     dueDate: string;
     prio?: string;
-    category: Category[];
+    category: Category;
     creatorId: string;
     subtasks?: string[];
     status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done';

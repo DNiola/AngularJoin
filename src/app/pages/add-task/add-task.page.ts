@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from 'src/app/models/category.model';
+import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
 import { Task } from 'src/app/models/task.model';
@@ -14,7 +14,7 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public currentTask: Task = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId || '', status: 'awaitFeedback' };
+  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false }, creatorId: this.currentUser?.userId || '', status: 'awaitFeedback' };
   public selectedBubble: Contact[] = [];
   public subtasks: string[] = [];
   public activeButton = '';
@@ -31,7 +31,7 @@ export class AddTaskPage implements OnInit {
     { name: 'Elon Dust', initials: 'E D', color: 'darkBlue', userId: 6 },
   ];
 
-  public categories: Array<Category> = [
+  public categories: Categorys = [
     { text: 'Technical Task', selected: false },
     { text: 'User history', selected: false },
   ];
@@ -71,7 +71,7 @@ export class AddTaskPage implements OnInit {
   }
 
 
-  public setTaskData(data: string | Category[] | Contact[], section: string): void {
+  public setTaskData(data: string | Category | Contact[], section: string): void {
     switch (section) {
       case 'title':
         this.currentTask.title = data as string;
@@ -86,7 +86,7 @@ export class AddTaskPage implements OnInit {
         this.currentTask.assignedTo = data as Contact[];
         break;
       case 'category':
-        this.currentTask.category = data as Category[];
+        this.currentTask.category = data as Category;
         break;
       default:
         console.warn(`Unbekanntes Feld: ${section}`);
@@ -128,7 +128,7 @@ export class AddTaskPage implements OnInit {
     if (this.currentTask.dueDate === '') {
       this.isError.dueDate = true;
     }
-    if (this.currentTask.category.length === 0) {
+    if (this.currentTask.category.text === '') {
       this.isError.category = true;
     }
   }
@@ -152,7 +152,7 @@ export class AddTaskPage implements OnInit {
     this.resetTrigger = true;
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
-    this.currentTask = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId ?? '', status: 'todo' };
+    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false }, creatorId: this.currentUser?.userId ?? '', status: 'todo' };
     setTimeout(() => this.resetTrigger = false, 0);
   }
 }

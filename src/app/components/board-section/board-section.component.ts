@@ -1,15 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import { Task } from 'src/app/models/task.model';
 @Component({
   selector: 'app-board-section',
   templateUrl: './board-section.component.html',
   styleUrls: ['./board-section.component.scss'],
 })
-export class BoardSectionComponent  implements OnInit {
-  @Input() title: string = ''; 
+export class BoardSectionComponent {
+  @Input() title: string = '';
   @Input() icon: string = '';
-  constructor() { }
-
-  ngOnInit() {}
-
+  @Input() tasks: Task[] = [];
 }

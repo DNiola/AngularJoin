@@ -1,15 +1,20 @@
 <div class="flex flex-col">
-  <span class="font-medium bg-green-400 p-2 px-4 rounded-lg w-max text-white">User Story</span>
-  <span class="pt-4 font-medium text-normalBlue">Title blla blla</span>
-  <span class="text-lightGray">Description</span>
+  <span class="font-medium bg-green-400 p-2 px-4 rounded-lg w-max text-white">{{ cardTitle }}</span>
+  <span class="pt-4 font-medium text-normalBlue">{{task?.title}}</span>
+  <span class="text-lightGray">{{task?.description}}</span>
 </div>
 <div class="flex pt-2">
   <div>Balken</div>
   <span>1/2 Subtasks</span>
 </div>
-<div class="flex pt-2">
-  <div>
-    <app-user-bubble></app-user-bubble>
+<div>
+  <div class="flex pt-2">
+    <div class="-mr-4" *ngFor="let assignedTo of task?.assignedTo">
+      <app-user-bubble [text]="assignedTo?.initials" [color]="assignedTo?.color"></app-user-bubble>
+    </div>
+    <div>
+      <ion-img src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>
+    </div>
   </div>
-  <span>Prio</span>
+
 </div>
