@@ -21,7 +21,7 @@ export class SubtaskService {
 
   public deleteSubtask(index: number): void {
     const currentSubtasks = this.subtasksSubject.getValue();
-    this.subtasksSubject.next(currentSubtasks.filter((_, i) => i !== index));
+    this.updateSubtasks(currentSubtasks.filter((_, i) => i !== index));
   }
 
 
@@ -29,5 +29,10 @@ export class SubtaskService {
     const currentSubtasks = this.subtasksSubject.getValue();
     currentSubtasks[index] = updatedSubtask;
     this.subtasksSubject.next([...currentSubtasks]);
+  }
+
+  
+  public clearSubtasks(): void {
+    this.subtasksSubject.next([]);
   }
 }

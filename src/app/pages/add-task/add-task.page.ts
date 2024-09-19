@@ -47,7 +47,7 @@ export class AddTaskPage implements OnInit {
   }
 
 
-  public onDisplayedBubble(selectedContacts: Contact[], section: string): void { 
+  public onDisplayedBubble(selectedContacts: Contact[], section: string): void {
     this.selectedData = selectedContacts;
     this.setTaskData(selectedContacts, section);
   }
@@ -69,17 +69,22 @@ export class AddTaskPage implements OnInit {
     this.setTaskData(newSubtasks, 'subtasks');
   }
 
+
   public setTaskData(data: any, section: string): void {
     this.currentTask[section] = data;
   }
 
+
   public createTask(): void {
+    this.currentTask['subtasks'] = this.subtasks;
+    this.currentTask.creator = this.currentUser?.userId;
     console.log('Task wird erstellt:', this.currentTask);
   }
 
+
   public clearTask(): void {
     this.currentTask = {};
-    // this.subtaskService.clearSubtasks();  // Falls du die Subtasks ebenfalls zurücksetzen möchtest
+    this.subtaskService.clearSubtasks();
   }
 }
 

@@ -42,9 +42,9 @@
 
                 <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
                 <!-- Subtasks -->
-                <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'" (outputValue)="setTaskData($event, 'subtasks')"></app-creator-input-field>
+                <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
                 <div class="-mt-8">
-                  <app-subtask-list [subtasks]="subtasks"></app-subtask-list>
+                  <app-subtask-list [subtasks]="subtasks" ></app-subtask-list>
                 </div>
               </div>
             </div>
