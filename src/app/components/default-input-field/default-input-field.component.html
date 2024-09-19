@@ -2,5 +2,5 @@
   {{label}}
   <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
-<ion-input (input)="onInputChange($event)" *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" placeholder="{{placeholder}}"></ion-input>
-<textarea (input)="onInputChange($event)" *ngIf="type === 'textarea'" class="bg-white textareaTest " placeholder="{{placeholder}}"></textarea>
+<ion-input (input)="onInputChange($event)" ngModel="{{inputValue}}" *ngIf="type !== 'textarea'" type="{{type}}" class="inputField cursor-pointer z-10" placeholder="{{placeholder}}"></ion-input>
+<textarea (input)="onInputChange($event)" ngModel="{{inputValue}}" *ngIf="type === 'textarea'" class="bg-white textareaTest " placeholder="{{placeholder}}"></textarea>
