@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown-input-field',
@@ -11,12 +11,28 @@ export class DropdownInputFieldComponent {
   @Input() placeholder = '';
   @Input() fieldRequired = false;
 
+  @Input() resetTrigger = false;
+
   @Output() outputValue = new EventEmitter<Array<any>>();
 
   public filteredItems: any[] = [];
   public isDropdownOpen = false;
   public selectedItems: Array<any> = [];
   public searchTerm = '';
+
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['resetTrigger']) {
+      this.clearDropdown();
+    }
+  }
+
+
+  private clearDropdown(): void {
+    this.selectedItems = [];
+    this.searchTerm = '';
+    this.items.forEach(item => item.selected = false);
+  }
 
 
   public toggleDropdown(): void {
