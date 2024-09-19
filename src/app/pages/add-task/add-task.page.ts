@@ -6,6 +6,7 @@ import { Task } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service';
 import { TaskService } from 'src/app/services/task.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-add-task',
@@ -14,7 +15,7 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false }, creatorId: this.currentUser?.userId || '', status: 'awaitFeedback' };
+  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', status: 'todo' };
   public selectedBubble: Contact[] = [];
   public subtasks: string[] = [];
   public activeButton = '';
@@ -32,11 +33,11 @@ export class AddTaskPage implements OnInit {
   ];
 
   public categories: Categorys = [
-    { text: 'Technical Task', selected: false },
-    { text: 'User history', selected: false },
+    { text: 'Technical Task', selected: false, color: this.helperService.getRandomColor() },
+    { text: 'User history', selected: false, color: this.helperService.getRandomColor() },
   ];
 
-  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService,) { }
+  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
@@ -114,7 +115,6 @@ export class AddTaskPage implements OnInit {
     if (this.currentUser) {
       this.currentTask.creatorId = this.currentUser.userId;
     }
-
     this.currentTask.subtasks = this.subtasks;
   }
 
@@ -152,7 +152,7 @@ export class AddTaskPage implements OnInit {
     this.resetTrigger = true;
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
-    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false }, creatorId: this.currentUser?.userId ?? '', status: 'todo' };
+    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo' };
     setTimeout(() => this.resetTrigger = false, 0);
   }
 }
