@@ -14,7 +14,7 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public currentTask: Task = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId || '', status: 'todo' };
+  public currentTask: Task = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId || '', status: 'awaitFeedback' };
   public selectedBubble: Contact[] = [];
   public subtasks: string[] = [];
   public activeButton = '';
@@ -104,7 +104,7 @@ export class AddTaskPage implements OnInit {
     this.createTask();
   }
 
-  
+
   private getTaskData(): void {
     this.currentTask.prio = this.activeButton
     if (this.currentTask.prio === '') {
@@ -119,7 +119,7 @@ export class AddTaskPage implements OnInit {
   }
 
 
-  private checkRequiredFields() {
+  private checkRequiredFields(): void {
     this.isError = { title: false, dueDate: false, category: false };
 
     if (this.currentTask.title === '') {

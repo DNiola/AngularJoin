@@ -1,6 +1,5 @@
 import { Category } from "./category.model";
 import { Contact } from "./contact.model";
-import { User } from "./user.model";
 
 export interface Task {
     title: string;
@@ -13,5 +12,3 @@ export interface Task {
     subtasks?: string[];
     status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done';
 }
-
-
