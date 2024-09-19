@@ -20,6 +20,7 @@ export class AddTaskPage implements OnInit {
   public activeButton = '';
 
   public resetTrigger = false;
+  public isError = { title: false, dueDate: false, category: false };
 
   public contacts: Array<Contact> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange', userId: 1 },
@@ -92,9 +93,21 @@ export class AddTaskPage implements OnInit {
     }
   }
 
-
-
   public onCreateTask(): void {
+    this.isError = { title: false, dueDate: false, category: false };
+    if (this.currentTask.title === '') {
+      this.isError.title = true;
+    }
+    if (this.currentTask.dueDate === '') {
+      this.isError.dueDate = true;
+    }
+    if (this.currentTask.category.length === 0) {
+      this.isError.category = true;
+    }
+    if (this.isError.title || this.isError.dueDate || this.isError.category) {
+      console.error('Fehler beim Erstellen des Tasks:', this.isError);
+      return;
+    }
     this.currentTask.subtasks = this.subtasks;
     this.currentTask.prio = this.activeButton
     if (this.currentUser) {
@@ -105,10 +118,12 @@ export class AddTaskPage implements OnInit {
   }
 
 
+
   private createTask(): void {
     this.taskService.createTask(this.currentTask)
       .then(() => {
         console.log('Task erfolgreich erstellt und gespeichert:', this.currentTask);
+        this.clearTask();
       })
       .catch(error => {
         console.error('Fehler beim Speichern des Tasks:', error);
@@ -119,12 +134,11 @@ export class AddTaskPage implements OnInit {
   public clearTask(): void {
     this.activeButton = '';
     this.selectedBubble = [];
-    this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });  
-    this.resetTrigger = true;   
-    setTimeout(() => this.resetTrigger = false, 0);  
+    this.resetTrigger = true;
     this.subtaskService.clearSubtasks();
+    this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
     this.currentTask = { title: '', dueDate: '', category: [], creatorId: this.currentUser?.userId ?? '' };
-
+    setTimeout(() => this.resetTrigger = false, 0);
   }
 }
 

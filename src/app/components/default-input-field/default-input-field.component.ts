@@ -12,6 +12,7 @@ export class DefaultInputFieldComponent {
   @Input() placeholder = '';
   @Input() type = '';
 
+  @Input() errorMessage = false;
   @Input() resetTrigger = false;
 
   @Output() outputValue = new EventEmitter<string>();

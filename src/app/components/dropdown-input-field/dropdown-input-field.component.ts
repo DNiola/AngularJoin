@@ -11,6 +11,7 @@ export class DropdownInputFieldComponent {
   @Input() placeholder = '';
   @Input() fieldRequired = false;
 
+  @Input() errorMessage = false;
   @Input() resetTrigger = false;
 
   @Output() outputValue = new EventEmitter<Array<any>>();
