@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class UserService {
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
+  public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
 
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {

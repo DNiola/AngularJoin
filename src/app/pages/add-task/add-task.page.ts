@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Category } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
+import { Task } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,7 +16,7 @@ export class AddTaskPage implements OnInit {
   @Input() subtasks: string[] = [];
   @Input() outputValue: any = {};
 
-  public currentTask: any = {};
+  public currentTask: Task = { title: '', dueDate: '', category: [] };
   public currentUser: User | null = null;
   public activeButton = '';
 
@@ -29,9 +31,9 @@ export class AddTaskPage implements OnInit {
     { name: 'Elon Dust', initials: 'E D', color: 'darkBlue', userId: 6 },
   ];
 
-  public categories: Array<any> = [
-    { text: 'Technical Task' },
-    { text: 'User history' },
+  public categories: Array<Category> = [
+    { text: 'Technical Task', selected: false },
+    { text: 'User history', selected: false },
   ];
 
   constructor(private userService: UserService, private subtaskService: SubtaskService) { }
@@ -66,24 +68,44 @@ export class AddTaskPage implements OnInit {
 
   public onDisplayedSubtask(newSubtasks: string[]): void {
     this.subtaskService.updateSubtasks(newSubtasks);
-    this.setTaskData(newSubtasks, 'subtasks');
   }
 
 
-  public setTaskData(data: any, section: string): void {
-    this.currentTask[section] = data;
+  public setTaskData(data: string | User | Category[] | Contact[], section: string): void {
+    switch (section) {
+      case 'title':
+        this.currentTask.title = data as string;
+        break;
+      case 'description':
+        this.currentTask.description = data as string;
+        break;
+      case 'dueDate':
+        this.currentTask.dueDate = data as string;
+        break;
+      case 'assignedTo':
+        this.currentTask.assignedTo = data as Contact[];
+        break;
+      case 'category':
+        this.currentTask.category = data as Category[];
+        break;
+      default:
+        console.warn(`Unbekanntes Feld: ${section}`);
+    }
   }
+
 
 
   public createTask(): void {
-    this.currentTask['subtasks'] = this.subtasks;
-    this.currentTask.creator = this.currentUser?.userId;
+    this.currentTask.subtasks = this.subtasks;
+    this.currentTask.prio = this.activeButton
+    if (this.currentUser) {
+      this.currentTask.creator = this.currentUser;
+    }
     console.log('Task wird erstellt:', this.currentTask);
   }
 
-
   public clearTask(): void {
-    this.currentTask = {};
+    this.currentTask = { title: '', dueDate: '', category: [] };
     this.subtaskService.clearSubtasks();
   }
 }
