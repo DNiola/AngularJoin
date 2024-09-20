@@ -6,8 +6,8 @@
       <span class="font-bold text-6xl">Board</span>
       <div class="flex gap-14 flex-grow">
         <ion-grid>
-          <ion-row class="flex flex-col  ">
-            <div class="flex gap-16 flex-grow">
+          <ion-row class="flex flex-col">
+            <div class="flex 2xl:gap-32 gap-14 flex-grow">
               <app-board-section [tasks]="todoTasks" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section>
               <app-board-section [tasks]="inProgressTasks" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section>
               <app-board-section [tasks]="awaitFeedbackTasks" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section>
