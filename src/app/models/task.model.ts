@@ -11,6 +11,7 @@ export interface Task {
     creatorId: string;
     subtasks?: subTask[];
     status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done';
+    id: string;
 }
 
 export interface subTask {

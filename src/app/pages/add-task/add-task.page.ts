@@ -15,7 +15,7 @@ import { HelperService } from 'src/app/services/helper.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', status: 'todo' };
+  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', id: '', status: 'todo' };
   public selectedBubble: Contact[] = [];
   public subtasks: subTask[] = [];
   public activeButton = '';
@@ -39,7 +39,7 @@ export class AddTaskPage implements OnInit {
 
   constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
-  
+
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
@@ -153,7 +153,7 @@ export class AddTaskPage implements OnInit {
     this.resetTrigger = true;
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
-    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo' };
+    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
     setTimeout(() => this.resetTrigger = false, 0);
   }
 }

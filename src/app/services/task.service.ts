@@ -11,25 +11,42 @@ export class TaskService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  // method to add a task to Firestore
-  createTask(task: Task): Promise<any> {
-    return this.firestore.collection('tasks').add(task);
+  // task in firestore create
+  public async createTask(task: Task): Promise<any> {
+    const taskRef = this.firestore.collection('tasks').doc();
+    const taskId = taskRef.ref.id;
+    task.id = taskId;
+
+    return taskRef.set(task)
+      .then(() => {
+        console.log("Task erfolgreich erstellt mit ID:", taskId);
+        return taskId;
+      });
   }
 
+
+  // task in firestore update
+  public updateTaskStatus(taskId: string, newStatus: string): Promise<void> {
+    return this.firestore.collection('tasks').doc(taskId).update({ status: newStatus });
+  }
+
+
   // method to load all tasks 
-  getTasks(): Observable<Task[]> {
+  public getTasks(): Observable<Task[]> {
     return this.firestore.collection<Task>('tasks').valueChanges();
   }
 
+
   // method to load a single task
-  getTasksByStatus(status: string): Observable<Task[]> {
+  public getTasksByStatus(status: string): Observable<Task[]> {
     return this.getTasks().pipe(
       map(tasks => tasks.filter(task => task.status === status))
     );
   }
 
+
   // Filter tasks by priority
-  getTasksByPriority(prio: string): Observable<Task[]> {
+  public getTasksByPriority(prio: string): Observable<Task[]> {
     return this.getTasks().pipe(
       map(tasks => tasks.filter(task => task.prio === prio))
     );
