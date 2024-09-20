@@ -2,67 +2,15 @@
   <div class="main-content ml-60 h-dvh bg-whiteSmoke flex flex-col">
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
-
-    <!-- Container für den mittleren Bereich -->
     <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
       <span class="font-bold text-6xl">Add Task</span>
-      <div class="flex gap-14 flex-grow">
-        <ion-grid>
-          <ion-row class="flex flex-col w-4/6 max-2xl:w-full">
-            <div class="flex gap-16 flex-grow">
-              <!-- Left side -->
-              <div class="w-full flex flex-col gap-8">
-                <!-- Task Title -->
-                <app-default-input-field [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'" [resetTrigger]="resetTrigger" [errorMessage]="isError.title" (outputValue)="setTaskData($event, 'title')"></app-default-input-field>
-                <!-- Description -->
-                <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
-                <!-- Assigned to -->
-                <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
-
-                <div class="flex flex-wrap gap-4">
-                  <div *ngFor="let item of selectedBubble">
-                    <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'" [borderColor]="'white'"></app-user-bubble>
-                  </div>
-                </div>
-              </div>
-              <!-- Middle Line -->
-              <div class="bg-[#D1D1D1] rounded-full min-h-full w-[2px]"></div>
-              <!-- Right side -->
-              <div class="w-full flex flex-col gap-8">
-                <app-default-input-field [fieldRequired]="true" [label]="'Due date'" [type]="'date'" [resetTrigger]="resetTrigger" [errorMessage]="isError.dueDate" (outputValue)="setTaskData($event, 'dueDate')"></app-default-input-field>
-                <!-- Prio -->
-                <div>
-                  <ion-label position="floating font-medium w-full">Prio</ion-label>
-                  <div class="flex gap-4">
-                    <app-prio-button [text]="'Urgent'" [icon]="'prio-urgent'" [isActive]="isButtonActive('urgent')" (click)="setActiveButton('urgent')" [color]="'#FF3D00'" class="w-full"></app-prio-button>
-                    <app-prio-button [text]="'Medium'" [icon]="'prio-medium'" [isActive]="isButtonActive('medium')" (click)="setActiveButton('medium')" [color]="'#FFA800'" class="w-full"></app-prio-button>
-                    <app-prio-button [text]="'Low'" [icon]="'prio-low'" [isActive]="isButtonActive('low')" (click)="setActiveButton('low')" [color]="'#7AE229'" class="w-full"></app-prio-button>
-                  </div>
-                </div>
-                <!-- Category -->
-                <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
-                <!-- Subtasks -->
-                <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
-                <div class="-mt-8">
-                  <app-subtask-list [subtasks]="subtasks" ></app-subtask-list>
-                </div>
-              </div>
-            </div>
-          </ion-row>
-        </ion-grid>
-      </div>
-      <!-- Bottom section with buttons and required field -->
-      <div class="flex justify-between items-center font-inter w-4/6 max-2xl:w-full pb-3">
-        <ion-col size="12" size="6">
-          <span class="text-lightRed">*</span> This field is required
-        </ion-col>
-        <ion-col size="12" size="6">
-          <div class="flex justify-end gap-4">
-            <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="clearTask()"></app-button-edge>
-            <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onCreateTask()"></app-button-filled>
-          </div>
-        </ion-col>
-      </div> 
+      <app-task-card-add 
+      [currentUser]="currentUser" 
+      [categories]="categories" 
+      [contacts]="contacts"
+      [subtasks]="subtasks" 
+      class="flex-grow flex flex-col"
+      ></app-task-card-add>
     </div>
   </div>
 </ion-content>

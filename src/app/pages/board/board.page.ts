@@ -28,10 +28,8 @@ export class BoardPage implements OnInit {
       this.currentUser = user;
     });
 
-
     this.taskService.getTasksByStatus('todo').subscribe((tasks) => {
       this.todoTasks = tasks;
-      // console.log(this.todoTasks);
     });
 
     this.taskService.getTasksByStatus('inProgress').subscribe((tasks) => {

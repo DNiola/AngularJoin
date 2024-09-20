@@ -15,13 +15,7 @@ import { HelperService } from 'src/app/services/helper.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', id: '', status: 'todo' };
-  public selectedBubble: Contact[] = [];
   public subtasks: subTask[] = [];
-  public activeButton = '';
-
-  public resetTrigger = false;
-  public isError = { title: false, dueDate: false, category: false };
 
   public contacts: Array<Contact> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange', userId: 1 },
@@ -37,7 +31,7 @@ export class AddTaskPage implements OnInit {
     { text: 'User history', selected: false, color: this.helperService.getRandomColor() },
   ];
 
-  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
+  constructor(private userService: UserService, private subtaskService: SubtaskService, private helperService: HelperService) { }
 
 
   public ngOnInit(): void {
@@ -50,111 +44,5 @@ export class AddTaskPage implements OnInit {
     });
   }
 
-
-  public onDisplayedBubble(selectedContacts: Contact[], section: string): void {
-    this.selectedBubble = selectedContacts;
-    this.setTaskData(selectedContacts, section);
-  }
-
-
-  public setActiveButton(button: string): void {
-    this.activeButton = button;
-    this.setTaskData(this.activeButton, 'prio');
-  }
-
-
-  public isButtonActive(button: string): boolean {
-    return this.activeButton === button;
-  }
-
-
-  public onDisplayedSubtask(newSubtasks: subTask[]): void {
-    this.subtaskService.updateSubtasks(newSubtasks);
-  }
-
-
-  public setTaskData(data: string | Category | Contact[], section: string): void {
-    switch (section) {
-      case 'title':
-        this.currentTask.title = data as string;
-        break;
-      case 'description':
-        this.currentTask.description = data as string;
-        break;
-      case 'dueDate':
-        this.currentTask.dueDate = data as string;
-        break;
-      case 'assignedTo':
-        this.currentTask.assignedTo = data as Contact[];
-        break;
-      case 'category':
-        this.currentTask.category = data as Category;
-        break;
-      default:
-        console.warn(`Unbekanntes Feld: ${section}`);
-    }
-  }
-
-
-  public onCreateTask(): void {
-    this.checkRequiredFields();
-    if (this.isError.title || this.isError.dueDate || this.isError.category) {
-      console.error('Fehler beim Erstellen des Tasks:', this.isError);
-      return;
-    }
-    this.getTaskData();
-    this.createTask();
-  }
-
-
-  private getTaskData(): void {
-    this.currentTask.prio = this.activeButton
-    if (this.currentTask.prio === '') {
-      this.currentTask.prio = 'low';
-    }
-
-    if (this.currentUser) {
-      this.currentTask.creatorId = this.currentUser.userId;
-    }
-    this.currentTask.subtasks = this.subtasks;
-  }
-
-
-  private checkRequiredFields(): void {
-    this.isError = { title: false, dueDate: false, category: false };
-
-    if (this.currentTask.title === '') {
-      this.isError.title = true;
-    }
-    if (this.currentTask.dueDate === '') {
-      this.isError.dueDate = true;
-    }
-    if (this.currentTask.category.text === '') {
-      this.isError.category = true;
-    }
-  }
-
-
-  private createTask(): void {
-    this.taskService.createTask(this.currentTask)
-      .then(() => {
-        console.log('Task erfolgreich erstellt und gespeichert:', this.currentTask);
-        this.clearTask();
-      })
-      .catch(error => {
-        console.error('Fehler beim Speichern des Tasks:', error);
-      });
-  }
-
-
-  public clearTask(): void {
-    this.activeButton = '';
-    this.selectedBubble = [];
-    this.resetTrigger = true;
-    this.subtaskService.clearSubtasks();
-    this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
-    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
-    setTimeout(() => this.resetTrigger = false, 0);
-  }
 }
 
