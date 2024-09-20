@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4" (dragover)="allowDrop($event)" (drop)="onDrop($event)">
   <app-big-title [title]="title" [icon]="icon"></app-big-title>
-  <div *ngFor="let task of tasks" class="bg-white shadow-taskShadow p-4 border-0 rounded-3xl">
-    <app-task-card [task]="task"></app-task-card>
-  </div>
+  <app-task-card *ngFor="let task of tasks" [task]="task" draggable="true" (dragstart)="onDragStart($event, task)"
+    class="bg-white shadow-taskShadow p-4 border-0 rounded-3xl">
+  </app-task-card>
 </div>

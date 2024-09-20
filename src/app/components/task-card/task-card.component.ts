@@ -34,10 +34,8 @@ export class TaskCardComponent implements OnInit {
 
   private initSubtasks(): void {
     this.doneSubtasks = this.task?.subtasks?.filter(subtask => subtask.done) || [];
-    console.log(`Erledigte Subtasks: ${this.doneSubtasks.length}`);
-
+ 
     this.percentDoneSubtasks = this.doneSubtasks.length / (this.task?.subtasks?.length || 1) * 100;
-    console.log(`Prozent erledigter Subtasks: ${this.percentDoneSubtasks}%`);
-  }
+   }
 
 }
