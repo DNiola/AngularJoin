@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
-import { Task } from 'src/app/models/task.model';
+import { subTask, Task } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -17,7 +17,7 @@ export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
   public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', status: 'todo' };
   public selectedBubble: Contact[] = [];
-  public subtasks: string[] = [];
+  public subtasks: subTask[] = [];
   public activeButton = '';
 
   public resetTrigger = false;
@@ -39,6 +39,7 @@ export class AddTaskPage implements OnInit {
 
   constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
+  
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
@@ -67,7 +68,7 @@ export class AddTaskPage implements OnInit {
   }
 
 
-  public onDisplayedSubtask(newSubtasks: string[]): void {
+  public onDisplayedSubtask(newSubtasks: subTask[]): void {
     this.subtaskService.updateSubtasks(newSubtasks);
   }
 

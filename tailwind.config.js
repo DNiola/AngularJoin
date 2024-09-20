@@ -16,6 +16,8 @@ module.exports = {
         'lightRed': '#FF8190',
         'menuHoverBlue': '#3b3d59',
         'titleActiveBlue': '#42526E',
+        'shadowGray': '#F4F4F4',
+        'coverBlue': '#4589FF',
       },
       boxShadow: {
         'lightShadow': '0px 4px 6px 0px rgba(0, 0, 0, 0.33);',

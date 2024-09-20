@@ -3,19 +3,19 @@
   <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
 <div class="flex relative">
-  <ion-input (click)="isClicked = true" [(ngModel)]="newSubtask" type="text" class="inputField cursor-pointer z-10"
+  <ion-input (click)="isClicked = true" [(ngModel)]="newSubtask.title" type="text" class="inputField cursor-pointer z-10"
     placeholder="{{placeholder}}">
   </ion-input>
 
-  <ion-icon *ngIf="!newSubtask" name="add-outline" slot="end"
+  <ion-icon *ngIf="!newSubtask.title" name="add-outline" slot="end"
     class="text-xl flex z-10 absolute right-2 top-[0.80rem] gap-1 items-center">
   </ion-icon>
 
-  <div *ngIf="newSubtask" class="flex z-10 absolute right-2 top-3 gap-1 items-center">
+  <div *ngIf="newSubtask.title" class="flex z-10 absolute right-2 top-3 gap-1 items-center">
     <ion-icon (click)="addSubtask()" slot="end" class="text-lg hover:bg-slate-400 rounded-full p-1 cursor-pointer"
       name="checkmark-outline"></ion-icon>
     <span class="text-slate-300">|</span>
-    <ion-icon (click)="newSubtask = ''" slot="end" class="text-lg hover:bg-slate-400  rounded-full p-1 cursor-pointer"
+    <ion-icon (click)="newSubtask = { title: '', done: false }" slot="end" class="text-lg hover:bg-slate-400  rounded-full p-1 cursor-pointer"
       name="close-outline"></ion-icon>
   </div>
 </div>
