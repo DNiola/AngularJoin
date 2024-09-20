@@ -2,20 +2,20 @@
   <span [ngStyle]="{ 'background-color': colorTitle }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
     {{ cardTitle }}
   </span>
-  <span class="pt-3 pb-2 font-medium text-normalBlue">{{task?.title}}</span>
+  <span class="pt-5 pb-1 font-bold text-normalBlue">{{task?.title}}</span>
   <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description}}</span>
 </div>
 
-<div class="flex pt-2 items-center">
+<div class="flex pt-4 items-center">
   <div class="w-full relative items-center flex">
     <div class="absolute h-2 w-full bg-shadowGray rounded-lg"></div>
-    <div class="absolute h-2 w-[{{percentDoneSubtasks}}%] bg-coverBlue rounded-lg" [ngStyle]="{ 'width.%': percentDoneSubtasks }"></div>
+    <div class="absolute h-2 bg-coverBlue rounded-lg" [ngStyle]="{ 'width.%': percentDoneSubtasks }"></div>
   </div>
   <span class="w-full justify-center flex">{{doneSubtasks.length ? doneSubtasks.length : 0}}/{{task?.subtasks?.length}} Subtasks</span>
 </div>
 
 <div>
-  <div class="flex pt-2 ">
+  <div class="flex pt-4 ">
     <div class="-mr-4" *ngFor="let assignedTo of task?.assignedTo">
       <app-user-bubble [text]="assignedTo?.initials" [color]="assignedTo?.color"></app-user-bubble>
     </div>
