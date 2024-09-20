@@ -1,20 +1,26 @@
 <div class="flex flex-col">
-  <span [ngStyle]="{ 'background-color': colorTitle }" class="font-medium p-2 px-4 rounded-lg w-max text-white">{{
-    cardTitle }}</span>
-  <span class="pt-4 font-medium text-normalBlue">{{task?.title}}</span>
+  <span [ngStyle]="{ 'background-color': colorTitle }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
+    {{ cardTitle }}
+  </span>
+  <span class="pt-3 pb-2 font-medium text-normalBlue">{{task?.title}}</span>
   <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description}}</span>
 </div>
-<div class="flex pt-2">
-  <div>Balken</div>
-  <span>1/2 Subtasks</span>
+
+<div class="flex pt-2 items-center">
+  <div class="w-full relative items-center flex">
+    <div class="absolute h-2 w-full bg-shadowGray rounded-lg"></div>
+    <div class="absolute h-2 w-[{{percentDoneSubtasks}}%] bg-coverBlue rounded-lg" [ngStyle]="{ 'width.%': percentDoneSubtasks }"></div>
+  </div>
+  <span class="w-full justify-center flex">{{doneSubtasks.length ? doneSubtasks.length : 0}}/{{task?.subtasks?.length}} Subtasks</span>
 </div>
+
 <div>
-  <div class="flex pt-2">
+  <div class="flex pt-2 ">
     <div class="-mr-4" *ngFor="let assignedTo of task?.assignedTo">
       <app-user-bubble [text]="assignedTo?.initials" [color]="assignedTo?.color"></app-user-bubble>
     </div>
-    <div>
-      <ion-img src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>
+    <div class="flex w-full justify-end pr-4">
+      <ion-img class="w-6" src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>
     </div>
   </div>
 </div>
