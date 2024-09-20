@@ -8,10 +8,14 @@
         <ion-grid>
           <ion-row class="flex flex-col">
             <div class="flex 2xl:gap-32 gap-14 flex-grow">
-              <app-board-section [tasks]="todoTasks" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section>
-              <app-board-section [tasks]="inProgressTasks" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section>
-              <app-board-section [tasks]="awaitFeedbackTasks" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section>
-              <app-board-section [tasks]="doneTasks" [title]="'Done'" class="w-full"></app-board-section>
+              <!-- todo -->
+              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'todo'" [tasks]="todoTasks" [status]="'todo'" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section> 
+              <!-- in progress -->
+              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'inProgress'" [tasks]="inProgressTasks" [status]="'inProgress'" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section> 
+              <!-- awaitFeedbackTasks --> 
+              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'awaitFeedback'" [tasks]="awaitFeedbackTasks" [status]="'awaitFeedback'" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section> 
+              <!-- doneTasks -->
+              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'done'" [tasks]="doneTasks" [status]="'done'" [title]="'Done'" class="w-full"></app-board-section> 
             </div>
           </ion-row>
         </ion-grid>
