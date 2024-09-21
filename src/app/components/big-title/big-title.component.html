@@ -1,4 +1,7 @@
-<div class="flex justify-between">
+<div class="flex justify-between group">
   <span class="font-inter font-bold text-xl text-titleActiveBlue">{{title}}</span>
-  <ion-img class="cursor-pointer" *ngIf="icon" src="../../../assets/img/{{icon}}" (click)="onOpenAddTask()"></ion-img>
+  <div *ngIf="icon" (mouseover)="hovered = true" (mouseout)="hovered = false" class="hover:transition-all">
+    <ion-img *ngIf="!hovered" src="../../../assets/img/{{icon}}.svg"></ion-img>
+    <ion-img *ngIf="hovered" class="cursor-pointer" src="../../../assets/img/{{icon}}Hover.svg"(click)="onOpenAddTask()"></ion-img>
+  </div>
 </div>

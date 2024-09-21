@@ -13,6 +13,8 @@ export class BigTitleComponent {
 
   @Output() openAddTask = new EventEmitter<string>();
 
+  public hovered = false;
+
 
   public onOpenAddTask(): void {
     this.openAddTask.emit(this.status);
