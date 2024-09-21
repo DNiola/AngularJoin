@@ -3,29 +3,76 @@
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
     <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter relative">
-      <app-page-title [title]="'Board'"></app-page-title>
-      <div class="flex gap-14 flex-grow relative justify-center">
+
+      <div class="flex items-center justify-between">
+        <app-page-title [title]="'Board'"></app-page-title>
+        <div class="flex items-center gap-8">
+          <app-search-input-field [placeholder]="'Find a Task'"></app-search-input-field>
+          <app-button-filled [text]="'Add Task'" [iconName]="'add-outline'" (click)="isAddTaskOpen = true"></app-button-filled>
+        </div>
+      </div>
+      <div class="flex gap-14 flex-grow">
         <ion-grid>
           <ion-row class="flex flex-col">
             <div class="flex gap-14 flex-grow">
               <!-- todo -->
-              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'todo'" [tasks]="todoTasks" [status]="'todo'" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section> 
+              <app-board-section 
+              (taskDropped)="onTaskDragStart($event)" 
+              (openAddTask)="openAddTask($event)"
+                [attr.data-status]="'todo'" 
+                [tasks]="todoTasks" 
+                [status]="'todo'" 
+                [icon]="'titlePlus.svg'"
+                [title]="'To do'" 
+                class="w-full">
+              </app-board-section>
               <!-- in progress -->
-              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'inProgress'" [tasks]="inProgressTasks" [status]="'inProgress'" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section> 
-              <!-- awaitFeedbackTasks --> 
-              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'awaitFeedback'" [tasks]="awaitFeedbackTasks" [status]="'awaitFeedback'" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section> 
+              <app-board-section 
+                (taskDropped)="onTaskDragStart($event)"
+                (openAddTask)="openAddTask($event)"
+                [attr.data-status]="'inProgress'"
+                [tasks]="inProgressTasks" 
+                [status]="'inProgress'"
+                [icon]="'titlePlus.svg'" 
+                [title]="'In progress'" 
+                class="w-full">
+              </app-board-section>
+              <!-- awaitFeedbackTasks -->
+              <app-board-section
+                (taskDropped)="onTaskDragStart($event)" 
+                (openAddTask)="openAddTask($event)"
+                [attr.data-status]="'awaitFeedback'" 
+                [tasks]="awaitFeedbackTasks" 
+                [status]="'awaitFeedback'"
+                [icon]="'titlePlus.svg'" 
+                [title]="'Await feedback'" 
+                class="w-full">
+              </app-board-section>
               <!-- doneTasks -->
-              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'done'" [tasks]="doneTasks" [status]="'done'" [title]="'Done'" class="w-full"></app-board-section> 
+              <app-board-section 
+                (taskDropped)="onTaskDragStart($event)"
+                (openAddTask)="openAddTask($event)"
+                [attr.data-status]="'done'" 
+                [tasks]="doneTasks" [status]="'done'" 
+                [title]="'Done'"
+                class="w-full">
+              </app-board-section>
             </div>
           </ion-row>
-        </ion-grid> 
-     
+        </ion-grid>
       </div>
-    </div>  
+    </div>
   </div>
-<div *ngIf="isAddTaskOpen" class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
-  <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-3/5 max-2xl:w-10/12">
-    <app-task-card-add (isCardOpen)="isAddTaskOpen = false"  [currentUser]="currentUser" [subtasks]="subtasks" [taskStatus]="taskStatus" [isCard]="true" class="flex-grow flex flex-col"></app-task-card-add>
-  </div>  
-</div>
+  <div *ngIf="isAddTaskOpen" class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
+    <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-3/5 max-2xl:w-10/12">
+      <app-task-card-add 
+      (isCardOpen)="isAddTaskOpen = false" 
+      [currentUser]="currentUser" 
+      [subtasks]="subtasks"
+      [taskStatus]="taskStatus" 
+      [isCard]="true" 
+      class="flex-grow flex flex-col">
+      </app-task-card-add>
+    </div>
+  </div>
 </ion-content>
