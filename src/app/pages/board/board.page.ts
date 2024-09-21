@@ -24,10 +24,13 @@ export class BoardPage implements OnInit {
 
   public isAddTaskOpen = false;
   public taskStatus: Task['status'] = 'todo';
+
+  private searchTerm: string = ''; 
+
   constructor(private userService: UserService, private taskService: TaskService, private subtaskService: SubtaskService) { }
 
 
-  ngOnInit() {
+  public ngOnInit() {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
@@ -35,28 +38,43 @@ export class BoardPage implements OnInit {
     this.subtaskService.subtasks$.subscribe((subtasks) => {
       this.subtasks = subtasks;
     });
+    
+    this.tasksInit();
+  }
 
-    this.taskService.getTasksByStatus('todo').subscribe((tasks) => {
+
+  private tasksInit(): void {
+    this.taskService.getTasksByStatus('todo', this.searchTerm).subscribe(tasks => {
       this.todoTasks = tasks;
     });
 
-    this.taskService.getTasksByStatus('inProgress').subscribe((tasks) => {
+    this.taskService.getTasksByStatus('inProgress', this.searchTerm).subscribe(tasks => {
       this.inProgressTasks = tasks;
     });
 
-    this.taskService.getTasksByStatus('awaitFeedback').subscribe((tasks) => {
+    this.taskService.getTasksByStatus('awaitFeedback', this.searchTerm).subscribe(tasks => {
       this.awaitFeedbackTasks = tasks;
     });
 
-    this.taskService.getTasksByStatus('done').subscribe((tasks) => {
+    this.taskService.getTasksByStatus('done', this.searchTerm).subscribe(tasks => {
       this.doneTasks = tasks;
     });
   }
 
+
   public openAddTask(status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done'): void {
-    console.log('Open Add Task:', status)
     this.isAddTaskOpen = true;
     this.taskStatus = status;
+  }
+
+
+  public onSearch(event: Event): void {
+    const inputElement = event.target as HTMLInputElement | null;
+
+    if (inputElement) {
+      this.searchTerm = inputElement.value;
+      this.tasksInit();
+    }
   }
 
 

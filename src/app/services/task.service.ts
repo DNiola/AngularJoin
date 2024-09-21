@@ -11,7 +11,8 @@ export class TaskService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  // task in firestore create
+
+  // create task in Firestore
   public async createTask(task: Task): Promise<any> {
     const taskRef = this.firestore.collection('tasks').doc();
     const taskId = taskRef.ref.id;
@@ -25,27 +26,36 @@ export class TaskService {
   }
 
 
-  // task in firestore update
+  // update task status
   public updateTaskStatus(taskId: string, newStatus: string): Promise<void> {
     return this.firestore.collection('tasks').doc(taskId).update({ status: newStatus });
   }
 
 
-  // method to load all tasks 
-  public getTasks(): Observable<Task[]> {
-    return this.firestore.collection<Task>('tasks').valueChanges();
+  // load tasks and optionally filter by title
+  public getTasks(searchTerm?: string): Observable<Task[]> {
+    return this.firestore.collection<Task>('tasks').valueChanges().pipe(
+      map(tasks => {
+        if (searchTerm) {
+          return tasks.filter(task =>
+            task.title.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+        return tasks;
+      })
+    );
   }
 
 
-  // method to load a single task
-  public getTasksByStatus(status: string): Observable<Task[]> {
-    return this.getTasks().pipe(
+  // filter tasks by status
+  public getTasksByStatus(status: string, searchTerm?: string): Observable<Task[]> {
+    return this.getTasks(searchTerm).pipe(
       map(tasks => tasks.filter(task => task.status === status))
     );
   }
 
 
-  // Filter tasks by priority
+  // filter tasks by priority
   public getTasksByPriority(prio: string): Observable<Task[]> {
     return this.getTasks().pipe(
       map(tasks => tasks.filter(task => task.prio === prio))

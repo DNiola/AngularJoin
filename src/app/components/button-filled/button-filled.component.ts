@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ButtonFilledComponent implements OnInit {
   @Input() text = '';
-  @Input() iconName = '';
+  @Input() iconName? = '';
   
   constructor() { }
 
