@@ -3,7 +3,7 @@
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
     <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
-      <span class="font-bold text-6xl">Board</span>
+      <app-page-title [title]="'Board'"></app-page-title>
       <ion-card *ngIf="isAddTaskOpen" class="m-0  absolute w-full z-10 ">
         <app-task-card-add  [currentUser]="currentUser" [subtasks]="subtasks" [taskStatus]="taskStatus" class="flex-grow flex flex-col"></app-task-card-add>
       </ion-card>

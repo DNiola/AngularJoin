@@ -25,9 +25,10 @@ import { BigTitleComponent } from '../components/big-title/big-title.component';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
 import { BoardSectionComponent } from '../components/board-section/board-section.component';
 import { TaskCardAddComponent } from '../components/task-card-add/task-card-add.component';
+import { PageTitleComponent } from '../components/page-title/page-title.component';
 @NgModule({
-  declarations: [TaskCardAddComponent, BoardSectionComponent, TaskCardComponent, BigTitleComponent, SubtaskListComponent, CreatorInputFieldComponent, DropdownInputFieldComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
+  declarations: [PageTitleComponent, TaskCardAddComponent, BoardSectionComponent, TaskCardComponent, BigTitleComponent, SubtaskListComponent, CreatorInputFieldComponent, DropdownInputFieldComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
   imports: [CommonModule, IonicModule, FormsModule, RouterModule],
-  exports: [TaskCardAddComponent, BoardSectionComponent, TaskCardComponent, BigTitleComponent, SubtaskListComponent, CreatorInputFieldComponent, DropdownInputFieldComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
+  exports: [PageTitleComponent, TaskCardAddComponent, BoardSectionComponent, TaskCardComponent, BigTitleComponent, SubtaskListComponent, CreatorInputFieldComponent, DropdownInputFieldComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
 })
 export class SharedModule { }
