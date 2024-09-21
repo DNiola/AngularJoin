@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { subTask, Task } from 'src/app/models/task.model';
+import { Subtask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -18,7 +18,7 @@ export class BoardPage implements OnInit {
   public inProgressTasks: Task[] = [];
   public awaitFeedbackTasks: Task[] = [];
   public doneTasks: Task[] = [];
-  public subtasks: subTask[] = [];
+  public subtasks: Subtask[] = [];
 
   public currentDraggedTask: Task | null = null;
 

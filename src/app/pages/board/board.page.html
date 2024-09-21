@@ -2,15 +2,12 @@
   <div class="main-content ml-60 h-dvh bg-whiteSmoke">
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
-    <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
+    <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter relative">
       <app-page-title [title]="'Board'"></app-page-title>
-      <ion-card *ngIf="isAddTaskOpen" class="m-0  absolute w-full z-10 ">
-        <app-task-card-add  [currentUser]="currentUser" [subtasks]="subtasks" [taskStatus]="taskStatus" class="flex-grow flex flex-col"></app-task-card-add>
-      </ion-card>
-      <div class="flex gap-14 flex-grow">
+      <div class="flex gap-14 flex-grow relative justify-center">
         <ion-grid>
           <ion-row class="flex flex-col">
-            <div class="flex 2xl:gap-32 gap-14 flex-grow">
+            <div class="flex gap-14 flex-grow">
               <!-- todo -->
               <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'todo'" [tasks]="todoTasks" [status]="'todo'" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section> 
               <!-- in progress -->
@@ -21,9 +18,14 @@
               <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'done'" [tasks]="doneTasks" [status]="'done'" [title]="'Done'" class="w-full"></app-board-section> 
             </div>
           </ion-row>
-        </ion-grid>
+        </ion-grid> 
+     
       </div>
-    </div>
+    </div>  
   </div>
+<div *ngIf="isAddTaskOpen" class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
+  <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-3/5 max-2xl:w-10/12">
+    <app-task-card-add (isCardOpen)="isAddTaskOpen = false"  [currentUser]="currentUser" [subtasks]="subtasks" [taskStatus]="taskStatus" [isCard]="true" class="flex-grow flex flex-col"></app-task-card-add>
+  </div>  
+</div>
 </ion-content>
-
