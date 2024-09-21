@@ -9,28 +9,32 @@ export class BoardSectionComponent {
   @Input() title = '';
   @Input() icon = '';
   @Input() tasks: Task[] = [];
-  @Input() status = 'todo';
+  @Input() status: Task['status'] = 'todo';
 
   @Output() taskDropped = new EventEmitter<{ task: Task, newStatus: string }>();
-
+  @Output() openAddTask = new EventEmitter<Task['status']>();
 
   // start the drag event and pass the task
-  onDragStart(event: DragEvent, task: Task) {
-    event.dataTransfer?.setData('text/plain', task.id); 
+  public onDragStart(event: DragEvent, task: Task): void {
+    event.dataTransfer?.setData('text/plain', task.id);
     this.taskDropped.emit({ task: task, newStatus: this.status });
   }
 
 
   // Allow drop
-  allowDrop(event: DragEvent) {
+  public allowDrop(event: DragEvent): void {
     event.preventDefault();
   }
 
-  
+
   // Pass the event on drop
-  onDrop(event: DragEvent) {
+  public onDrop(event: DragEvent): void {
     event.preventDefault();
-    const newStatus = this.status;  
+    const newStatus = this.status;
+  }
+
+  public onOpenAddTask(): void {
+    this.openAddTask.emit(this.status);
   }
 
 }

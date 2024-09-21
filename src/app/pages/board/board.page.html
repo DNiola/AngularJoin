@@ -4,18 +4,21 @@
     <app-sidebar></app-sidebar>
     <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
       <span class="font-bold text-6xl">Board</span>
+      <ion-card *ngIf="isAddTaskOpen" class="m-0  absolute w-full z-10 ">
+        <app-task-card-add  [currentUser]="currentUser" [subtasks]="subtasks" [taskStatus]="taskStatus" class="flex-grow flex flex-col"></app-task-card-add>
+      </ion-card>
       <div class="flex gap-14 flex-grow">
         <ion-grid>
           <ion-row class="flex flex-col">
             <div class="flex 2xl:gap-32 gap-14 flex-grow">
               <!-- todo -->
-              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'todo'" [tasks]="todoTasks" [status]="'todo'" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section> 
+              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'todo'" [tasks]="todoTasks" [status]="'todo'" [icon]="'titlePlus.svg'" [title]="'To do'" class="w-full"></app-board-section> 
               <!-- in progress -->
-              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'inProgress'" [tasks]="inProgressTasks" [status]="'inProgress'" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section> 
+              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'inProgress'" [tasks]="inProgressTasks" [status]="'inProgress'" [icon]="'titlePlus.svg'" [title]="'In progress'" class="w-full"></app-board-section> 
               <!-- awaitFeedbackTasks --> 
-              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'awaitFeedback'" [tasks]="awaitFeedbackTasks" [status]="'awaitFeedback'" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section> 
+              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'awaitFeedback'" [tasks]="awaitFeedbackTasks" [status]="'awaitFeedback'" [icon]="'titlePlus.svg'" [title]="'Await feedback'" class="w-full"></app-board-section> 
               <!-- doneTasks -->
-              <app-board-section (taskDropped)="onTaskDragStart($event)" [attr.data-status]="'done'" [tasks]="doneTasks" [status]="'done'" [title]="'Done'" class="w-full"></app-board-section> 
+              <app-board-section (taskDropped)="onTaskDragStart($event)" (openAddTask)="openAddTask($event)" [attr.data-status]="'done'" [tasks]="doneTasks" [status]="'done'" [title]="'Done'" class="w-full"></app-board-section> 
             </div>
           </ion-row>
         </ion-grid>
@@ -23,3 +26,4 @@
     </div>
   </div>
 </ion-content>
+

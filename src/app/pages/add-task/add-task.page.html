@@ -2,15 +2,6 @@
   <div class="main-content ml-60 h-dvh bg-whiteSmoke flex flex-col">
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
-    <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
-      <span class="font-bold text-6xl">Add Task</span>
-      <app-task-card-add 
-      [currentUser]="currentUser" 
-      [categories]="categories" 
-      [contacts]="contacts"
-      [subtasks]="subtasks" 
-      class="flex-grow flex flex-col"
-      ></app-task-card-add>
-    </div>
+    <app-task-card-add [currentUser]="currentUser" [subtasks]="subtasks" [taskStatus]="'todo'" class="flex-grow flex flex-col"></app-task-card-add>
   </div>
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Task } from 'src/app/models/task.model';
+import { subTask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
+import { SubtaskService } from 'src/app/services/subtask.service';
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,15 +18,22 @@ export class BoardPage implements OnInit {
   public inProgressTasks: Task[] = [];
   public awaitFeedbackTasks: Task[] = [];
   public doneTasks: Task[] = [];
+  public subtasks: subTask[] = [];
 
   public currentDraggedTask: Task | null = null;
 
-  constructor(private userService: UserService, private taskService: TaskService) { }
+  public isAddTaskOpen = false;
+  public taskStatus: Task['status'] = 'todo';
+  constructor(private userService: UserService, private taskService: TaskService, private subtaskService: SubtaskService) { }
 
 
   ngOnInit() {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
+    });
+
+    this.subtaskService.subtasks$.subscribe((subtasks) => {
+      this.subtasks = subtasks;
     });
 
     this.taskService.getTasksByStatus('todo').subscribe((tasks) => {
@@ -43,6 +51,12 @@ export class BoardPage implements OnInit {
     this.taskService.getTasksByStatus('done').subscribe((tasks) => {
       this.doneTasks = tasks;
     });
+  }
+
+  public openAddTask(status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done'): void {
+    console.log('Open Add Task:', status)
+    this.isAddTaskOpen = true;
+    this.taskStatus = status;
   }
 
 
