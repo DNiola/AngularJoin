@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { subTask } from 'src/app/models/task.model';
+import { Subtask } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 
 @Component({
@@ -8,12 +8,12 @@ import { SubtaskService } from 'src/app/services/subtask.service';
   styleUrls: ['./subtask-list.component.scss'],
 })
 export class SubtaskListComponent {
-  @Input() subtasks: subTask[] = [];
+  @Input() subtasks: Subtask[] = [];
 
   public isHoverOboveSubtask: boolean[] = [];
 
   public editIndex: number | null = null;
-  public editedSubtask: subTask = { title: '', done: false };
+  public editedSubtask: Subtask = { title: '', done: false };
 
   constructor(private subtaskService: SubtaskService) { }
 

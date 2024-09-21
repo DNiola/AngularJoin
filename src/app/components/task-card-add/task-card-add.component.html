@@ -1,8 +1,11 @@
-<div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter">
-<app-page-title [title]="'Add Task'"></app-page-title>
+<div class="flex-grow flex flex-col gap-14 font-inter" [ngClass]="isCard ? 'p-14' :'p-4 px-20 pt-20'">
+
+<app-page-title [title]="'Add Task'"></app-page-title> 
+<ion-icon *ngIf="isCard" class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
+
 <div class="flex gap-14 flex-grow">
   <ion-grid>
-    <ion-row class="flex flex-col w-4/6 max-2xl:w-full">
+    <ion-row class="flex flex-col " [ngClass]="isCard ? '' :'w-4/6 max-2xl:w-full'">
       <div class="flex gap-16 flex-grow">
         <!-- Left side -->
         <div class="w-full flex flex-col gap-8">
@@ -12,7 +15,7 @@
           <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
           <!-- Assigned to -->
           <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
-
+          <!-- Assigned Bubble -->
           <div class="flex flex-wrap gap-4">
             <div *ngFor="let item of selectedBubble">
               <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'" [borderColor]="'white'"></app-user-bubble>
@@ -46,7 +49,7 @@
   </ion-grid>
 </div>
 <!-- Bottom section with buttons and required field -->
-<div class="flex justify-between items-center font-inter w-4/6 max-2xl:w-full pb-3">
+<div class="flex justify-between items-center font-inter pb-3" [ngClass]="isCard ? '' :'w-4/6 max-2xl:w-full'">
   <ion-col size="12" size="6">
     <span class="text-lightRed">*</span> This field is required
   </ion-col>
@@ -56,4 +59,5 @@
       <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onCreateTask()"></app-button-filled>
     </div>
   </ion-col>
-</div> </div>
+</div> 
+</div>

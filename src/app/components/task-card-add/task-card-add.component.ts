@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
-import { subTask, Task } from 'src/app/models/task.model';
+import { Subtask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
 import { SubtaskService } from 'src/app/services/subtask.service';
@@ -15,8 +15,11 @@ import { TaskService } from 'src/app/services/task.service';
 
 export class TaskCardAddComponent {
   @Input() public currentUser: User | null = null;
-  @Input() public subtasks: subTask[] = [];
+  @Input() public subtasks: Subtask[] = [];
   @Input() public taskStatus: Task['status'] = 'todo';
+  @Input() public isCard = false;
+
+  @Output() isCardOpen = new EventEmitter<void>();
 
   public contacts: Array<Contact> = [
     { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange', userId: 1 },
@@ -36,6 +39,7 @@ export class TaskCardAddComponent {
 
   public isError = { title: false, dueDate: false, category: false };
   public resetTrigger = false;
+  public isCardClosed = false;
 
   public selectedBubble: Contact[] = [];
   public activeButton = '';
@@ -128,6 +132,7 @@ export class TaskCardAddComponent {
     }
   }
 
+
   public onDisplayedBubble(selectedContacts: Contact[], section: string): void {
     this.selectedBubble = selectedContacts;
     this.setTaskData(selectedContacts, section);
@@ -145,7 +150,13 @@ export class TaskCardAddComponent {
   }
 
 
-  public onDisplayedSubtask(newSubtasks: subTask[]): void {
+  public onDisplayedSubtask(newSubtasks: Subtask[]): void {
     this.subtaskService.updateSubtasks(newSubtasks);
+  }
+
+
+  public onCloseCard(): void {
+    this.isCardOpen.emit();
+    this.clearTask();
   }
 }

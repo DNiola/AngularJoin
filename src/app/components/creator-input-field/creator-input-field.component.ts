@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { subTask } from 'src/app/models/task.model';
+import { Subtask } from 'src/app/models/task.model';
 
 @Component({
   selector: 'app-creator-input-field',
@@ -11,10 +11,10 @@ export class CreatorInputFieldComponent {
   @Input() label = '';
   @Input() placeholder = '';
 
-  @Input() subtasks: subTask[] = [];
-  @Output() selectedData = new EventEmitter<subTask[]>();
+  @Input() subtasks: Subtask[] = [];
+  @Output() selectedData = new EventEmitter<Subtask[]>();
 
-  public newSubtask: subTask = { title: '', done: false };
+  public newSubtask: Subtask = { title: '', done: false };
   public isClicked = false;
 
 

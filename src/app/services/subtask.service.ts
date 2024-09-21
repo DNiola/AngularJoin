@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { subTask } from '../models/task.model';
+import { Subtask } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubtaskService {
-  private subtasksSubject = new BehaviorSubject<subTask[]>([]);
-  subtasks$: Observable<subTask[]> = this.subtasksSubject.asObservable();
+  private subtasksSubject = new BehaviorSubject<Subtask[]>([]);
+  subtasks$: Observable<Subtask[]> = this.subtasksSubject.asObservable();
 
 
-  public updateSubtasks(subtasks: subTask[]): void {
+  public updateSubtasks(subtasks: Subtask[]): void {
     this.subtasksSubject.next([...subtasks]);
   }
 
 
-  public addSubtask(subtask: subTask): void {
+  public addSubtask(subTask: Subtask): void {
     const currentSubtasks = this.subtasksSubject.getValue();
-    this.subtasksSubject.next([...currentSubtasks, subtask]);
+    this.subtasksSubject.next([...currentSubtasks, subTask]);
   }
 
 
@@ -27,7 +27,7 @@ export class SubtaskService {
   }
 
 
-  public updateSubtask(index: number, updatedSubtask: subTask): void {
+  public updateSubtask(index: number, updatedSubtask: Subtask): void {
     const currentSubtasks = this.subtasksSubject.getValue();
     currentSubtasks[index] = updatedSubtask;
     this.subtasksSubject.next([...currentSubtasks]);

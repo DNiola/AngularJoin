@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { subTask, Task } from 'src/app/models/task.model';
+import { Subtask, Task } from 'src/app/models/task.model';
 @Component({
   selector: 'app-task-card',
   templateUrl: './task-card.component.html',
@@ -11,7 +11,7 @@ export class TaskCardComponent implements OnInit {
   public cardTitle = '';
   public colorTitle = '';
 
-  public doneSubtasks: subTask[] = [{ title: '', done: false }]
+  public doneSubtasks: Subtask[] = [{ title: '', done: false }]
   public percentDoneSubtasks = 0;
 
 

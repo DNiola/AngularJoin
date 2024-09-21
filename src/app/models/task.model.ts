@@ -9,14 +9,14 @@ export interface Task {
     prio?: string;
     category: Category;
     creatorId: string;
-    subtasks?: subTask[];
+    subtasks?: Subtask[];
     status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done';
     id: string;
 }
 
-export interface subTask {
+export interface Subtask {
     title: string;
     done: boolean;
 }
 
-export type subTasks = subTask[];
+export type subTasks = Subtask[];

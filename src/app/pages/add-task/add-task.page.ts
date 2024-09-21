@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'; 
 import { User } from 'src/app/models/user.model';
-import { subTask, Task } from 'src/app/models/task.model';
+import { Subtask } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service'; 
 
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
-  public subtasks: subTask[] = [];
+  public subtasks: Subtask[] = [];
 
   constructor(private userService: UserService, private subtaskService: SubtaskService) { }
 
