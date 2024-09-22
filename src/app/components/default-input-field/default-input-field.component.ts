@@ -15,18 +15,25 @@ export class DefaultInputFieldComponent implements OnInit {
   @Input() errorMessage = false;
   @Input() resetTrigger = false;
 
+
+  @Input() editValueMode? = '';
+
   @Output() outputValue = new EventEmitter<string>();
 
   public inputValue: string = '';
   public minDate = '';
 
-  ngOnInit() { 
+  ngOnInit() {
     const today = new Date();
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
     const day = ('0' + today.getDate()).slice(-2);
- 
+
     this.minDate = `${year}-${month}-${day}`;
+
+    if (this.editValueMode) {
+      this.inputValue = this.editValueMode
+    }
   }
 
   public onInputChange(event: any): void {

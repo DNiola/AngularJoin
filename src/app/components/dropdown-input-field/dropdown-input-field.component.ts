@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Category } from 'src/app/models/category.model';
 
 @Component({
   selector: 'app-dropdown-input-field',
@@ -14,6 +15,8 @@ export class DropdownInputFieldComponent {
   @Input() errorMessage = false;
   @Input() resetTrigger = false;
 
+  @Input() editValueMode? = '' as any;
+
   @Output() outputValue = new EventEmitter<Array<any>>();
 
   public filteredItems: any[] = [];
@@ -21,6 +24,11 @@ export class DropdownInputFieldComponent {
   public selectedItems: Array<any> = [];
   public searchTerm = '';
 
+  ngOnInit() {
+    if (this.editValueMode[0]?.text) {
+      this.searchTerm = this.editValueMode[0].text;
+    }
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['resetTrigger']) {
