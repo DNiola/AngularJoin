@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
 import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { Subtask, Task } from 'src/app/models/task.model';
@@ -13,7 +13,7 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['./task-card-add.component.scss'],
 })
 
-export class TaskCardAddComponent {
+export class TaskCardAddComponent implements OnInit {
   @Input() public currentUser: User | null = null;
   @Input() public subtasks: Subtask[] = [];
   @Input() public taskStatus: Task['status'] = 'todo';
@@ -50,14 +50,42 @@ export class TaskCardAddComponent {
   constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
 
-  public onCreateTask(): void {
+  public ngOnInit(): void {
+    if (this.isEditTask) {
+      this.currentTask = this.editTask as Task;
+      this.taskStatus = this.editTask?.status as Task['status'];
+      this.currentTask.description = this.currentTask.description || '';
+      this.selectedBubble = this.currentTask.assignedTo || [];
+      this.activeButton = this.currentTask.prio || '';
+      this.subtasks = this.currentTask.subtasks || [];
+    }  
+  }
+
+
+
+
+  public onCreateTask(isCreate: boolean): void {
     this.checkRequiredFields();
     if (this.isError.title || this.isError.dueDate || this.isError.category) {
       console.error('Fehler beim Erstellen des Tasks:', this.isError);
       return;
     }
     this.getTaskData();
-    this.createTask();
+    if (isCreate) {
+      this.createTask();
+    } else {
+      this.editTaskData();
+    }
+  }
+
+
+  public editTaskData(): void {
+    this.taskService.updateTask(this.currentTask).then(() => {
+      this.onCloseCard();
+      console.log(`Task mit ID ${this.currentTask.id} wurde erfolgreich aktualisiert.`);
+    }).catch(error => {
+      console.error('Fehler beim Aktualisieren des Tasks:', error);
+    });
   }
 
 

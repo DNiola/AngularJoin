@@ -1,32 +1,32 @@
 <div class="flex-grow flex flex-col gap-14 font-inter" [ngClass]="isCard ? 'p-14' :'p-4 px-20 pt-20'">
 
-<app-page-title [title]="'Add Task'"></app-page-title> 
-<ion-icon *ngIf="isCard" class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
+<app-page-title *ngIf="!isEditTask" [title]="'Add Task'"></app-page-title> 
+<ion-icon *ngIf="isCard" [ngClass]="{ 'top-6': isEditTask }" class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
 
 <div class="flex gap-14 flex-grow">
   <ion-grid>
-    <ion-row class="flex flex-col " [ngClass]="isCard ? '' :'w-4/6 max-2xl:w-full'">
-      <div class="flex gap-16 flex-grow">
+    <ion-row class="flex flex-col " [ngClass]="{ 'w-4/6 max-2xl:w-full': !isCard }">
+      <div class="flex flex-grow" [ngClass]="isEditTask ? 'flex-col gap-8' : 'gap-16'">
         <!-- Left side -->
         <div class="w-full flex flex-col gap-8">
           <!-- Task Title -->
-          <app-default-input-field [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'" [resetTrigger]="resetTrigger" [errorMessage]="isError.title" (outputValue)="setTaskData($event, 'title')"></app-default-input-field>
+          <app-default-input-field [editValueMode]="currentTask.title" [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'" [resetTrigger]="resetTrigger" [errorMessage]="isError.title" (outputValue)="setTaskData($event, 'title')"></app-default-input-field>
           <!-- Description -->
-          <app-default-input-field [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
+          <app-default-input-field [editValueMode]="currentTask.description" [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
           <!-- Assigned to -->
           <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
           <!-- Assigned Bubble -->
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap gap-4" [ngClass]="{ '-mt-6': isEditTask }">
             <div *ngFor="let item of selectedBubble">
               <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'" [borderColor]="'white'"></app-user-bubble>
             </div>
           </div>
         </div>
         <!-- Middle Line -->
-        <div class="bg-[#D1D1D1] rounded-full min-h-full w-[2px]"></div>
+        <div *ngIf="!isEditTask" class="bg-[#D1D1D1] rounded-full min-h-full w-[2px]"></div>
         <!-- Right side -->
         <div class="w-full flex flex-col gap-8">
-          <app-default-input-field [fieldRequired]="true" [label]="'Due date'" [type]="'date'" [resetTrigger]="resetTrigger" [errorMessage]="isError.dueDate" (outputValue)="setTaskData($event, 'dueDate')"></app-default-input-field>
+          <app-default-input-field [editValueMode]="currentTask.dueDate" [fieldRequired]="true" [label]="'Due date'" [type]="'date'" [resetTrigger]="resetTrigger" [errorMessage]="isError.dueDate" (outputValue)="setTaskData($event, 'dueDate')"></app-default-input-field>
           <!-- Prio -->
           <div>
             <ion-label position="floating font-medium w-full">Prio</ion-label>
@@ -37,7 +37,7 @@
             </div>
           </div>
           <!-- Category -->
-          <app-dropdown-input-field [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
+          <app-dropdown-input-field [editValueMode]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
           <!-- Subtasks -->
           <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
           <div class="-mt-8">
@@ -49,14 +49,17 @@
   </ion-grid>
 </div>
 <!-- Bottom section with buttons and required field -->
-<div class="flex justify-between items-center font-inter pb-3" [ngClass]="isCard ? '' :'w-4/6 max-2xl:w-full'">
+<div class="flex justify-between items-center font-inter pb-3" [ngClass]="{ 'w-4/6 max-2xl:w-full': !isCard }">
   <ion-col size="12" size="6">
     <span class="text-lightRed">*</span> This field is required
   </ion-col>
   <ion-col size="12" size="6">
-    <div class="flex justify-end gap-4">
+    <div *ngIf="!isEditTask" class="flex justify-end gap-4">
       <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="clearTask()"></app-button-edge>
-      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onCreateTask()"></app-button-filled>
+      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onCreateTask(true)"></app-button-filled>
+    </div>
+    <div *ngIf="isEditTask" class="flex justify-end">
+      <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onCreateTask(false)"></app-button-filled>
     </div>
   </ion-col>
 </div> 
