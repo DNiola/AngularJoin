@@ -1,17 +1,17 @@
 <div class="flex flex-col">
-  <span [ngStyle]="{ 'background-color': colorTitle }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
-    {{ cardTitle }}
+  <span [ngStyle]="{ 'background-color': category?.color }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
+    {{ category?.text }}
   </span>
   <span class="pt-5 pb-1 font-bold text-normalBlue">{{task?.title}}</span>
   <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description}}</span>
 </div>
 
-<div class="flex pt-4 items-center">
+<div *ngIf="this.task?.subtasks?.length" class="flex pt-4 items-center">
   <div class="w-full relative items-center flex">
     <div class="absolute h-2 w-full bg-shadowGray rounded-lg"></div>
     <div class="absolute h-2 bg-coverBlue rounded-lg" [ngStyle]="{ 'width.%': percentDoneSubtasks }"></div>
   </div>
-  <span class="w-full justify-center flex">{{doneSubtasks.length ? doneSubtasks.length : 0}}/{{task?.subtasks?.length}} Subtasks</span>
+  <span class="w-full justify-center flex">{{doneSubtasks.length}}/{{task?.subtasks?.length}} Subtasks</span>
 </div>
 
 <div>
