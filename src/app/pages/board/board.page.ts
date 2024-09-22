@@ -25,6 +25,9 @@ export class BoardPage implements OnInit {
 
   public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
+  public isEditTask = false;  
+
+
   public taskStatus: Task['status'] = 'todo';
 
   private searchTerm: string = '';
@@ -70,9 +73,25 @@ export class BoardPage implements OnInit {
   }
 
 
+  public closeAddTask(): void {
+    this.isAddTaskOpen = false;
+    this.isEditTask = false;
+    this.currentOpenedTask = null;
+  }
+
+
   public openTaskCard(task: Task): void {
     this.currentOpenedTask = task;
     this.isTaskOverviewOpen = true;
+  }
+
+
+  public editTask(task: Task): void {
+    this.isTaskOverviewOpen = false;
+    this.isAddTaskOpen = true;
+    this.isEditTask = true;
+    console.log('Edit Task:', task);
+    
   }
 
 
