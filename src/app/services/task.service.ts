@@ -61,4 +61,27 @@ export class TaskService {
       map(tasks => tasks.filter(task => task.prio === prio))
     );
   }
+
+
+  // update subtask status in Firestore
+  public async updateSubtaskStatus(taskId: string, subtaskIndex: number, done: boolean): Promise<void> {
+    return this.firestore.collection('tasks').doc(taskId).get().toPromise().then((taskDoc) => {
+      const taskData = taskDoc?.data() as Task;
+
+      if (taskData && taskData.subtasks && taskData.subtasks[subtaskIndex]) {
+        taskData.subtasks[subtaskIndex].done = done;
+
+        // save task with updated subtask status in Firestore
+        return this.firestore.collection('tasks').doc(taskId).update({ subtasks: taskData.subtasks });
+      }
+
+      // Add return value if no subtask was found
+      return Promise.resolve(); // Returns a resolved promise if no subtasks were found
+    });
+  }
+
+  // delete task in Firestore
+  public deleteTask(taskId: string): Promise<void> {
+    return this.firestore.collection('tasks').doc(taskId).delete();
+  }
 }

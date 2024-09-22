@@ -1,8 +1,78 @@
-<div class="p-14">
-    <span [ngStyle]="{ 'background-color': category?.color }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
-        {{ category?.text }}
-    </span>
-    <ion-icon class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0"
-        name="close-outline" (click)="onCloseCard()"></ion-icon>
+<div class="px-14 py-7 flex flex-col gap-8 font-inter">
+    <div class="flex items-center justify-between flex-1">
+        <span [ngStyle]="{ 'background-color': category?.color }"
+            class="font-medium p-1 px-4 rounded-lg w-max text-white">
+            {{ category?.text }}
+        </span>
 
+        <ion-icon class="cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline"
+            (click)="onCloseCard()">
+        </ion-icon>
+    </div>
+
+    <div class="flex items-center">
+        <span class="font-bold text-3xl">{{task?.title}}</span>
+    </div>
+
+    <div class="flex items-center">
+        <span>{{task?.description}}</span>
+    </div>
+
+    <div class="flex items-center">
+        <span class="w-1/4 text-titleActiveBlue">Due date: </span>
+        <span class="w-1/4">{{ task?.dueDate | date: 'dd/MM/yyyy' }}</span>
+    </div>
+
+    <div class="flex items-center">
+        <span class="w-1/4 text-titleActiveBlue">Priority: </span>
+        <div class="w-1/4 flex gap-2">
+            <span class="capitalize">{{task?.prio}}</span>
+            <img src="../../../assets/img/prio-{{task?.prio}}.svg" alt="">
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <ng-container *ngIf="task?.assignedTo?.length">
+            <span class="text-titleActiveBlue">Assigned To:</span>
+            <div *ngFor="let contact of task?.assignedTo" class="flex items-center gap-4">
+                <app-user-bubble [color]="contact.color" [text]="contact.initials"
+                    [borderColor]="'whiteSmoke'"></app-user-bubble>
+                <span>{{ contact.name }}</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!task?.assignedTo?.length">
+            <span>No contacts assigned</span>
+        </ng-container>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <ng-container *ngIf="task?.subtasks?.length">
+            <div class="text-titleActiveBlue">Subtasks</div>
+            <div *ngFor="let subtask of task?.subtasks;let i = index" class="flex items-center gap-2">
+                <ion-checkbox [checked]="subtask.done" (ionChange)="onSubtaskStatusChange(i, $event)"
+                    class="scale-75"></ion-checkbox>
+                <div class="flex justify-center items-center capitalize">
+                    {{ subtask.title }}
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!task?.subtasks?.length">
+            <span>No subtasks assigned</span>
+        </ng-container>
+    </div>
+
+    <div class="flex items-center gap-4 text-titleActiveBlue justify-end">
+        <div (click)="onDeleteTask()"
+            class="flex items-center cursor-pointer justify-center gap-1 hover:text-lightBlue hover:scale-105 max-w-20 max-h-12">
+            <ion-icon name="trash-outline"></ion-icon>
+            Delete
+        </div>
+        <div class="flex border h-6 bg-titleActiveBlue"></div>
+        <div (click)="onEditTask()"
+            class="flex items-center cursor-pointer justify-center gap-1 hover:text-lightBlue hover:scale-105 max-w-20 max-h-12">
+            <ion-icon name="pencil-outline"></ion-icon>
+            Edit
+        </div>
+    </div>
+    
 </div>

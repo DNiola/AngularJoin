@@ -17,7 +17,7 @@
 <div>
   <div class="flex pt-4 ">
     <div class="-mr-4" *ngFor="let assignedTo of task?.assignedTo">
-      <app-user-bubble [text]="assignedTo?.initials" [color]="assignedTo?.color"></app-user-bubble>
+      <app-user-bubble [borderColor]="'white'" [text]="assignedTo?.initials" [color]="assignedTo?.color"></app-user-bubble>
     </div>
     <div class="flex w-full justify-end pr-4">
       <ion-img class="w-6" src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>

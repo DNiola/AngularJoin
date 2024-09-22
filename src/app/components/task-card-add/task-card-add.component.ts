@@ -19,6 +19,9 @@ export class TaskCardAddComponent {
   @Input() public taskStatus: Task['status'] = 'todo';
   @Input() public isCard = false;
 
+  @Input() public isEditTask = false;
+  @Input() public editTask: Task | null = null;
+
   @Output() isCardOpen = new EventEmitter<void>();
 
   public contacts: Array<Contact> = [
@@ -156,7 +159,7 @@ export class TaskCardAddComponent {
 
 
   public onCloseCard(): void {
-    this.isCardOpen.emit();
     this.clearTask();
+    this.isCardOpen.emit();
   }
 }
