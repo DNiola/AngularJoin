@@ -1,0 +1,8 @@
+<div class="p-14">
+    <span [ngStyle]="{ 'background-color': category?.color }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
+        {{ category?.text }}
+    </span>
+    <ion-icon class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0"
+        name="close-outline" (click)="onCloseCard()"></ion-icon>
+
+</div>

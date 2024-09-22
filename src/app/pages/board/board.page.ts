@@ -21,11 +21,13 @@ export class BoardPage implements OnInit {
   public subtasks: Subtask[] = [];
 
   public currentDraggedTask: Task | null = null;
+  public currentOpenedTask: Task | null = null;
 
+  public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
   public taskStatus: Task['status'] = 'todo';
 
-  private searchTerm: string = ''; 
+  private searchTerm: string = '';
 
   constructor(private userService: UserService, private taskService: TaskService, private subtaskService: SubtaskService) { }
 
@@ -38,7 +40,7 @@ export class BoardPage implements OnInit {
     this.subtaskService.subtasks$.subscribe((subtasks) => {
       this.subtasks = subtasks;
     });
-    
+
     this.tasksInit();
   }
 
@@ -65,6 +67,12 @@ export class BoardPage implements OnInit {
   public openAddTask(status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done'): void {
     this.isAddTaskOpen = true;
     this.taskStatus = status;
+  }
+
+
+  public openTaskCard(task: Task): void {
+    this.currentOpenedTask = task;
+    this.isTaskOverviewOpen = true;
   }
 
 
