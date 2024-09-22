@@ -13,6 +13,8 @@ export class BoardSectionComponent {
 
   @Output() taskDropped = new EventEmitter<{ task: Task, newStatus: string }>();
   @Output() openAddTask = new EventEmitter<Task['status']>();
+  @Output() openTaskCard = new EventEmitter<Task>();
+
 
   // start the drag event and pass the task
   public onDragStart(event: DragEvent, task: Task): void {
@@ -33,8 +35,15 @@ export class BoardSectionComponent {
     const newStatus = this.status;
   }
 
+
   public onOpenAddTask(): void {
     this.openAddTask.emit(this.status);
+  }
+
+
+  public onOpenTaskCard(task: Task): void {
+    console.log(task);
+    this.openTaskCard.emit(task);
   }
 
 }
