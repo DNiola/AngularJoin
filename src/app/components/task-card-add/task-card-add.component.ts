@@ -52,18 +52,15 @@ export class TaskCardAddComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.isEditTask) {
-      this.currentTask = this.editTask as Task;
-      this.taskStatus = this.editTask?.status as Task['status'];
-      this.currentTask.description = this.currentTask.description || '';
+      this.currentTask = { ...this.editTask } as Task;
+      this.taskStatus = this.editTask?.status as Task['status']; 
       this.selectedBubble = this.currentTask.assignedTo || [];
       this.activeButton = this.currentTask.prio || '';
       this.subtasks = this.currentTask.subtasks || [];
     }  
   }
 
-
-
-
+ 
   public onCreateTask(isCreate: boolean): void {
     this.checkRequiredFields();
     if (this.isError.title || this.isError.dueDate || this.isError.category) {

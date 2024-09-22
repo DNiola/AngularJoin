@@ -17,17 +17,18 @@ export class SubtaskListComponent {
 
   constructor(private subtaskService: SubtaskService) { }
 
-  
+
   public editSubtask(index: number): void {
     this.editIndex = index;
-    this.editedSubtask = this.subtasks[index];
+    this.editedSubtask = { ...this.subtasks[index] };
   }
 
 
   public saveEdit(): void {
     if (this.editIndex !== null) {
-      this.subtaskService.updateSubtask(this.editIndex, this.editedSubtask);
-      this.subtasks[this.editIndex] = this.editedSubtask;
+      this.subtasks[this.editIndex] = this.editedSubtask ;
+      this.subtasks = this.subtasks;
+      this.subtaskService.updateSubtasks(this.subtasks);
       this.editIndex = null;
       this.editedSubtask = { title: '', done: false };
     }
@@ -38,7 +39,6 @@ export class SubtaskListComponent {
     this.editIndex = null;
     this.editedSubtask = { title: '', done: false };
   }
-
 
 
   public deleteSubtask(index: number): void {
