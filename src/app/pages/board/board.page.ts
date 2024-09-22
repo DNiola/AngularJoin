@@ -90,8 +90,6 @@ export class BoardPage implements OnInit {
     this.isTaskOverviewOpen = false;
     this.isAddTaskOpen = true;
     this.isEditTask = true;
-    console.log('Edit Task:', task);
-    
   }
 
 
@@ -108,7 +106,6 @@ export class BoardPage implements OnInit {
   // Listener for setting the task that is currently being dragged
   onTaskDragStart(event: { task: Task, newStatus: string }): void {
     this.currentDraggedTask = event.task;
-    console.log('Task Drag Start:', event.task.id);
   }
 
 
@@ -116,7 +113,6 @@ export class BoardPage implements OnInit {
   @HostListener('dragover', ['$event'])
   onGlobalDragOver(event: DragEvent): void {
     event.preventDefault();
-    console.log('Global Drag Over');
   }
 
 

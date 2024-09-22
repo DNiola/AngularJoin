@@ -70,7 +70,6 @@ export class SummaryPage implements OnInit {
 
       // Format the due date as "Month Day, Year"
       this.upcomingDeadline = formatDate(nextDeadlineTask.dueDate, 'MMMM d, y', 'en-US');
-      console.log('Upcoming Deadline:', this.upcomingDeadline);
     } else {
       this.upcomingDeadline = null;
       console.log('No urgent tasks found.');

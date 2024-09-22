@@ -42,7 +42,6 @@ export class BoardSectionComponent {
 
 
   public onOpenTaskCard(task: Task): void {
-    console.log(task);
     this.openTaskCard.emit(task);
   }
 
