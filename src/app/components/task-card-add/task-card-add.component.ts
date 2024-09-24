@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { TaskService } from 'src/app/services/task.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-task-card-add',
@@ -16,6 +17,7 @@ import { TaskService } from 'src/app/services/task.service';
 export class TaskCardAddComponent implements OnInit {
   @Input() public currentUser: User | null = null;
   @Input() public subtasks: Subtask[] = [];
+  @Input() public contacts: Contact[] = [];
   @Input() public taskStatus: Task['status'] = 'todo';
   @Input() public isCard = false;
 
@@ -23,15 +25,6 @@ export class TaskCardAddComponent implements OnInit {
   @Input() public editTask: Task | null = null;
 
   @Output() isCardOpen = new EventEmitter<void>();
-
-  public contacts: Array<Contact> = [
-    { name: 'Sofia Müller (You)', initials: 'S M', color: 'orange', userId: 1 },
-    { name: 'Anton Mayer', initials: 'A M', color: 'red', userId: 2 },
-    { name: 'Anja Schulz', initials: 'A S', color: 'yellow', userId: 3 },
-    { name: 'Benedikt Ziegler', initials: 'B Z', color: 'green', userId: 4 },
-    { name: 'David Eisenberg', initials: 'D E', color: 'gray', userId: 5 },
-    { name: 'Elon Dust', initials: 'E D', color: 'darkBlue', userId: 6 },
-  ];
 
   public categories: Categorys = [
     { text: 'Technical Task', selected: false, color: this.helperService.getRandomColor() },
@@ -47,20 +40,30 @@ export class TaskCardAddComponent implements OnInit {
   public selectedBubble: Contact[] = [];
   public activeButton = '';
 
-  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
+  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
 
   public ngOnInit(): void {
     if (this.isEditTask) {
       this.currentTask = { ...this.editTask } as Task;
-      this.taskStatus = this.editTask?.status as Task['status']; 
+      this.taskStatus = this.editTask?.status as Task['status'];
       this.selectedBubble = this.currentTask.assignedTo || [];
       this.activeButton = this.currentTask.prio || '';
       this.subtasks = this.currentTask.subtasks || [];
-    }  
+    }
+    this.contactsInit();
   }
 
- 
+
+  private contactsInit(): void {
+    if (this.currentUser) {
+      this.userService.getAllUsers(this.currentUser.userId).then(users => {
+        this.contacts = users as Contact[];
+      });
+    }
+  }
+
+
   public onCreateTask(isCreate: boolean): void {
     this.checkRequiredFields();
     if (this.isError.title || this.isError.dueDate || this.isError.category) {

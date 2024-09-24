@@ -3,5 +3,7 @@ export interface Contact {
     selected?: boolean;
     color: string;
     initials: string;
-    userId: number;
+    userId: string;
+    email?: string;
+    contacts: Contact[];   
 }

@@ -123,7 +123,8 @@ export class AuthFormComponent {
         name: userData.name || '',
         email: user?.email || '',
         initials: userData.initials,
-        color: userData.color
+        color: userData.color,
+        contacts: userData.contacts
       });
 
       this.router.navigate(['/summary']);

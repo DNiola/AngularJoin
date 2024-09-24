@@ -24,7 +24,7 @@ export class UserService {
   }
 
 
-  private async loadUserData(uid: string) {
+  private async loadUserData(uid: string): Promise<void> {
     const userDataSnapshot = await this.firestore.collection('users').doc(uid).get().toPromise();
     const userData = userDataSnapshot?.data() as User;
     if (userData) {
@@ -33,22 +33,40 @@ export class UserService {
         name: userData.name,
         email: userData.email || '',
         initials: userData.initials,
-        color: userData.color
+        color: userData.color,
+        contacts: [] 
       });
     }
   }
 
 
-  setUser(userData: User) {
+  public async getAllUsers(currentUserId: string) {
+    const allUsersSnapshot = await this.firestore.collection('users').get().toPromise();
+    const contacts = allUsersSnapshot?.docs.map(doc => {
+      const userData = doc.data() as User;
+      return {
+        userId: userData.userId,
+        name: userData.name,
+        email: userData.email,
+        initials: userData.initials,
+        color: userData.color
+      };
+    }).filter(user => user.userId !== currentUserId); 
+    
+    return contacts;
+  }
+
+
+  public setUser(userData: User): void {
     this.currentUserSubject.next(userData);
   }
 
 
-  getUser() {
+  public getUser(): User | null {
     return this.currentUserSubject.getValue();
   }
 
-  clearUser() {
+  public clearUser(): void {
     this.afAuth.signOut().then(() => {
       this.currentUserSubject.next(null);
     }).catch((error) => {
