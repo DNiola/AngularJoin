@@ -1,0 +1,39 @@
+<div class="h-full flex items-center">
+
+  <div class="bg-normalBlue text-white p-20 gap-1 flex flex-col rounded-l-3xl h-full justify-center">
+    <img class="h-28 w-28" src="../../../assets/img/sideLogo.svg">
+    <app-page-title class="flex pt-4 w-max" [title]="'Add contact'"></app-page-title>
+    <span>Tasks are better with a team!</span>
+    <div class="h-1 w-20 bg-lightBlue rounded-lg"></div>
+  </div>
+  <div class="flex w-full items-center justify-evenly">
+    <ion-icon class="cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0 absolute right-14 top-14"
+      name="close-outline" (click)="onCloseCard()">
+    </ion-icon>
+    <app-user-bubble [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
+    </app-user-bubble>
+
+    <form action="" class="flex flex-col justify-center items-center pt-16">
+
+      <div class="flex flex-col justify-center gap-8  w-96">
+        <app-auth-input-fields [icon]="'user.svg'"></app-auth-input-fields>
+        <app-auth-input-fields [icon]="'email.svg'"></app-auth-input-fields>
+        <app-auth-input-fields [icon]="'phone.svg'"></app-auth-input-fields>
+
+
+        <div class="flex justify-between items-center font-inter pt-3">
+          <ion-col size="12" size="6">
+            <div *ngIf="!isEditContact" class="flex w-max gap-4">
+              <app-button-edge [text]="'Cancel'" [iconName]="'close-outline'"></app-button-edge>
+              <app-button-filled [text]="'Create contact'" [iconName]="'checkmark-outline'"></app-button-filled>
+            </div>
+            <div *ngIf="isEditContact" class="flex justify-end">
+              <app-button-edge [text]="'Delete'"></app-button-edge>
+              <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'"></app-button-filled>
+            </div>
+          </ion-col>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

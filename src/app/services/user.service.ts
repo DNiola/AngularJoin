@@ -51,7 +51,7 @@ export class UserService {
         initials: userData.initials,
         color: userData.color
       };
-    }).filter(user => user.userId !== currentUserId); 
+    }) 
     
     return contacts;
   }

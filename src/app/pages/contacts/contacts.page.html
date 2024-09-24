@@ -1,9 +1,31 @@
 <ion-content [fullscreen]="true">
-  <div class="main-content ml-60 h-dvh bg-whiteSmoke">
+  <div class="main-content ml-60 bg-whiteSmoke flex flex-col h-dvh">
     <app-header [currentUser]="currentUser"></app-header>
     <app-sidebar></app-sidebar>
-    <div class="flex items-center gap-6 p-4 px-20 pt-20 font-inter">
-      <span class="font-bold text-5xl">Contacts</span>
+
+    <div class="flex flex-grow ">
+      <div class="w-1/4 bg-white flex flex-col p-4 px-8 shadow-rightShadow z-10">
+        <app-button-filled class="w-full" [text]="'Add new contact'" [iconName]="'person-add-outline'"
+          (click)="isContactCardOpen = true"></app-button-filled>
+
+        <div *ngFor="let contacts of groupedContacts | keyvalue" class="flex flex-col">
+          <span class="font-semibold text-xl border-b w-full flex pt-2 px-9"> {{ contacts.key }}</span>
+          <div *ngFor="let contact of contacts.value" class="pt-2" (click)="selectContact(contact)">
+            <app-contact-item [contact]="contact" [selectedContact]="selectedContact"></app-contact-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter w-7/12">
+        <app-page-title class="flex" [title]="'Contacts'" [text]="'Better with a team'"></app-page-title>
+        <app-contact-overview [selectedContact]="selectedContact"></app-contact-overview>
+      </div>
     </div>
   </div>
 </ion-content>
+<div *ngIf="isContactCardOpen"
+  class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
+  <div class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-2/4 max-2xl:w-3/4 h-[600px]">
+    <app-contact-card (closeCard)="isContactCardOpen = false"></app-contact-card>
+  </div>
+</div>

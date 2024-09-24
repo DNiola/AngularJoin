@@ -5,5 +5,6 @@ export interface Contact {
     initials: string;
     userId: string;
     email?: string;
-    contacts: Contact[];   
+    contacts?: Contact[];   
+    phone?: string;
 }
