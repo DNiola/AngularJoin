@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Contact } from 'src/app/models/contact.model';
 import { Subtask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
@@ -13,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class BoardPage implements OnInit {
 
   public currentUser: User | null = null;
+  public contacts: Contact[] = [];
 
   public todoTasks: Task[] = [];
   public inProgressTasks: Task[] = [];
@@ -25,8 +27,7 @@ export class BoardPage implements OnInit {
 
   public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
-  public isEditTask = false;  
-
+  public isEditTask = false;
 
   public taskStatus: Task['status'] = 'todo';
 
@@ -38,6 +39,7 @@ export class BoardPage implements OnInit {
   public ngOnInit() {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
+      this.contactsInit();
     });
 
     this.subtaskService.subtasks$.subscribe((subtasks) => {
@@ -45,6 +47,15 @@ export class BoardPage implements OnInit {
     });
 
     this.tasksInit();
+  }
+
+
+  public contactsInit(): void {
+    if (this.currentUser) {
+      this.userService.getAllUsers(this.currentUser.userId).then(users => {
+        this.contacts = users as Contact[]
+      });
+    }
   }
 
 

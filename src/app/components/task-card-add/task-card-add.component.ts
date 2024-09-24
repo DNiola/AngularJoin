@@ -18,6 +18,7 @@ export class TaskCardAddComponent implements OnInit {
   @Input() public currentUser: User | null = null;
   @Input() public subtasks: Subtask[] = [];
   @Input() public contacts: Contact[] = [];
+
   @Input() public taskStatus: Task['status'] = 'todo';
   @Input() public isCard = false;
 
@@ -40,7 +41,7 @@ export class TaskCardAddComponent implements OnInit {
   public selectedBubble: Contact[] = [];
   public activeButton = '';
 
-  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
+  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
 
   public ngOnInit(): void {
@@ -50,16 +51,6 @@ export class TaskCardAddComponent implements OnInit {
       this.selectedBubble = this.currentTask.assignedTo || [];
       this.activeButton = this.currentTask.prio || '';
       this.subtasks = this.currentTask.subtasks || [];
-    }
-    this.contactsInit();
-  }
-
-
-  private contactsInit(): void {
-    if (this.currentUser) {
-      this.userService.getAllUsers(this.currentUser.userId).then(users => {
-        this.contacts = users as Contact[];
-      });
     }
   }
 
