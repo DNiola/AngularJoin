@@ -73,12 +73,12 @@ export class AuthFormComponent {
   private async signUp(name: string, email: string, password: string): Promise<void> {
     try {
       const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      const userID = result.user?.uid;
+      const userId = result.user?.uid;
 
       const initials = this.getInitials(name);
       const color = this.helperService.getRandomColor();
 
-      await this.saveUserToFirestore(userID, name, email, initials, color);
+      await this.saveUserToFirestore(userId, name, email, initials, color);
 
       this.isAnimation = true;
       setTimeout(() => {
@@ -239,9 +239,9 @@ export class AuthFormComponent {
   }
 
 
-  private saveUserToFirestore(userID: string | undefined, name: string, email: string, initials: string, color: string): Promise<void> {
-    return this.firestore.collection('users').doc(userID).set({
-      userID: userID,
+  private saveUserToFirestore(userId: string | undefined, name: string, email: string, initials: string, color: string): Promise<void> {
+    return this.firestore.collection('users').doc(userId).set({
+      userId: userId,
       name: name,
       email: email,
       initials: initials,
