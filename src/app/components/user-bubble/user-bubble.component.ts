@@ -12,6 +12,7 @@ export class UserBubbleComponent {
   @Input() size: string = '48px';
   @Input() borderWidth: string = '2px';
   @Input() borderColor: string = '';
+  @Input() fontSize: string = '14px';
 
 
   public get bubbleStyles(): { [key: string]: string } {
@@ -21,6 +22,7 @@ export class UserBubbleComponent {
       'width': this.size,
       'height': this.size,
       'border-width': this.borderWidth,
+      'font-size': this.fontSize
     };
   }
 
