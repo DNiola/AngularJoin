@@ -1,2 +1,7 @@
-
-<span class="font-bold text-6xl">{{title}}</span>
+<div class="flex items-center">
+    <span class="font-bold text-6xl">{{title}}</span>
+    <div *ngIf="text" class="flex items-center pl-4">
+        <span class="bg-lightBlue rounded-full h-12 w-[3px] "></span>
+        <span class="text-3xl pl-4 text-normalBlue">{{text}}</span>
+    </div>
+</div>
