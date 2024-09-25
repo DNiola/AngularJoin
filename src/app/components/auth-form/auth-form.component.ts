@@ -32,7 +32,7 @@ export class AuthFormComponent {
   public isAnimation = false;
 
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, private helperService: HelperService) { }
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) { }
 
   ngAfterViewInit() {
     const savedEmail = localStorage.getItem('email');
@@ -55,7 +55,7 @@ export class AuthFormComponent {
 
 
   private getSignUpData(): void {
-    const name = this.capitalizeName(this.nameField.getValue());
+    const name = this.helperService.capitalizeName(this.nameField.getValue());
     const email = this.emailField.getValue();
     const password = this.passwordField.getValue();
     const confirmPassword = this.confirmPasswordField ? this.confirmPasswordField.getValue() : '';
@@ -75,7 +75,7 @@ export class AuthFormComponent {
       const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
       const userId = result.user?.uid;
 
-      const initials = this.getInitials(name);
+      const initials = this.helperService.getInitials(name);
       const color = this.helperService.getRandomColor();
 
       await this.saveUserToFirestore(userId, name, email, initials, color);
@@ -225,20 +225,6 @@ export class AuthFormComponent {
   }
 
 
-  private getInitials(name: string): string {
-    const names = name.split(' ');
-    const initials = names[0][0] + (names[1] ? ' ' + names[1][0] : '');
-    return initials.toUpperCase();
-  }
-
-
-  private capitalizeName(name: string): string {
-    return name.split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  }
-
-
   private saveUserToFirestore(userId: string | undefined, name: string, email: string, initials: string, color: string): Promise<void> {
     return this.firestore.collection('users').doc(userId).set({
       userId: userId,
@@ -247,11 +233,6 @@ export class AuthFormComponent {
       initials: initials,
       color: color
     });
-  }
-
-
-  public EmptyErrorField(fieldName: AuthInputFieldsComponent | AuthCheckboxComponent): void {
-    fieldName.errorMessage = '';
   }
 
 }

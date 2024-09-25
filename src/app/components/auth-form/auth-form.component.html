@@ -24,23 +24,23 @@
 
         <form (ngSubmit)="onSubmit()" class="flex flex-col items-center space-y-8">
           <!-- Name input (only shown if not login) -->
-          <app-auth-input-fields *ngIf="!isLogin" (input)="EmptyErrorField(nameField)" #nameField class="w-full"
+          <app-auth-input-fields *ngIf="!isLogin" (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
             [type]="'name'" [placeholder]="'Name'" [icon]="'user.svg'" [errorMessage]="errorMessage">
           </app-auth-input-fields>
 
           <!-- Email input -->
-          <app-auth-input-fields (input)="EmptyErrorField(emailField)" #emailField name="email" class="w-full"
+          <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField name="email" class="w-full"
             [type]="'email'" [placeholder]="'Email'" [icon]="'email.svg'">
           </app-auth-input-fields>
 
 
           <!-- Password input -->
-          <app-auth-input-fields (input)="EmptyErrorField(passwordField)" #passwordField class="w-full"
+          <app-auth-input-fields (input)="helperService.EmptyErrorField(passwordField)" #passwordField class="w-full"
             [type]="'password'" [placeholder]="'Password'" [isPasswordField]="true">
           </app-auth-input-fields>
 
           <!-- Confirm Password input (only shown if not login) -->
-          <app-auth-input-fields *ngIf="!isLogin" (input)="EmptyErrorField(confirmPasswordField)" #confirmPasswordField
+          <app-auth-input-fields *ngIf="!isLogin" (input)="helperService.EmptyErrorField(confirmPasswordField)" #confirmPasswordField
             class="w-full" [type]="'password'" [placeholder]="'Confirm Password'" [isPasswordField]="true">
           </app-auth-input-fields>
 
@@ -50,7 +50,7 @@
 
             <a *ngIf="isLogin" href="" class="text-lightBlue hover:underline">Forgot my password</a>
 
-            <app-auth-checkbox *ngIf="!isLogin" (ionChange)="EmptyErrorField(privacyCheckbox)" #privacyCheckbox
+            <app-auth-checkbox *ngIf="!isLogin" (ionChange)="helperService.EmptyErrorField(privacyCheckbox)" #privacyCheckbox
               [text]="'I accept the'" [linkText]="'Privacy policy'" [link]="'/privacy-policy'">
             </app-auth-checkbox>
           </div>
