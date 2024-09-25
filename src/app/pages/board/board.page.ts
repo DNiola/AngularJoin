@@ -52,7 +52,7 @@ export class BoardPage implements OnInit {
 
   public contactsInit(): void {
     if (this.currentUser) {
-      this.userService.getAllUsers(this.currentUser.userId).then(users => {
+      this.userService.getAllUsers().then(users => {
         this.contacts = users as Contact[]
       });
     }
