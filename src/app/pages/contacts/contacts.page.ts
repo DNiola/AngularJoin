@@ -16,49 +16,52 @@ export class ContactsPage implements OnInit {
   public groupedContacts: { [key: string]: Contact[] } = {};
 
   public isContactCardOpen = false;
+  
   constructor(private userService: UserService) { }
 
+
   ngOnInit() {
-    this.userService.currentUser$.subscribe(user => {
+    this.userService.currentUser$.subscribe((user) => {
       this.currentUser = user;
       this.contactsInit();
     });
   }
 
+
   public contactsInit(): void {
     if (this.currentUser) {
-      this.userService.getAllUsers(this.currentUser.userId).then(users => {
-        this.contacts = users as Contact[];
+      this.userService.getAllUsers().then((users) => {
+        const userContacts = users as Contact[];
+        const personalContacts = this.currentUser?.contacts || [];
+        if (userContacts) {
+          this.contacts = [...userContacts, ...personalContacts];
+        }
         this.groupContactsByLetter();
       });
     }
   }
 
-  private groupContactsByLetter(): void {
-    this.contacts.forEach(contact => {
-      console.log(this.contacts);
 
+  private groupContactsByLetter(): void {
+    this.groupedContacts = {};
+    this.contacts.forEach((contact) => {
       const firstLetter = contact.name.charAt(0).toUpperCase();
       if (!this.groupedContacts[firstLetter]) {
         this.groupedContacts[firstLetter] = [];
       }
-      if (contact) {
-        this.groupedContacts[firstLetter].push(contact);
-      }
+      this.groupedContacts[firstLetter].push(contact);
     });
+
   }
 
 
-
-  // Funktion zum Auswählen eines Kontakts
   public selectContact(contact: Contact): void {
-    this.selectedContact = contact; 
+    this.selectedContact = contact;
     this.showContactOverview();
   }
 
 
   public showContactOverview() {
     console.log(this.selectedContact);
-
   }
 }

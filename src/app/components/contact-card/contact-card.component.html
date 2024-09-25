@@ -13,19 +13,32 @@
     <app-user-bubble [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
     </app-user-bubble>
 
-    <form action="" class="flex flex-col justify-center items-center pt-16">
+    <form (submit)="onCreateContact()" class="flex flex-col justify-center items-center pt-16">
 
       <div class="flex flex-col justify-center gap-8  w-96">
-        <app-auth-input-fields [icon]="'user.svg'"></app-auth-input-fields>
-        <app-auth-input-fields [icon]="'email.svg'"></app-auth-input-fields>
-        <app-auth-input-fields [icon]="'phone.svg'"></app-auth-input-fields>
+        <!-- <app-auth-input-fields [(ngModel)]="contact.name" name="name" [icon]="'user.svg'" placeholder="Vollständiger Name"></app-auth-input-fields>
+        <app-auth-input-fields [(ngModel)]="contact.email" name="email" [icon]="'email.svg'" placeholder="E-Mail"></app-auth-input-fields>
+        <app-auth-input-fields [(ngModel)]="contact.phone" name="phone" [icon]="'phone.svg'" placeholder="Telefonnummer"></app-auth-input-fields> -->
+
+        <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full" [type]="'text'"
+          [placeholder]="'Vollständiger Name'" [icon]="'user.svg'">
+        </app-auth-input-fields>
+
+        <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField class="w-full" [type]="'email'"
+          [placeholder]="'E-Mail'" [icon]="'email.svg'">
+        </app-auth-input-fields>
+
+        <app-auth-input-fields (input)="helperService.EmptyErrorField(phoneField)" #phoneField class="w-full" [type]="'tel'"
+          [placeholder]="'Telefonnummer'" [icon]="'phone.svg'">
+        </app-auth-input-fields>
 
 
         <div class="flex justify-between items-center font-inter pt-3">
           <ion-col size="12" size="6">
             <div *ngIf="!isEditContact" class="flex w-max gap-4">
               <app-button-edge [text]="'Cancel'" [iconName]="'close-outline'"></app-button-edge>
-              <app-button-filled [text]="'Create contact'" [iconName]="'checkmark-outline'"></app-button-filled>
+              <app-button-filled [text]="'Create contact'" [iconName]="'checkmark-outline'"
+                type="submit"></app-button-filled>
             </div>
             <div *ngIf="isEditContact" class="flex justify-end">
               <app-button-edge [text]="'Delete'"></app-button-edge>

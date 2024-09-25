@@ -7,4 +7,5 @@ export interface Contact {
     email?: string;
     contacts?: Contact[];   
     phone?: string;
+    creatorId ?: string;
 }
