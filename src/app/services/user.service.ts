@@ -28,31 +28,19 @@ export class UserService {
     const userDataSnapshot = await this.firestore.collection('users').doc(uid).get().toPromise();
     const userData = userDataSnapshot?.data() as User;
     if (userData) {
-      this.currentUserSubject.next({
-        userId: uid,
-        name: userData.name,
-        email: userData.email || '',
-        initials: userData.initials,
-        color: userData.color,
-        contacts: [] 
-      });
+      this.currentUserSubject.next(userData);
     }
   }
 
 
-  public async getAllUsers(currentUserId: string) {
+  public async getAllUsers() {
     const allUsersSnapshot = await this.firestore.collection('users').get().toPromise();
     const contacts = allUsersSnapshot?.docs.map(doc => {
       const userData = doc.data() as User;
-      return {
-        userId: userData.userId,
-        name: userData.name,
-        email: userData.email,
-        initials: userData.initials,
-        color: userData.color
-      };
-    }) 
-    
+      return userData
+
+    })
+
     return contacts;
   }
 
