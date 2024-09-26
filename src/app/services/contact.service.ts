@@ -9,7 +9,7 @@ export class ContactService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public saveContact(creatorId: string, newContact: Contact): Promise<void> {
+  public saveContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
     const userRef = this.firestore.collection('users').doc(creatorId);
 
     return this.firestore.firestore.runTransaction(async (transaction) => {
@@ -27,7 +27,25 @@ export class ContactService {
   }
 
 
-  public deleteUserContact(currentUserId: string, contactId: string): Promise<void> {
+  public updateContact(creatorId: Contact['creatorId'], updatedContact: Contact): Promise<void> {
+    const userRef = this.firestore.collection('users').doc(creatorId);
+
+    return this.firestore.firestore.runTransaction(async (transaction) => {
+      const userDoc = await transaction.get(userRef.ref);
+
+      if (!userDoc.exists) {
+        throw new Error('Benutzer existiert nicht');
+      }
+
+      const userData = userDoc.data() as any;
+      const updatedContacts = userData.contacts.map((c: Contact) => c.userId === updatedContact.userId ? updatedContact : c);
+
+      transaction.update(userRef.ref, { contacts: updatedContacts });
+    });
+  }
+
+
+  public deleteUserContact(currentUserId: Contact['creatorId'], contactId: string): Promise<void> {
     const userRef = this.firestore.collection('users').doc(currentUserId);
 
     return this.firestore.firestore.runTransaction(async (transaction) => {
