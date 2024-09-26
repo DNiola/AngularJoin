@@ -99,6 +99,16 @@ export class ContactsPage implements OnInit {
   }
 
 
+  public onContactCreated(newContact: Contact): void {
+    this.isContactCardOpen = false;  
+
+    if (newContact) {
+      this.contacts.push(newContact);
+      this.groupContactsByLetter();
+    }
+  }
+
+
   public selectContact(contact: Contact): void {
     this.selectedContact = contact;
     this.showContactOverview();
