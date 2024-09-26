@@ -5,8 +5,7 @@
 
     <div class="flex flex-grow ">
       <div class="w-1/4 bg-white flex flex-col p-4 px-8 shadow-rightShadow z-10">
-        <app-button-filled class="w-full" [text]="'Add new contact'" [iconName]="'person-add-outline'"
-          (click)="isContactCardOpen = true"></app-button-filled>
+        <app-button-filled class="w-full" [text]="'Add new contact'" [iconName]="'person-add-outline'" (click)="onOpenAddContact()"></app-button-filled>
 
         <div *ngFor="let contacts of groupedContacts | keyvalue" class="flex flex-col">
           <span class="font-semibold text-xl border-b w-full flex pt-2 px-9"> {{ contacts.key }}</span>
@@ -26,6 +25,6 @@
 <div *ngIf="isContactCardOpen"
   class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
   <div class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-2/4 max-2xl:w-3/4 h-[600px]">
-    <app-contact-card (closeCard)="onContactCreated($event)"></app-contact-card>
+    <app-contact-card (closeCard)="onContactCreated($event)" [isEditContact]="isEditContact" [contact]="selectedContact!"></app-contact-card>
   </div>
 </div>

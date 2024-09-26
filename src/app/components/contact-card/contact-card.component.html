@@ -2,8 +2,8 @@
 
   <div class="bg-normalBlue text-white p-20 gap-1 flex flex-col rounded-l-3xl h-full justify-center">
     <img class="h-28 w-28" src="../../../assets/img/sideLogo.svg">
-    <app-page-title class="flex pt-4 w-max" [title]="'Add contact'"></app-page-title>
-    <span>Tasks are better with a team!</span>
+    <app-page-title class="flex pt-4 w-max" [title]="isEditContact ? 'Edit contact' : 'Add contact'"></app-page-title>
+    <span *ngIf="!isEditContact">Tasks are better with a team!</span>
     <div class="h-1 w-20 bg-lightBlue rounded-lg"></div>
   </div>
   <div class="flex w-full items-center justify-evenly">
@@ -13,19 +13,19 @@
     <app-user-bubble [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
     </app-user-bubble>
 
-    <form (submit)="onCreateContact()" class="flex flex-col justify-center items-center pt-16">
+    <form (submit)="onHandleForm()" class="flex flex-col justify-center items-center pt-16">
 
-      <div class="flex flex-col justify-center gap-8  w-96"> 
-        <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full" [type]="'text'"
-          [placeholder]="'Vollständiger Name'" [icon]="'user.svg'">
+      <div class="flex flex-col justify-center gap-8  w-96">
+        <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
+          [type]="'text'" [placeholder]="'Full Name'" [icon]="'user.svg'">
         </app-auth-input-fields>
 
-        <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField class="w-full" [type]="'email'"
-          [placeholder]="'E-Mail'" [icon]="'email.svg'">
+        <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField class="w-full"
+          [type]="'email'" [placeholder]="'E-Mail'" [icon]="'email.svg'">
         </app-auth-input-fields>
 
-        <app-auth-input-fields (input)="helperService.EmptyErrorField(phoneField)" #phoneField class="w-full" [type]="'tel'"
-          [placeholder]="'Telefonnummer'" [icon]="'phone.svg'">
+        <app-auth-input-fields (input)="helperService.EmptyErrorField(phoneField)" #phoneField class="w-full"
+          [type]="'number'" [placeholder]="'Phone number'" [icon]="'phone.svg'">
         </app-auth-input-fields>
 
 
@@ -38,7 +38,7 @@
             </div>
             <div *ngIf="isEditContact" class="flex justify-end">
               <app-button-edge [text]="'Delete'"></app-button-edge>
-              <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'"></app-button-filled>
+              <app-button-filled [text]="'Save'" [iconName]="'checkmark-outline'"></app-button-filled>
             </div>
           </ion-col>
         </div>

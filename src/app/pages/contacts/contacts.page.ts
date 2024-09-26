@@ -17,6 +17,7 @@ export class ContactsPage implements OnInit {
   public groupedContacts: { [key: string]: Contact[] } = {};
 
   public isContactCardOpen = false;
+  public isEditContact = false;
 
   constructor(private userService: UserService, private contactService: ContactService) { }
 
@@ -24,21 +25,22 @@ export class ContactsPage implements OnInit {
   ngOnInit() {
     this.userService.currentUser$.subscribe((user) => {
       this.currentUser = user;
-      this.contactsInit();
+      if (this.currentUser) {
+        this.contactsInit(this.currentUser);
+      }
     });
   }
 
 
-  public contactsInit(): void {
-    if (this.currentUser) {
-      this.userService.getAllUsers().then((users) => {
-        const userContacts = users as Contact[];
-        const personalContacts = this.currentUser?.contacts || [];
-        const visibleUserContacts = userContacts.filter((contact) => !this.currentUser?.hidden?.includes(contact.userId));
-        this.contacts = [...visibleUserContacts, ...personalContacts];
-        this.groupContactsByLetter();
-      });
-    }
+  public contactsInit(currentUser: User): void {
+    this.userService.getAllUsers().then((users) => {
+      const userContacts = users as Contact[];
+      const personalContacts = currentUser.contacts || [];
+      const visibleUserContacts = userContacts.filter((contact) => !currentUser.hidden?.includes(contact.userId));
+      this.contacts = [...visibleUserContacts, ...personalContacts];
+      this.groupContactsByLetter();
+    });
+
   }
 
 
@@ -57,10 +59,16 @@ export class ContactsPage implements OnInit {
 
   public handleContact(action: any): void {
     if (action.action === 'delete' && this.currentUser) {
-      this.handleDeleteContact(action.contact, this.currentUser);
+      this.handleDeleteContact(this.selectedContact!, this.currentUser);
     } else if (action.action === 'edit' && this.currentUser) {
-      console.log('Contact handled', action);
+      this.editContact();
     }
+  }
+
+
+  private editContact(): void {
+    this.isEditContact = true;
+    this.isContactCardOpen = true;
   }
 
 
@@ -100,22 +108,29 @@ export class ContactsPage implements OnInit {
 
 
   public onContactCreated(newContact: Contact): void {
-    this.isContactCardOpen = false;  
-
+    this.isContactCardOpen = false;
     if (newContact) {
-      this.contacts.push(newContact);
+      if (this.isEditContact) {
+        const index = this.contacts.findIndex(c => c.userId === newContact.userId);
+        index !== -1 ? this.contacts[index] = newContact : this.contacts.push(newContact);
+      } else {
+        this.contacts.push(newContact);
+      }
       this.groupContactsByLetter();
     }
+    this.isEditContact = false;
   }
+
 
 
   public selectContact(contact: Contact): void {
     this.selectedContact = contact;
-    this.showContactOverview();
   }
 
 
-  public showContactOverview() {
-    console.log(this.selectedContact);
+  public onOpenAddContact(): void {
+    this.isEditContact = false;
+    this.isContactCardOpen = true
   }
+
 }
