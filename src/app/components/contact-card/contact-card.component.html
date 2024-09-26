@@ -15,11 +15,7 @@
 
     <form (submit)="onCreateContact()" class="flex flex-col justify-center items-center pt-16">
 
-      <div class="flex flex-col justify-center gap-8  w-96">
-        <!-- <app-auth-input-fields [(ngModel)]="contact.name" name="name" [icon]="'user.svg'" placeholder="Vollständiger Name"></app-auth-input-fields>
-        <app-auth-input-fields [(ngModel)]="contact.email" name="email" [icon]="'email.svg'" placeholder="E-Mail"></app-auth-input-fields>
-        <app-auth-input-fields [(ngModel)]="contact.phone" name="phone" [icon]="'phone.svg'" placeholder="Telefonnummer"></app-auth-input-fields> -->
-
+      <div class="flex flex-col justify-center gap-8  w-96"> 
         <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full" [type]="'text'"
           [placeholder]="'Vollständiger Name'" [icon]="'user.svg'">
         </app-auth-input-fields>
