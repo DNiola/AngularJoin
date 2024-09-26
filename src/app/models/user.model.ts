@@ -7,5 +7,6 @@ export interface User {
     initials: string;
     color: string;
     contacts: Contact[];
+    hidden?: string[]; 
   }
   

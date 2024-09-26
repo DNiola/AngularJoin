@@ -18,7 +18,7 @@
 
       <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter w-7/12">
         <app-page-title class="flex" [title]="'Contacts'" [text]="'Better with a team'"></app-page-title>
-        <app-contact-overview [selectedContact]="selectedContact"></app-contact-overview>
+        <app-contact-overview [selectedContact]="selectedContact" (handleContact)="handleContact($event)"></app-contact-overview>
       </div>
     </div>
   </div>
