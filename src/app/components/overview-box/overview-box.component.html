@@ -1,5 +1,5 @@
 <div
-  class="flex border border-gray-200 rounded-3xl shadow-overviewShadow hover:shadow-overviewShadowHover h-44 w-full bg-white hover:bg-normalBlue  hover:scale-105 transition-transform hover:text-[#FFFFFF]"
+  class="flex border border-gray-200 rounded-3xl shadow-overviewShadow hover:shadow-overviewShadowHover h-44 w-full bg-white hover:bg-normalBlue  hover:scale-105 transition-transform hover:text-[#FFFFFF] cursor-pointer" 
   (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
   <div class="flex items-center gap-4 p-4   justify-center w-full">
     <ion-img *ngIf="icon" class="w-14 hover:text-w" [src]="'../../../assets/img/' + (isHovered ? icon + 'Hover' : icon) + '.svg'"></ion-img>

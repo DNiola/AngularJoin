@@ -4,6 +4,7 @@ import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { formatDate } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -23,7 +24,7 @@ export class SummaryPage implements OnInit {
   public urgentTasks: Task[] = [];
   public allTasks: Task[] = [];
 
-  constructor(private userService: UserService, private taskService: TaskService) { }
+  constructor(private userService: UserService, private taskService: TaskService, private router: Router,) { }
 
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
@@ -59,7 +60,7 @@ export class SummaryPage implements OnInit {
     this.getGreetings();
   }
 
- 
+
   private calculateUpcomingDeadline(): void {
     if (this.urgentTasks.length > 0) {
       // Find the task with the earliest due date
@@ -90,6 +91,8 @@ export class SummaryPage implements OnInit {
     }
   }
 
-
+  public onRouteToBoard() {
+    this.router.navigate(['/board']);
+  }
 
 }

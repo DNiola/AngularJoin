@@ -11,19 +11,19 @@
 
         <div class="w-[38rem]">
           <div class="flex pb-8 gap-8">
-            <app-overview-box class="w-full" [text]="'To-do'" [icon]="'pen'" [number]="todoTasks.length"></app-overview-box>
-            <app-overview-box class="w-full" [text]="'Done'" [icon]="'done'" [number]="doneTasks.length"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'To-do'" [icon]="'pen'" [number]="todoTasks.length" (click)="onRouteToBoard()"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Done'" [icon]="'done'" [number]="doneTasks.length" (click)="onRouteToBoard()"></app-overview-box>
           </div>
 
           <div class="flex pb-8 gap-8">
-            <app-overview-box class="w-full" [longBox]="true" [text]="'Urgent'" [icon]="'urgent'" [number]="urgentTasks.length" [taskDeadline]="upcomingDeadline">
+            <app-overview-box class="w-full" [longBox]="true" [text]="'Urgent'" [icon]="'urgent'" [number]="urgentTasks.length" [taskDeadline]="upcomingDeadline" (click)="onRouteToBoard()">
             </app-overview-box>
           </div>
 
           <div class="flex gap-8">
-            <app-overview-box class="w-full" [text]="'Tasks in Board'" [number]="allTasks.length"></app-overview-box>
-            <app-overview-box class="w-full" [text]="'Tasks in Progress'" [number]="inProgressTasks.length"></app-overview-box>
-            <app-overview-box class="w-full" [text]="'Awaiting Feedback'" [number]="awaitFeedbackTasks.length"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Tasks in Board'" [number]="allTasks.length" (click)="onRouteToBoard()"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Tasks in Progress'" [number]="inProgressTasks.length" (click)="onRouteToBoard()"></app-overview-box>
+            <app-overview-box class="w-full" [text]="'Awaiting Feedback'" [number]="awaitFeedbackTasks.length" (click)="onRouteToBoard()"></app-overview-box>
           </div>
         </div>
 
