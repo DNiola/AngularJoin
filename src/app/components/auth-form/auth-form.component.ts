@@ -30,11 +30,12 @@ export class AuthFormComponent {
 
   private isError = false;
   public isAnimation = false;
+  public isForgotPassword = false;
 
 
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) { }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     const savedEmail = localStorage.getItem('email');
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
 
@@ -46,6 +47,9 @@ export class AuthFormComponent {
 
 
   public onSubmit(): void {
+    if (this.isForgotPassword) {
+      this.resetPassword();
+    }
     if (!this.isLogin) {
       this.getSignUpData();
     } else {
@@ -53,7 +57,7 @@ export class AuthFormComponent {
     }
   }
 
-  
+
   public onGuestLogin(): void {
     this.userService.signInAsGuest()
       .then(() => {
@@ -144,7 +148,7 @@ export class AuthFormComponent {
     }
   }
 
-  // Set the persistence based on the "Remember Me" option
+
   private async persistenceRememberMe(rememberMe: boolean, email: string) {
     await this.afAuth.setPersistence(rememberMe ? 'local' : 'session');
 
@@ -225,14 +229,18 @@ export class AuthFormComponent {
 
 
   public EmptyInputFields(): void {
-    this.nameField.inputValue = '';
-    this.emailField.inputValue = '';
-    this.passwordField.inputValue = '';
-    this.confirmPasswordField.inputValue = '';
-    this.showPassword = false;
-    this.showConfirmPassword = false;
-    this.privacyCheckbox.checkboxValue = false;
-    this.isAnimation = false;
+    if (this.isForgotPassword = true) {
+      this.isForgotPassword = false;
+    } else {
+      this.nameField.inputValue = '';
+      this.emailField.inputValue = '';
+      this.passwordField.inputValue = '';
+      this.confirmPasswordField.inputValue = '';
+      this.showPassword = false;
+      this.showConfirmPassword = false;
+      this.privacyCheckbox.checkboxValue = false;
+      this.isAnimation = false;
+    }
   }
 
 
@@ -244,6 +252,23 @@ export class AuthFormComponent {
       initials: initials,
       color: color
     });
+  }
+
+
+  public resetPassword(): void {
+    if (this.emailField.inputValue) {
+      this.userService.resetPassword(this.emailField.inputValue)
+        .then(() => {
+          alert('Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.');
+        })
+        .catch((error) => {
+          debugger
+          console.error(error);
+          alert('Fehler beim Senden der E-Mail. Bitte überprüfen Sie die E-Mail-Adresse.');
+        });
+    } else {
+      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    }
   }
 
 }
