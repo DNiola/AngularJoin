@@ -73,11 +73,7 @@ export class ContactsPage implements OnInit {
 
 
   public handleDeleteContact(contact: Contact, currentUser: User): void {
-    if (contact.creatorId) {
-      this.deleteContact(currentUser, contact);
-    } else {
-      this.hiddeUserContact(currentUser, contact);
-    }
+    contact.creatorId ? this.deleteContact(currentUser, contact) : this.hiddeUserContact(currentUser, contact);
   }
 
 
@@ -116,6 +112,7 @@ export class ContactsPage implements OnInit {
       } else {
         this.contacts.push(newContact);
       }
+      this.selectedContact = newContact;
       this.groupContactsByLetter();
     }
     this.isEditContact = false;

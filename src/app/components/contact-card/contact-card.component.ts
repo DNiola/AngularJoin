@@ -5,7 +5,7 @@ import { ContactService } from 'src/app/services/contact.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'app-contact-card',
   templateUrl: './contact-card.component.html',
@@ -23,18 +23,21 @@ export class ContactCardComponent {
 
   constructor(private contactService: ContactService, private firestore: AngularFirestore, private afAuth: AngularFireAuth, public helperService: HelperService, private cdr: ChangeDetectorRef) { }
 
-  ngAfterViewInit(): void {
+
+  public ngAfterViewInit(): void {
     if (this.isEditContact && this.contact) {
       this.setFormValues();
     }
     this.cdr.detectChanges();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+
+  public ngOnChanges(changes: SimpleChanges): void {
     if (this.isEditContact && changes['contact'] && this.nameField) {
       this.setFormValues();
     }
   }
+
 
   private setFormValues(): void {
     if (this.nameField && this.contact) {
@@ -44,38 +47,49 @@ export class ContactCardComponent {
     }
   }
 
+
+  private getFormValues(): { name: string, email: string, phone: string } {
+    return {
+      name: this.nameField.getValue(),
+      email: this.emailField.getValue(),
+      phone: this.phoneField.getValue(),
+    };
+  }
+
+
   public onHandleForm(): void {
-    if (this.isEditContact) {
-      this.handleEditContact();
-    } else {
-      this.handleCreateContact();
-    }
+    this.isEditContact ? this.handleEditContact() : this.handleCreateContact();
   }
 
 
   private handleEditContact(): void {
     this.afAuth.currentUser.then((user) => {
       if (user) {
-        const creatorId = this.contact.creatorId ? this.contact.creatorId : '0';
-        const name = this.nameField.getValue();
-        const email = this.emailField.getValue();
-        const phone = this.phoneField.getValue();
-        const initials = this.helperService.getInitials(name);
-        const color = this.contact.color
-        const userId = this.contact.userId
-
-        const newContact: Contact = {
-          userId,
-          name,
-          email,
-          phone,
-          initials,
-          color,
-          creatorId,
-        };
-        this.editContact(creatorId, newContact)
+        const creatorId = this.contact.creatorId ? this.contact.creatorId : '';
+        const { userId, newContact } = this.getEditContactData(creatorId);
+        creatorId ? this.editContact(creatorId, newContact) : this.editUserContact(userId, newContact)
       }
     });
+  }
+
+
+  private getEditContactData(creatorId: Contact['creatorId']): { userId: Contact['userId'], newContact: Contact } {
+    const { name, email, phone } = this.getFormValues();
+    const initials = this.helperService.getInitials(name);
+    const color = this.contact.color
+    const userId = this.contact.userId
+
+    const newContact: Contact = {
+      userId,
+      name,
+      email,
+      phone,
+      initials,
+      color,
+      creatorId,
+    };
+
+    return { userId, newContact };
   }
 
 
@@ -83,31 +97,47 @@ export class ContactCardComponent {
     this.afAuth.currentUser.then((user) => {
       if (user) {
         const creatorId = user.uid;
-        const name = this.nameField.getValue();
-        const email = this.emailField.getValue();
-        const phone = this.phoneField.getValue();
-        const initials = this.helperService.getInitials(name);
-        const color = this.helperService.getRandomColor();
-        const userId = this.firestore.createId();
-
-        const newContact: Contact = {
-          userId,
-          name,
-          email,
-          phone,
-          initials,
-          color,
-          creatorId,
-        };
-
+        const newContact = this.getCreateContactData(creatorId);
         this.createContact(creatorId, newContact)
       }
     });
   }
 
 
+  private getCreateContactData(creatorId: Contact['creatorId']): Contact {
+    const { name, email, phone } = this.getFormValues();
+    const initials = this.helperService.getInitials(name);
+    const color = this.helperService.getRandomColor();
+    const userId = this.firestore.createId();
+
+    const newContact: Contact = {
+      userId,
+      name,
+      email,
+      phone,
+      initials,
+      color,
+      creatorId,
+    };
+
+    return newContact;
+  }
+
+
   private editContact(creatorId: Contact['creatorId'], newContact: Contact): void {
-    this.contactService.updateContact(creatorId, newContact)
+    this.contactService.updateCreatorContact(creatorId, newContact)
+      .then(() => {
+        this.closeCard.emit(newContact);
+        this.emptyField();
+      })
+      .catch((error) => {
+        console.error('Fehler beim Aktualisieren des Kontakts:', error);
+      });
+  }
+
+
+  private editUserContact(userId: User['userId'], newContact: Contact): void {
+    this.contactService.updateUserContact(userId, newContact)
       .then(() => {
         this.closeCard.emit(newContact);
         this.emptyField();
@@ -134,7 +164,7 @@ export class ContactCardComponent {
     this.closeCard.emit();
   }
 
-  
+
   private emptyField(): void {
     this.nameField.setValue('');
     this.emailField.setValue('');
