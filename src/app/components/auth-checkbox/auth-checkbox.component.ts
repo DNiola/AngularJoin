@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-auth-checkbox',
@@ -10,13 +10,14 @@ export class AuthCheckboxComponent {
   @Input() link = '';
   @Input() linkText = '';
   @Input() errorMessage = '';
-  
+
+  @Output() checkedChange = new EventEmitter<boolean>();
+
   public checkboxValue = false;
 
-  constructor() { }
 
-
-
-
+  public onCheckboxChange(): void {
+    this.checkedChange.emit(this.checkboxValue);
+  }
 
 }
