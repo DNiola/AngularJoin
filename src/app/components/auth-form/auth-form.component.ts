@@ -262,7 +262,6 @@ export class AuthFormComponent {
           alert('Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.');
         })
         .catch((error) => {
-          debugger
           console.error(error);
           alert('Fehler beim Senden der E-Mail. Bitte überprüfen Sie die E-Mail-Adresse.');
         });

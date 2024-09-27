@@ -13,7 +13,6 @@ export class DialogComponent {
 
 
   public onConfirm(): void {
-    debugger
     if (this.dialogMessage.showAgain == true) {
       localStorage.setItem('disclaimerUnderstood', 'true');
     }
