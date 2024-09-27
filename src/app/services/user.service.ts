@@ -87,9 +87,7 @@ export class UserService {
 
   public async resetPassword(email: string): Promise<void> {
     return this.afAuth.sendPasswordResetEmail(email)
-      .then(() => {
-        console.log('Passwort-Zurücksetzungs-E-Mail gesendet.');
-      })
+      .then(() => { })
       .catch((error) => {
         console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', error);
         throw error;

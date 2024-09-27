@@ -259,14 +259,17 @@ export class AuthFormComponent {
     if (this.emailField.inputValue) {
       this.userService.resetPassword(this.emailField.inputValue)
         .then(() => {
-          alert('Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.');
+          this.isAnimation = true;
+          setTimeout(() => {
+            this.isForgotPassword = false;
+            this.isAnimation = false;
+          }, 1000);
         })
         .catch((error) => {
-          console.error(error);
-          alert('Fehler beim Senden der E-Mail. Bitte überprüfen Sie die E-Mail-Adresse.');
+          this.handleErrorFromFirebase(error);
         });
     } else {
-      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+      this.emailField.errorMessage = 'Please enter your email address.';
     }
   }
 

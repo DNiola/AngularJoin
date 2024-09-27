@@ -1,8 +1,6 @@
 <ion-grid class="flex items-center justify-center h-dvh ">
 
-  <div *ngIf="isAnimation" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10">
-    <div class="p-4 rounded-lg bg-normalBlue text-white slide-up">You Signed Up sucessfully</div>
-  </div>
+  <app-animated-badge *ngIf="isAnimation" [text]="isForgotPassword ? 'Email was sucessfully send': 'You Signed Up sucessfully' " class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10"></app-animated-badge>
 
   <ion-row class="justify-center">
     <ion-col size-lg="20">
