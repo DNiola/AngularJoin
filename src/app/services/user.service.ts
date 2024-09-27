@@ -3,6 +3,7 @@ import { User } from '../models/user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class UserService {
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private helperService: HelperService) {
+
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.loadUserData(user.uid);
@@ -61,4 +63,25 @@ export class UserService {
       console.error('Error signing out:', error);
     });
   }
+
+
+  public async signInAsGuest(): Promise<void> {
+    return this.afAuth.signInWithEmailAndPassword('Guest@User.com', '123123')
+      .then((userCredential) => {
+        this.currentUserSubject.next({
+          userId: userCredential.user?.uid || 'guest_user',
+          name: 'Guest User',
+          email: 'Guest@User.com',
+          initials: 'G',
+          color: '#2A3647',
+          creatorId: 'guest_user',
+          isGuest: true,
+          contacts: []
+        } as User);
+      })
+      .catch((error) => {
+        console.error('Fehler beim Gast-Login:', error);
+      });
+  }
+
 }

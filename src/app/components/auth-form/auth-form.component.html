@@ -58,7 +58,7 @@
           <!-- Buttons -->
           <div class="flex items-center justify-around w-full mt-4">
             <app-button-filled [text]=" isLogin ? 'Login' : 'Sign Up'"></app-button-filled>
-            <app-button-edge *ngIf="isLogin" [text]="'Guest Log in'"></app-button-edge>
+            <app-button-edge *ngIf="isLogin" [text]="'Guest Log in'" (click)="onGuestLogin()"></app-button-edge>
           </div>
         </form>
       </div>

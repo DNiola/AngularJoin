@@ -8,5 +8,6 @@ export interface User {
     color: string;
     contacts: Contact[];
     hidden?: string[]; 
+    isGuest?: boolean;
   }
   

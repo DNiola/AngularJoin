@@ -53,6 +53,17 @@ export class AuthFormComponent {
     }
   }
 
+  
+  public onGuestLogin(): void {
+    this.userService.signInAsGuest()
+      .then(() => {
+        this.router.navigate(['/summary']);
+      })
+      .catch((error) => {
+        console.error('Fehler beim Gast-Login:', error);
+      });
+  }
+
 
   private getSignUpData(): void {
     const name = this.helperService.capitalizeName(this.nameField.getValue());

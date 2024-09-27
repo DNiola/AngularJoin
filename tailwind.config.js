@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         'normalBlue': '#2A3647',
         'lightBlue': '#29ABE2',
-        'darkBlue': '#091931', // the button color after click
+        'darkBlue': '#091931',
         'smokeGray': '#CDCDCD',
         'whiteSmoke': '#F5F5F5',
         'lightGray': '#A8A8A8',
