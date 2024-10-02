@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { LegalPageRoutingModule } from './legal-routing.module';
 
 import { LegalPage } from './legal.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, 
+    SharedModule,
     LegalPageRoutingModule
   ],
   declarations: [LegalPage]
 })
-export class LegalPageModule {}
+export class LegalPageModule { }
