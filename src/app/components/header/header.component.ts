@@ -21,7 +21,7 @@ export class HeaderComponent {
   ]
 
   public isDropdownOpen = false
-
+  public isDialog = false;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -41,6 +41,7 @@ export class HeaderComponent {
 
 
   logout(): void {
+    this.isDialog = false;
     this.userService.clearUser();
     this.router.navigate(['/login']);
   }

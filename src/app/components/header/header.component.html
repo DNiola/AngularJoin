@@ -21,5 +21,7 @@
   class="dropdown-menu absolute slide-up right-20 top-24 w-48 bg-normalBlue text-smokeGray rounded-lg rounded-tr-none shadow-[#0000001A] inter p-3 z-40 cursor-pointer">
   <a *ngFor="let items of menuItems" href="/{{items.href}}"
     class="block px-4 py-2 hover:bg-menuHoverBlue cursor-pointer">{{items.text}}</a>
-  <a (click)="logout()" class="block px-4 py-2 hover:bg-[#3b3d59]">Log out</a>
+  <a (click)="isDialog = true" class="block px-4 py-2 hover:bg-[#3b3d59]">Log out</a>
 </div>
+
+<app-dialog *ngIf="isDialog" (confirm)="logout()" (cancel)="isDialog = false" [dialogMessage]="{ title: 'Logout ?', message: 'Are you sure you want to logout?'}" ></app-dialog>
