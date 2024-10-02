@@ -2,7 +2,7 @@
 
   <ion-img class="w-32 p-5 pt-12" src="../../../assets/img/sideLogo.svg"></ion-img>
 
-  <div class="flex flex-col justify-center py-4 my-auto gap-2 w-full ">
+  <div *ngIf="currentUser" class="flex flex-col justify-center py-4 my-auto gap-2 w-full ">
     <app-sidebar-button [text]="'Summary'" [icon]="'summaryIcon.svg'" [link]="'/summary'"></app-sidebar-button>
     <app-sidebar-button [text]="'Add Task'" [icon]="'addTaskIcon.svg'" [link]="'/addTask'"></app-sidebar-button>
     <app-sidebar-button [text]="'Board'" [icon]="'boardIcon.svg'" [link]="'/board'"></app-sidebar-button>
