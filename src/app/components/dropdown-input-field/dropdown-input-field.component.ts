@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, SimpleChanges } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
 
 @Component({
@@ -23,6 +23,8 @@ export class DropdownInputFieldComponent {
   public isDropdownOpen = false;
   public selectedItems: Array<any> = [];
   public searchTerm = '';
+
+constructor(private eRef: ElementRef) { }
 
   ngOnInit() {
     if (this.editValueMode[0]?.text) {
@@ -84,6 +86,14 @@ export class DropdownInputFieldComponent {
   public selectItem(item: any): void {
     if (item.text) {
       this.searchTerm = item.text;
+      this.isDropdownOpen = false;
+    }
+  }
+
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: Event) {
+    if (this.isDropdownOpen && !this.eRef.nativeElement.contains(event.target)) {
       this.isDropdownOpen = false;
     }
   }
