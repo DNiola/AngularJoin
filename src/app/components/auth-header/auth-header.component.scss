@@ -1,5 +1,7 @@
 @keyframes fadeOut {
-    0% {}
+    0% {
+        background-color: whitesmoke;
+    }
 
     100% {
         background-color: transparent;
