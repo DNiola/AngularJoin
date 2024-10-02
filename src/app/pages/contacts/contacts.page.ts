@@ -18,6 +18,7 @@ export class ContactsPage implements OnInit {
 
   public isContactCardOpen = false;
   public isEditContact = false;
+  public isAnimation = false;
 
   constructor(private userService: UserService, private contactService: ContactService) { }
 
@@ -61,12 +62,12 @@ export class ContactsPage implements OnInit {
     if (action.action === 'delete' && this.currentUser) {
       this.handleDeleteContact(this.selectedContact!, this.currentUser);
     } else if (action.action === 'edit' && this.currentUser) {
-      this.editContact();
+      this.setEditContact();
     }
   }
 
 
-  private editContact(): void {
+  private setEditContact(): void {
     this.isEditContact = true;
     this.isContactCardOpen = true;
   }
@@ -106,18 +107,36 @@ export class ContactsPage implements OnInit {
   public onContactCreated(newContact: Contact): void {
     this.isContactCardOpen = false;
     if (newContact) {
-      if (this.isEditContact) {
-        const index = this.contacts.findIndex(c => c.userId === newContact.userId);
-        index !== -1 ? this.contacts[index] = newContact : this.contacts.push(newContact);
-      } else {
-        this.contacts.push(newContact);
-      }
-      this.selectedContact = newContact;
-      this.groupContactsByLetter();
+      this.handleCreateNewContact(newContact);
     }
     this.isEditContact = false;
   }
 
+
+  public handleCreateNewContact(newContact: Contact): void {
+    if (this.isEditContact) {
+      this.editContact(newContact);
+    } else {
+      this.isAnimation = true;
+      this.pushNewContact(newContact);
+    }
+    this.selectedContact = newContact;
+    this.groupContactsByLetter();
+  }
+
+
+  public editContact(newContact: Contact): void {
+    const index = this.contacts.findIndex(c => c.userId === newContact.userId);
+    index !== -1 ? this.contacts[index] = newContact : this.contacts.push(newContact);
+  }
+
+
+  public pushNewContact(newContact: Contact): void {
+    this.contacts.push(newContact);
+    setTimeout(() => {
+      this.isAnimation = false;
+    }, 1000);
+  }
 
 
   public selectContact(contact: Contact): void {

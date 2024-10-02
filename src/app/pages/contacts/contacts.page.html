@@ -28,3 +28,5 @@
     <app-contact-card (closeCard)="onContactCreated($event)" [isEditContact]="isEditContact" [contact]="selectedContact!"></app-contact-card>
   </div>
 </div>
+
+<app-animated-badge *ngIf="isAnimation" [text]="'Contact was sucessfully created'" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
