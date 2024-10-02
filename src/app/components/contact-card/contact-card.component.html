@@ -13,7 +13,7 @@
     <app-user-bubble [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
     </app-user-bubble>
 
-    <form (submit)="onHandleForm()" class="flex flex-col justify-center items-center pt-16">
+    <form (submit)="onHandleDialog('create')" class="flex flex-col justify-center items-center pt-16">
 
       <div class="flex flex-col justify-center gap-8  w-96">
         <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
@@ -32,13 +32,12 @@
         <div class="flex justify-between items-center font-inter pt-3">
           <ion-col size="12" size="6">
             <div *ngIf="!isEditContact" class="flex w-max gap-4">
-              <app-button-edge [text]="'Cancel'" [iconName]="'close-outline'"></app-button-edge>
-              <app-button-filled [text]="'Create contact'" [iconName]="'checkmark-outline'"
-                type="submit"></app-button-filled>
+              <app-button-edge [text]="'Cancel'" [iconName]="'close-outline'" (click)="onHandleDialog('cancel')"></app-button-edge>
+              <app-button-filled [text]="'Create contact'" [iconName]="'checkmark-outline'" type="submit"></app-button-filled>
             </div>
             <div *ngIf="isEditContact" class="flex justify-end">
-              <app-button-edge [text]="'Delete'"></app-button-edge>
-              <app-button-filled [text]="'Save'" [iconName]="'checkmark-outline'"></app-button-filled>
+              <app-button-edge [text]="'Delete'" (click)="onHandleDialog('delete')"></app-button-edge>
+              <app-button-filled [text]="'Save'" [iconName]="'checkmark-outline'" (click)="onHandleDialog('edit')"></app-button-filled>
             </div>
           </ion-col>
         </div>
@@ -46,3 +45,5 @@
     </form>
   </div>
 </div>
+
+<app-dialog *ngIf="isDialog" [dialogMessage]="dialogMessage" (confirm)="dialogMessage.action == 'cancel' ? emptyField() : dialogMessage.action == 'delete' ? onDeleteContact(contact) : onHandleForm()" (cancel)="isDialog = false"></app-dialog>

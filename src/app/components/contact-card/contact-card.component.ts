@@ -20,6 +20,10 @@ export class ContactCardComponent {
   @Input() public contact: Contact = { name: '', color: '', initials: '', userId: '' };
 
   @Output() closeCard = new EventEmitter<Contact>();
+  @Output() deleteContact = new EventEmitter<{ action: 'delete'; contact: Contact }>();
+
+  public dialogMessage = { title: '', message: '', action: '' };
+  public isDialog = false;
 
   constructor(private contactService: ContactService, private firestore: AngularFirestore, private afAuth: AngularFireAuth, public helperService: HelperService, private cdr: ChangeDetectorRef) { }
 
@@ -165,9 +169,35 @@ export class ContactCardComponent {
   }
 
 
-  private emptyField(): void {
+  public emptyField(): void {
     this.nameField.setValue('');
     this.emailField.setValue('');
     this.phoneField.setValue('');
+    this.isDialog = false;
   }
+
+
+  public onDeleteContact(contact: Contact): void {
+    this.deleteContact.emit({ action: 'delete', contact });
+  }
+
+
+  public onHandleDialog(action: 'cancel' | 'create' | 'delete' | 'edit'): void {
+    if (action == 'create') {
+      this.dialogMessage = { title: 'Add new contact', message: 'Are you sure to create this contact?', action: action }
+    }
+    if (action == 'cancel') {
+      this.dialogMessage = { title: 'Cancel', message: 'Are you sure to cancel this action?', action: action }
+
+    }
+    if (action == 'delete') {
+      this.dialogMessage = { title: 'Delete contact', message: 'Are you sure to delete this contact?', action: action }
+
+    }
+    else if (action == 'edit') {
+      this.dialogMessage = { title: 'Edit contact', message: 'Are you sure to edit this contact?', action: action }
+    }
+    this.isDialog = true;
+  }
+
 }
