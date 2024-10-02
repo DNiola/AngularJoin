@@ -77,8 +77,7 @@ export class TaskCardAddComponent implements OnInit {
 
   public editTaskData(): void {
     this.taskService.updateTask(this.currentTask).then(() => {
-      this.onCloseCard();
-      console.log(`Task mit ID ${this.currentTask.id} wurde erfolgreich aktualisiert.`);
+      this.onCloseCard(); 
     }).catch(error => {
       console.error('Fehler beim Aktualisieren des Tasks:', error);
     });
@@ -186,14 +185,15 @@ export class TaskCardAddComponent implements OnInit {
   }
 
 
-  public onOpenDialog(action: 'clear' | 'create'): void {
+  public onOpenDialog(action: 'clear' | 'create' | 'edit'): void {
     if (action === 'clear') {
       this.dialogMessage = { title: 'Clear Task?', message: 'Are you sure you want to clear the task?', action: action }
-      this.isDialog = true
+    } else if (action === 'create') {
+      this.dialogMessage = { title: 'Create Task?', message: 'Are you sure you want to create the task?', action: action }
     } else {
-      this.dialogMessage = { title: 'Create Task?', message: 'Are you sure you want to Create the task?', action: action }
-      this.isDialog = true
-    }
+      this.dialogMessage = { title: 'Edit Task?', message: 'Are you sure you want to edit the task?', action: action }
+    } 
+    this.isDialog = true
   }
 
 

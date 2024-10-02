@@ -59,11 +59,11 @@
       <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('create')"></app-button-filled>
     </div>
     <div *ngIf="isEditTask" class="flex justify-end">
-      <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onCreateTask(false)"></app-button-filled>
+      <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('edit')"></app-button-filled>
     </div>
   </ion-col>
 </div> 
 </div>
 
 <app-animated-badge *ngIf="isAnimation" [text]="'Task was sucessfully created'" [ngClass]="isCard ? 'h-full w-full' : 'h-dvh w-dvw'" class="absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
-<app-dialog *ngIf="isDialog" [dialogMessage]="dialogMessage" (cancel)="isDialog = false" (confirm)="dialogMessage.action == 'clear' ? clearTask() : onCreateTask(true)"></app-dialog>
+<app-dialog *ngIf="isDialog" [dialogMessage]="dialogMessage" (cancel)="isDialog = false" (confirm)="dialogMessage.action == 'clear' ? clearTask() : dialogMessage.action == 'create' ? onCreateTask(true) : onCreateTask(false)"></app-dialog>
