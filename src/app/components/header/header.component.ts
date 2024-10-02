@@ -25,6 +25,13 @@ export class HeaderComponent {
 
   constructor(private userService: UserService, private router: Router) { }
 
+  public ngOnInit(): void {
+     this.userService.currentUser$.subscribe((user) => {
+      this.currentUser = user;
+    });
+  }
+
+  
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent): void {
     if (!this.dropdownMenu || !this.userInitials) {
