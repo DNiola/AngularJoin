@@ -97,7 +97,7 @@ export class BoardPage implements OnInit {
   }
 
 
-  public editTask(task: Task): void {
+  public editTask(): void {
     this.isTaskOverviewOpen = false;
     this.isAddTaskOpen = true;
     this.isEditTask = true;

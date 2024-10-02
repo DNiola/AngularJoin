@@ -1,6 +1,6 @@
 <div class=" flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11] fixed">
   <div
-    class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-2/5 max-2xl:w-2/3 font-inter p-4 flex flex-col gap-4">
+    class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-1/5 max-2xl:w-2/3 font-inter p-4 flex flex-col gap-4">
 
     <span class="font-bold text-3xl flex justify-center pt-2">{{dialogMessage.title}}</span>
 
@@ -12,8 +12,8 @@
     </div>
 
     <div *ngIf="!isSingUpSection" class="flex items-center justify-center gap-4">
-      <app-button-filled [text]="'Yes'" (click)="onConfirm()"></app-button-filled>
       <app-button-edge [text]="'Cancel'" (click)="onCancel()"></app-button-edge>
+      <app-button-filled [text]="'Yes'" (click)="onConfirm()"></app-button-filled>
     </div>
 
   </div>

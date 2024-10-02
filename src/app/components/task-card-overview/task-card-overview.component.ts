@@ -15,7 +15,8 @@ export class TaskCardOverviewComponent implements OnInit {
   @Output() editTask = new EventEmitter<Task>();
 
   public category: Category | null = null;
-
+  public isDialog = false;
+  
   constructor(private taskService: TaskService) { }
 
   public ngOnInit(): void {
