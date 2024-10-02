@@ -13,7 +13,7 @@
     <app-user-bubble [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
     </app-user-bubble>
 
-    <form (submit)="onHandleDialog('create')" class="flex flex-col justify-center items-center pt-16">
+    <form (submit)="isEditContact ? onHandleDialog('edit') : onHandleDialog('create')" class="flex flex-col justify-center items-center pt-16">
 
       <div class="flex flex-col justify-center gap-8  w-96">
         <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
@@ -37,7 +37,7 @@
             </div>
             <div *ngIf="isEditContact" class="flex justify-end">
               <app-button-edge [text]="'Delete'" (click)="onHandleDialog('delete')"></app-button-edge>
-              <app-button-filled [text]="'Save'" [iconName]="'checkmark-outline'" (click)="onHandleDialog('edit')"></app-button-filled>
+              <app-button-filled [text]="'Save'" [iconName]="'checkmark-outline'" type="submit"></app-button-filled>
             </div>
           </ion-col>
         </div>
