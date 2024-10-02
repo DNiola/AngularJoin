@@ -97,4 +97,11 @@ constructor(private eRef: ElementRef) { }
       this.isDropdownOpen = false;
     }
   }
+
+  
+  public onHandleItems(item:any): void {
+    this.toggleItem(item)
+    this.selectItem(item)
+    this.errorMessage = false
+  }
 }

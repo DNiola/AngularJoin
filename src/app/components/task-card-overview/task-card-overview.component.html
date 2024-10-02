@@ -19,8 +19,8 @@
     </div>
 
     <div class="flex items-center">
-        <span class="w-1/4 text-titleActiveBlue">Due date: </span>
-        <span class="w-1/4">{{ task?.dueDate | date: 'dd/MM/yyyy' }}</span>
+        <span class="w-1/4 min-w-max text-titleActiveBlue">Due date: </span>
+        <span class="w-1/4 min-w-max">{{ task?.dueDate | date: 'dd/MM/yyyy' }}</span>
     </div>
 
     <div class="flex items-center">
@@ -44,7 +44,7 @@
             <span>No contacts assigned</span>
         </ng-container>
     </div>
-
+    
     <div class="flex flex-col gap-2">
         <ng-container *ngIf="task?.subtasks?.length">
             <div class="text-titleActiveBlue">Subtasks</div>

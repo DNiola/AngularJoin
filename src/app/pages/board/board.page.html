@@ -68,7 +68,7 @@
     </div>
   </div>
   <div *ngIf="isAddTaskOpen || isTaskOverviewOpen" class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
-    <div *ngIf="isTaskOverviewOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-2/5 max-2xl:w-2/3">
+    <div *ngIf="isTaskOverviewOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-1/4 max-2xl:w-2/4">
       <app-task-card-overview [task]="currentOpenedTask" (editTask)="editTask()" (isCardOpen)="isTaskOverviewOpen = false" ></app-task-card-overview>
     </div>
     <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow "
