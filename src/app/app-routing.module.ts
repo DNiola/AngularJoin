@@ -39,7 +39,19 @@ const routes: Routes = [
     path: 'contacts',
     loadChildren: () => import('./pages/contacts/contacts.module').then( m => m.ContactsPageModule),
     canActivate: [authGuard]
+  },  {
+    path: 'legal',
+    loadChildren: () => import('./pages/legal/legal.module').then( m => m.LegalPageModule)
   },
+  {
+    path: 'policy',
+    loadChildren: () => import('./pages/policy/policy.module').then( m => m.PolicyPageModule)
+  },
+  {
+    path: 'info',
+    loadChildren: () => import('./pages/info/info.module').then( m => m.InfoPageModule)
+  },
+
 
 
 ];
