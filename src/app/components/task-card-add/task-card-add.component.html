@@ -55,8 +55,8 @@
   </ion-col>
   <ion-col size="12" size="6">
     <div *ngIf="!isEditTask" class="flex justify-end gap-4">
-      <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="clearTask()"></app-button-edge>
-      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onCreateTask(true)"></app-button-filled>
+      <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="onOpenDialog('clear')"></app-button-edge>
+      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('create')"></app-button-filled>
     </div>
     <div *ngIf="isEditTask" class="flex justify-end">
       <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onCreateTask(false)"></app-button-filled>
@@ -66,3 +66,4 @@
 </div>
 
 <app-animated-badge *ngIf="isAnimation" [text]="'Task was sucessfully created'" [ngClass]="isCard ? 'h-full w-full' : 'h-dvh w-dvw'" class="absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
+<app-dialog *ngIf="isDialog" [dialogMessage]="dialogMessage" (cancel)="isDialog = false" (confirm)="dialogMessage.action == 'clear' ? clearTask() : onCreateTask(true)"></app-dialog>

@@ -33,6 +33,7 @@ export class TaskCardAddComponent implements OnInit {
   ];
 
   public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', id: '', status: 'todo' };
+  public dialogMessage = { title: '', message: '', action: '' };
 
   public isError = { title: false, dueDate: false, category: false };
   public resetTrigger = false;
@@ -42,6 +43,7 @@ export class TaskCardAddComponent implements OnInit {
   public activeButton = '';
 
   public isAnimation = false;
+  public isDialog = false;
 
   constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
@@ -61,6 +63,7 @@ export class TaskCardAddComponent implements OnInit {
     this.checkRequiredFields();
     if (this.isError.title || this.isError.dueDate || this.isError.category) {
       console.error('Fehler beim Erstellen des Tasks:', this.isError);
+      this.isDialog = false;
       return;
     }
     this.getTaskData();
@@ -127,6 +130,7 @@ export class TaskCardAddComponent implements OnInit {
     this.activeButton = '';
     this.selectedBubble = [];
     this.resetTrigger = true;
+    this.isDialog = false
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
     this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
@@ -179,6 +183,17 @@ export class TaskCardAddComponent implements OnInit {
 
   public onDisplayedSubtask(newSubtasks: Subtask[]): void {
     this.subtaskService.updateSubtasks(newSubtasks);
+  }
+
+
+  public onOpenDialog(action: 'clear' | 'create'): void {
+    if (action === 'clear') {
+      this.dialogMessage = { title: 'Clear Task?', message: 'Are you sure you want to clear the task?', action: action }
+      this.isDialog = true
+    } else {
+      this.dialogMessage = { title: 'Create Task?', message: 'Are you sure you want to Create the task?', action: action }
+      this.isDialog = true
+    }
   }
 
 
