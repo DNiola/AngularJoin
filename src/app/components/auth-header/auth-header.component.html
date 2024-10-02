@@ -1,15 +1,20 @@
 <ion-grid class="h-dvh absolute w-dvw">
   <ion-row class="p-16">
     <ion-col size="12" size-md="6">
-      <a href="">
-        <ion-img class="w-20" src="../../assets/img/logo.svg"></ion-img>
+      <a *ngIf="isAnimationComplete" href="">
+        <ion-img  class=" standard-logo" src="../../assets/img/logo.svg" [ngClass]="{ 'logo-transition': isAnimationComplete }"></ion-img>
       </a>
     </ion-col>
     <ion-col *ngIf="isLogin" size="12" size-md="6" class="flex items-center justify-end gap-20">
       <span>
         <b class="font-inter">Not a Join user?</b>
       </span>
-      <app-button-filled  [routerLink]="['/sign-up']" [text]="'Sign Up'"></app-button-filled>
+      <app-button-filled [routerLink]="['/sign-up']" [text]="'Sign Up'"></app-button-filled>
     </ion-col>
   </ion-row>
 </ion-grid>
+
+
+<div *ngIf="!isAnimationComplete" class="absolute h-dvh z-20 w-dvw top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-whiteSmoke fade-out-background" >
+  <ion-img class="initial-logo" src="../../assets/img/logo.svg" (animationend)="onAnimationEnd()"></ion-img>
+</div>

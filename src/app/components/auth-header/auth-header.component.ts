@@ -1,14 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-auth-header',
   templateUrl: './auth-header.component.html',
   styleUrls: ['./auth-header.component.scss'],
 })
-export class AuthHeaderComponent implements OnInit {
+export class AuthHeaderComponent {
   @Input() isLogin = false;
-  constructor() { }
 
-  ngOnInit() { }
+  isAnimationComplete = false;
+
+  onAnimationEnd() {
+    this.isAnimationComplete = true;
+  }
 
 }
