@@ -11,9 +11,10 @@ export class SignUpPage implements OnInit {
   public dialogMessage = {
     title: 'Attention !',
     message: 'Please do not use real credentials to log in to this site. This site was created for educational and training purposes and the security of the data cannot be fully guaranteed. Please also note that all data stored on this site can only be deleted manually by the administrators. For more information, please see our legal notice.',
-    showAgain: false,
-    isSingUpSection: true
   };
+
+  public showAgain= false
+  public isSingUpSection= true
 
   constructor() { }
 

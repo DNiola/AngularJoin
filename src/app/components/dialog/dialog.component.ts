@@ -6,14 +6,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent {
-  @Input() public dialogMessage = { title: '', message: '', showAgain: false, isSingUpSection: false };
+  @Input() public dialogMessage = { title: '', message: '' };
+  @Input() public showAgain = false
+  @Input() public isSingUpSection = false
 
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
 
   public onConfirm(): void {
-    if (this.dialogMessage.showAgain == true) {
+    if (this.showAgain == true) {
       localStorage.setItem('disclaimerUnderstood', 'true');
     }
     this.confirm.emit();
@@ -26,6 +28,6 @@ export class DialogComponent {
 
 
   public onCheckboxChange(checked: boolean): void {
-    this.dialogMessage.showAgain = checked;
+    this.showAgain = checked;
   }
 }

@@ -2,7 +2,7 @@
   <div class="bg-whiteSmoke">
     <app-auth-header [isLogin]="false"></app-auth-header>
     <app-auth-form [isLogin]="false"></app-auth-form>
-    <app-dialog *ngIf="isDialogOpen" [dialogMessage]="dialogMessage" (confirm)="isDialogOpen = false"></app-dialog>
+    <app-dialog *ngIf="isDialogOpen" [dialogMessage]="dialogMessage" [isSingUpSection]="isSingUpSection" [showAgain]="showAgain" (confirm)="isDialogOpen = false"></app-dialog>
   </div>
   <app-auth-footer [leftFooter]="false"></app-auth-footer>
 </ion-content>

@@ -4,14 +4,14 @@
 
     <span class="font-bold text-3xl flex justify-center">{{dialogMessage.title}}</span>
 
-    <span>{{dialogMessage.message}}</span>
+    <span  [ngClass]="{'text-center' : !isSingUpSection }" class="font-medium">{{dialogMessage.message}}</span>
 
-    <div *ngIf="dialogMessage.isSingUpSection" class="flex items-center justify-center gap-4">
+    <div *ngIf="isSingUpSection" class="flex items-center justify-center gap-4">
       <app-auth-checkbox [text]="'Dont show again !'" (checkedChange)="onCheckboxChange($event)"> </app-auth-checkbox>
       <app-button-filled [text]="'Understood !'" (click)="onConfirm()"></app-button-filled>
     </div>
 
-    <div *ngIf="!dialogMessage.isSingUpSection">
+    <div *ngIf="!isSingUpSection" class="flex items-center justify-center gap-4">
       <app-button-filled [text]="'Yes'" (click)="onConfirm()"></app-button-filled>
       <app-button-edge [text]="'Cancel'" (click)="onCancel()"></app-button-edge>
     </div>
