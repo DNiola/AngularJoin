@@ -25,7 +25,7 @@ export class TaskService {
       });
   }
 
-  
+
   // update full task in Firestore
   public async updateTask(task: Task): Promise<void> {
     if (task.id) {
@@ -60,13 +60,14 @@ export class TaskService {
   }
 
 
-  // load tasks and optionally filter by title
+  // load tasks and optionally filter by title or description
   public getTasks(searchTerm?: string): Observable<Task[]> {
     return this.firestore.collection<Task>('tasks').valueChanges().pipe(
       map(tasks => {
         if (searchTerm) {
           return tasks.filter(task =>
-            task.title.toLowerCase().includes(searchTerm.toLowerCase())
+            task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (task.description && task.description.toLowerCase().includes(searchTerm.toLowerCase()))
           );
         }
         return tasks;
