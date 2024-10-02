@@ -65,4 +65,4 @@
 </div> 
 </div>
 
-<app-animated-badge *ngIf="isAnimation" [text]="'Task was sucessfully created'" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
+<app-animated-badge *ngIf="isAnimation" [text]="'Task was sucessfully created'" [ngClass]="isCard ? 'h-full w-full' : 'h-dvh w-dvw'" class="absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
