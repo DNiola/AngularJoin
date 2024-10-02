@@ -41,6 +41,8 @@ export class TaskCardAddComponent implements OnInit {
   public selectedBubble: Contact[] = [];
   public activeButton = '';
 
+  public isAnimation = false;
+
   constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
 
 
@@ -112,7 +114,7 @@ export class TaskCardAddComponent implements OnInit {
   private createTask(): void {
     this.taskService.createTask(this.currentTask)
       .then(() => {
-        console.log('Task erfolgreich erstellt und gespeichert:', this.currentTask);
+        this.isAnimation = true;
         this.clearTask();
       })
       .catch(error => {
@@ -128,7 +130,10 @@ export class TaskCardAddComponent implements OnInit {
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
     this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
-    setTimeout(() => this.resetTrigger = false, 0);
+    setTimeout(() => {
+      this.resetTrigger = false;
+      this.isAnimation = false;
+    }, 1000);
   }
 
 
