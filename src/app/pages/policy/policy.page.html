@@ -2,9 +2,16 @@
   <div class="main-content ml-60 h-dvh flex flex-col bg-whiteSmoke ">
     <app-header></app-header>
     <app-sidebar></app-sidebar>
-    <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter  bg-whiteSmoke">
-      <app-page-title class="flex" [title]="'Privacy Policy'"></app-page-title>
+    <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter  bg-whiteSmoke"> 
 
+      <div class="flex items-center justify-between">
+        <app-page-title class="flex" [title]="'Privacy Policy'"></app-page-title>
+        <div class="group cursor-pointer ">
+          <ion-img (click)="goBack()" class="w-6 transition duration-300 group-hover:filter group-hover:brightness-0"
+            src="../../assets/img/back.svg"></ion-img>
+        </div>
+      </div>
+      
       <div class="flex flex-col gap-4">
         <div class="flex flex-col gap-1">
           <span class="font-semibold text-2xl">Our Standard</span>

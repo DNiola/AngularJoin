@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-legal',
   templateUrl: './legal.page.html',
   styleUrls: ['./legal.page.scss'],
 })
-export class LegalPage implements OnInit {
+export class LegalPage {
 
-  constructor() { }
+  constructor(private location: Location) { }
 
-  ngOnInit() {
+  public goBack(): void {
+    this.location.back();
   }
 
 }
