@@ -49,7 +49,7 @@
             <a *ngIf="isLogin" class="text-lightBlue hover:underline" (click)="this.isForgotPassword = true;">Forgot my password</a>
 
             <app-auth-checkbox *ngIf="!isLogin" (ionChange)="helperService.EmptyErrorField(privacyCheckbox)" #privacyCheckbox
-              [text]="'I accept the'" [linkText]="'Privacy policy'" [link]="'/privacy-policy'">
+              [text]="'I accept the'" [linkText]="'Privacy policy'" [link]="'/policy'">
             </app-auth-checkbox>
           </div>
 

@@ -1,5 +1,5 @@
 <div class="flex items-center space-x-2">
   <ion-checkbox [(ngModel)]="checkboxValue" (ngModelChange)="onCheckboxChange()"></ion-checkbox>
-  <span>{{text}} <a class="text-lightBlue hover:underline" href="{{link}}">{{linkText}}</a></span>
+  <span>{{text}} <a class="text-lightBlue hover:underline" routerLink="/{{link}}">{{linkText}}</a></span>
 </div>
 <span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1">{{errorMessage}}</span>

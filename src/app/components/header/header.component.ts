@@ -15,9 +15,9 @@ export class HeaderComponent {
   @Input() currentUser: User | null = null;
 
   public menuItems = [
-    { text: 'Help', href: 'info' },
-    { text: 'Legal Notice', href: 'legal' },
-    { text: 'Privacy Policy', href: 'policy' }
+    { text: 'Help', link: 'info' },
+    { text: 'Legal Notice', link: 'legal' },
+    { text: 'Privacy Policy', link: 'policy' }
   ]
 
   public isDropdownOpen = false
