@@ -50,7 +50,7 @@ export class TaskCardAddComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    if (this.isEditTask) {
+    if (this.isEditTask) { debugger
       this.currentTask = { ...this.editTask } as Task;
       this.taskStatus = this.editTask?.status as Task['status'];
       this.selectedBubble = this.currentTask.assignedTo || [];
@@ -121,7 +121,7 @@ export class TaskCardAddComponent implements OnInit {
         this.clearTask();
         setTimeout(() => {
           this.router.navigate(['/board']);
-        } , 1000);
+        }, 1000);
       })
       .catch(error => {
         console.error('Fehler beim Speichern des Tasks:', error);

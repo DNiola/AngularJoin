@@ -14,7 +14,7 @@
           <!-- Description -->
           <app-default-input-field [editValueMode]="currentTask.description" [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
           <!-- Assigned to -->
-          <app-dropdown-input-field [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
+          <app-dropdown-input-field [editValueMode]="currentTask.assignedTo" [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
           <!-- Assigned Bubble -->
           <div class="flex flex-wrap gap-4" [ngClass]="{ '-mt-6': isEditTask }">
             <div *ngFor="let item of selectedBubble">
