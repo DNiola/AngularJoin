@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-default-input-field',
@@ -11,19 +12,18 @@ export class DefaultInputFieldComponent implements OnInit {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() type = '';
+  @Input() editValueMode? = '';
 
   @Input() errorMessage = false;
   @Input() resetTrigger = false;
-
-
-  @Input() editValueMode? = '';
 
   @Output() outputValue = new EventEmitter<string>();
 
   public inputValue: string = '';
   public minDate = '';
 
-  ngOnInit() {
+
+  public ngOnInit(): void {
     const today = new Date();
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -36,10 +36,12 @@ export class DefaultInputFieldComponent implements OnInit {
     }
   }
 
+
   public onInputChange(event: any): void {
     this.inputValue = event.target.value;
     this.outputValue.emit(this.inputValue);
   }
+
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['resetTrigger']) {
