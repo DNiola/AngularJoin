@@ -1,16 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button-filled',
   templateUrl: './button-filled.component.html',
   styleUrls: ['./button-filled.component.scss'],
 })
-export class ButtonFilledComponent implements OnInit {
+export class ButtonFilledComponent {
   @Input() text = '';
   @Input() iconName? = '';
-  
+  @Input() disabled = false;
+
+  @Output() confirm = new EventEmitter<void>();
   constructor() { }
 
-  ngOnInit() { }
+  public onConfirm(): void {
+    this.confirm.emit();
+  }
 
 }
