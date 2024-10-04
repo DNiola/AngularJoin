@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
+import { Router } from '@angular/router';
 import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { Subtask, Task } from 'src/app/models/task.model';
@@ -28,8 +29,8 @@ export class TaskCardAddComponent implements OnInit {
   @Output() isCardOpen = new EventEmitter<void>();
 
   public categories: Categorys = [
-    { text: 'Technical Task', selected: false, color: this.helperService.getRandomColor() },
-    { text: 'User history', selected: false, color: this.helperService.getRandomColor() },
+    { text: 'Technical Task', selected: false, color: '#1FD7C1' },
+    { text: 'User history', selected: false, color: '#0038FF' },
   ];
 
   public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', id: '', status: 'todo' };
@@ -45,7 +46,7 @@ export class TaskCardAddComponent implements OnInit {
   public isAnimation = false;
   public isDialog = false;
 
-  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService) { }
+  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService, private router: Router) { }
 
 
   public ngOnInit(): void {
@@ -77,7 +78,7 @@ export class TaskCardAddComponent implements OnInit {
 
   public editTaskData(): void {
     this.taskService.updateTask(this.currentTask).then(() => {
-      this.onCloseCard(); 
+      this.onCloseCard();
     }).catch(error => {
       console.error('Fehler beim Aktualisieren des Tasks:', error);
     });
@@ -118,6 +119,9 @@ export class TaskCardAddComponent implements OnInit {
       .then(() => {
         this.isAnimation = true;
         this.clearTask();
+        setTimeout(() => {
+          this.router.navigate(['/board']);
+        } , 1000);
       })
       .catch(error => {
         console.error('Fehler beim Speichern des Tasks:', error);
@@ -188,11 +192,11 @@ export class TaskCardAddComponent implements OnInit {
   public onOpenDialog(action: 'clear' | 'create' | 'edit'): void {
     if (action === 'clear') {
       this.dialogMessage = { title: 'Clear Task?', message: 'Are you sure you want to clear the task?', action: action }
-    } else if (action === 'create') {
+    } if (action === 'create') {
       this.dialogMessage = { title: 'Create Task?', message: 'Are you sure you want to create the task?', action: action }
     } else {
       this.dialogMessage = { title: 'Edit Task?', message: 'Are you sure you want to edit the task?', action: action }
-    } 
+    }
     this.isDialog = true
   }
 

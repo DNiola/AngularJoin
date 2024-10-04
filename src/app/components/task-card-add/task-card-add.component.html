@@ -37,11 +37,11 @@
             </div>
           </div>
           <!-- Category -->
-          <app-dropdown-input-field [editValueMode]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select contacts to assign'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
+          <app-dropdown-input-field [editValueMode]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select task category'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
           <!-- Subtasks -->
           <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
           <div class="-mt-8">
-            <app-subtask-list [subtasks]="subtasks" ></app-subtask-list>
+            <app-subtask-list [subtasks]="subtasks"></app-subtask-list>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
   <ion-col size="12" size="6">
     <div *ngIf="!isEditTask" class="flex justify-end gap-4">
       <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="onOpenDialog('clear')"></app-button-edge>
-      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('create')"></app-button-filled>
+      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (confirm)="onOpenDialog('create')"></app-button-filled>
     </div>
     <div *ngIf="isEditTask" class="flex justify-end">
       <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('edit')"></app-button-filled>

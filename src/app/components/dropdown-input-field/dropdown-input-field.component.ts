@@ -24,13 +24,15 @@ export class DropdownInputFieldComponent {
   public selectedItems: Array<any> = [];
   public searchTerm = '';
 
-constructor(private eRef: ElementRef) { }
+  constructor(private eRef: ElementRef) { }
 
-  ngOnInit() {
+
+  public ngOnInit(): void {
     if (this.editValueMode[0]?.text) {
       this.searchTerm = this.editValueMode[0].text;
     }
   }
+
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['resetTrigger']) {
@@ -61,6 +63,7 @@ constructor(private eRef: ElementRef) { }
     }
   }
 
+
   public filterItems(): void {
     this.filteredItems = this.items.filter(item =>
     (item.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -71,7 +74,8 @@ constructor(private eRef: ElementRef) { }
     }
   }
 
-  public toggleItem(item: any): void {
+
+  public toggleItem(item: Category): void {
     if (item.selected) {
       item.selected = false;
       this.selectedItems = this.selectedItems.filter(selected => selected !== item);
@@ -83,7 +87,7 @@ constructor(private eRef: ElementRef) { }
   }
 
 
-  public selectItem(item: any): void {
+  public selectItem(item: Category): void {
     if (item.text) {
       this.searchTerm = item.text;
       this.isDropdownOpen = false;
@@ -96,10 +100,11 @@ constructor(private eRef: ElementRef) { }
     if (this.isDropdownOpen && !this.eRef.nativeElement.contains(event.target)) {
       this.isDropdownOpen = false;
     }
+    this.searchTerm = this.selectedItems[0]?.text || '';
   }
 
   
-  public onHandleItems(item:any): void {
+  public onHandleItems(item: Category): void {
     this.toggleItem(item)
     this.selectItem(item)
     this.errorMessage = false

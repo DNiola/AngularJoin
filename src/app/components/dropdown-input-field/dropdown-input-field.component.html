@@ -11,16 +11,25 @@
 
 <!-- Dropdown List -->
 <div *ngIf="isDropdownOpen" class="bg-white border border-gray-300 rounded-b-lg max-h-40 overflow-auto -mt-2">
-  <div *ngFor="let item of filteredItems" 
+  <div 
+  *ngFor="let item of filteredItems" 
   (click)="onHandleItems(item)"
-  [ngClass]="{ 'bg-slate-500': selectedItems.includes(item) && label !== 'Category' }"
-  class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500"
+  [ngClass]="{ 'bg-slate-600': selectedItems.includes(item) && label !== 'Category' }"
+  class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500 group "
   >
-    <app-user-bubble *ngIf="item.initials" [color]="item.color" [text]="item.initials" [size]="'48px'"
-      [borderWidth]="'3px'" [borderColor]="'white'">
+    <app-user-bubble 
+    *ngIf="item.initials" 
+    [color]="item.color" 
+    [text]="item.initials" 
+    [size]="'48px'"
+    [borderWidth]="'3px'" 
+    [borderColor]="'white'">
     </app-user-bubble>
 
-    <ion-label class="text-gray-700">{{ item.name || item.text }}</ion-label>
+    <ion-label class="text-gray-700 group-hover:text-white" [ngClass]="{ 'text-white': selectedItems.includes(item) && label !== 'Category' }">
+      {{ item.name || item.text }}
+    </ion-label>
+    
     <ion-checkbox *ngIf="item.initials" [checked]="selectedItems.includes(item)" class="ml-auto"></ion-checkbox>
   </div>
   <!-- Search Not Found -->
