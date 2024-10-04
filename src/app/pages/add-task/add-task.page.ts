@@ -21,21 +21,23 @@ export class AddTaskPage implements OnInit {
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.contactsInit();
+      this.contactsInit(this.currentUser!);
     });
 
     this.subtaskService.subtasks$.subscribe((subtasks) => {
       this.subtasks = subtasks;
     });
   }
-  
 
-  public contactsInit(): void {
-    if (this.currentUser) {
-      this.userService.getAllUsers().then(users => {
-        this.contacts = users as Contact[]
-      });
-    }
+
+  public contactsInit(currentUser: User): void {
+    this.userService.getAllUsers().then(users => {
+      const userContacts = users as Contact[];
+      const personalContacts = currentUser?.contacts || [];
+      const visibleUserContacts = userContacts.filter((contact) => !currentUser?.hidden?.includes(contact.userId));
+      this.contacts = [...visibleUserContacts, ...personalContacts];
+    });
   }
+
 }
 
