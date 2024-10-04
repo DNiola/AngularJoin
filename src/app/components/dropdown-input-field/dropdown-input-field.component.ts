@@ -15,7 +15,7 @@ export class DropdownInputFieldComponent {
   @Input() errorMessage = false;
   @Input() resetTrigger = false;
 
-  @Input() editValueMode? = '' as any;
+  @Input() editValueMode = [] as any;
 
   @Output() outputValue = new EventEmitter<Array<any>>();
 
@@ -28,8 +28,16 @@ export class DropdownInputFieldComponent {
 
 
   public ngOnInit(): void {
-    if (this.editValueMode[0]?.text) {
-      this.searchTerm = this.editValueMode[0].text;
+    if (this.editValueMode && this.editValueMode.length) {
+      this.items.forEach(item => item.selected = false);
+      this.items.forEach(item => {
+        const editItem = this.editValueMode?.find((edit: any) => edit.userId === item.userId);
+        if (editItem) {
+          item.selected = editItem.selected;
+        }
+      });
+      this.filteredItems = [...this.items];
+      this.selectedItems = this.filteredItems.filter(item => item.selected);
     }
   }
 
@@ -95,18 +103,22 @@ export class DropdownInputFieldComponent {
   }
 
 
+  public onHandleItems(item: Category): void {
+    this.toggleItem(item)
+    this.selectItem(item)
+    this.errorMessage = false
+  }
+
+
   @HostListener('document:click', ['$event'])
   clickout(event: Event) {
     if (this.isDropdownOpen && !this.eRef.nativeElement.contains(event.target)) {
       this.isDropdownOpen = false;
     }
-    this.searchTerm = this.selectedItems[0]?.text || '';
-  }
+    if (this.searchTerm === '' && this.fieldRequired) {
+      this.searchTerm = this.selectedItems[0]?.text || '';
+      this.outputValue.emit(this.selectedItems);
+    }
 
-  
-  public onHandleItems(item: Category): void {
-    this.toggleItem(item)
-    this.selectItem(item)
-    this.errorMessage = false
   }
 }
