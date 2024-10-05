@@ -1,7 +1,7 @@
-<a [routerLink]="link">
-  <div [ngClass]="{ 'bg-darkBlue': active ,  ' hover:bg-menuHoverBlue' : !active }"
-    class="w-full py-2 flex items-center pl-16 gap-3 font-inter">
-    <ion-img class="w-7" src="../../../assets/img/{{icon}}"></ion-img>
-    <span>{{text}}</span>
+<a [routerLink]="link" class="flex w-full">
+  <div [ngClass]="active?'bg-darkBlue' : 'hover:bg-menuHoverBlue'"  
+    class="min-w-max w-[80px] py-2 flex flex-col gap-3 font-inter justify-center items-center rounded-lg lg:justify-normal lg:flex-row lg:rounded-none lg:w-full lg:min-w-[unset] lg:pl-16">
+    <ion-img class="w-auto lg:w-7" src="../../../assets/img/{{icon}}"></ion-img>
+    <span class="text-xs text-nowrap lg:text-base">{{text}}</span>
   </div>
 </a>
