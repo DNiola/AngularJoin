@@ -4,10 +4,10 @@
 
   <ion-row class="justify-center">
     <ion-col size-lg="20">
-      <div class="bg-white rounded-2xl shadow-smallShadow p-8">
+      <div class="bg-white rounded-2xl shadow-smallShadow p-4 px-8 sm:p-8">
 
         <!-- Back button -->
-        <div *ngIf="!isLogin || isForgotPassword" class="group cursor-pointer absolute">
+        <div *ngIf="!isLogin || isForgotPassword" class="group cursor-pointer absolute top-8 sm:top-12">
           <ion-img (click)="EmptyInputFields()" [routerLink]="['/login']"
             class="w-6 transition duration-300 group-hover:filter group-hover:brightness-0"
             src="../../assets/img/back.svg"></ion-img>
@@ -15,12 +15,12 @@
 
         <!-- Title -->
         <div class="flex justify-center items-center mb-6 ">
-          <b class="flex flex-col items-center text-5xl font-inter text-black">{{ isForgotPassword ? 'Forgot Password' : isLogin ? 'Log in' : 'Sign up' }}
+          <b class="flex flex-col items-center text-2xl sm:text-5xl font-inter text-black">{{ isForgotPassword ? 'Forgot Password' : isLogin ? 'Log in' : 'Sign up' }}
             <div class="bg-lightBlue h-[0.1rem] w-4/5 mt-2 rounded-xl"></div>
           </b>
         </div>
 
-        <form (ngSubmit)="onSubmit()" class="flex flex-col items-center space-y-8">
+        <form (ngSubmit)="onSubmit()" class="flex flex-col items-center space-y-3 lg:space-y-8 ">
           <!-- Name input (only shown if not login) -->
           <app-auth-input-fields *ngIf="!isLogin && !isForgotPassword" (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
             [type]="'name'" [placeholder]="'Name'" [icon]="'user.svg'" [errorMessage]="errorMessage">
@@ -43,7 +43,7 @@
           </app-auth-input-fields>
 
           <!-- Remember Me & Forgot Password -->
-          <div *ngIf="!isForgotPassword" class="flex justify-around w-full items-center font-inter">
+          <div *ngIf="!isForgotPassword" class="flex justify-around w-full items-center font-inter flex-col lg:flex-row gap-4 lg:gap-0">
             <app-auth-checkbox *ngIf="isLogin" #rememberMeCheckbox [text]="'Remember me'"></app-auth-checkbox>
 
             <a *ngIf="isLogin" class="text-lightBlue hover:underline" (click)="this.isForgotPassword = true;">Forgot my password</a>
@@ -54,9 +54,9 @@
           </div>
 
           <!-- Buttons -->
-          <div class="flex items-center justify-around w-full mt-4">
-            <app-button-filled [text]=" isForgotPassword ? 'Reset password' : isLogin ? 'Login' : 'Sign Up'"></app-button-filled>
-            <app-button-edge *ngIf="isLogin && !isForgotPassword" [text]="'Guest Log in'" (click)="onGuestLogin()"></app-button-edge>
+          <div class="flex items-center justify-around w-full mt-4 flex-col sm:flex-row">
+            <app-button-filled [text]=" isForgotPassword ? 'Reset password' : isLogin ? 'Login' : 'Sign Up'" class="w-full sm:w-[unset]"></app-button-filled>
+            <app-button-edge *ngIf="isLogin && !isForgotPassword" [text]="'Guest Log in'" (click)="onGuestLogin()" class="w-full sm:w-[unset]"></app-button-edge>
           </div>
         </form>
       </div>

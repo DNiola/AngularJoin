@@ -4,10 +4,8 @@ import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { Subtask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
-import { HelperService } from 'src/app/services/helper.service';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { TaskService } from 'src/app/services/task.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-task-card-add',
@@ -46,7 +44,7 @@ export class TaskCardAddComponent implements OnInit {
   public isAnimation = false;
   public isDialog = false;
 
-  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private helperService: HelperService, private router: Router) { }
+  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
 
 
   public ngOnInit(): void {

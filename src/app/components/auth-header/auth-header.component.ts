@@ -8,10 +8,13 @@ import { Component, Input } from '@angular/core';
 export class AuthHeaderComponent {
   @Input() isLogin = false;
 
-  isAnimationComplete = false;
+  public isAnimationComplete = false;
 
   onAnimationEnd() {
     this.isAnimationComplete = true;
+    setTimeout(() => {
+      this.isAnimationComplete = false;
+    }, 1000);
   }
 
 }

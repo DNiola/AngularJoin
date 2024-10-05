@@ -28,7 +28,12 @@ module.exports = {
         'prioShadow': '0px 4px 4px 0px rgba(0, 0, 0, 0.25);',
         'taskShadow': '0px 0px 10px 3px rgba(0, 0, 0, 0.08);',
         'rightShadow': '4px 0px 6px 0px rgba(0, 0, 0, 0.08);'
+      },
+      screens: {
+        'xs': '420px',
+        'min-h-700': { 'raw': '(min-height: 700px)' },
       }
+      ,
     },
 
   },
