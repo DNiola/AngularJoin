@@ -50,7 +50,7 @@ export class TaskCardAddComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    if (this.isEditTask) { debugger
+    if (this.isEditTask) {
       this.currentTask = { ...this.editTask } as Task;
       this.taskStatus = this.editTask?.status as Task['status'];
       this.selectedBubble = this.currentTask.assignedTo || [];
