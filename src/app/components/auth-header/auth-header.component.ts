@@ -12,9 +12,7 @@ export class AuthHeaderComponent {
 
   onAnimationEnd() {
     this.isAnimationComplete = true;
-    setTimeout(() => {
-      this.isAnimationComplete = false;
-    }, 1000);
+    this.isAnimationComplete = false;
   }
 
 }
