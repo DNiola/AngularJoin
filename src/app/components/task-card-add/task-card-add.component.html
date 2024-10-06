@@ -1,14 +1,14 @@
-<div class="flex-grow flex flex-col gap-14 font-inter" [ngClass]="isCard ? 'p-14' :'p-4 px-20 pt-20'">
+<div class="flex-grow flex flex-col gap-10 lg:gap-14 font-inter" [ngClass]="isCard ? 'p-14' :'pb-24 p-4 pt-[136px] lg:px-20 lg:pt-20 bg-whiteSmoke'">
 
 <app-page-title *ngIf="!isEditTask" [title]="'Add Task'"></app-page-title> 
 <ion-icon *ngIf="isCard" [ngClass]="{ 'top-6': isEditTask }" class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
 
 <div class="flex gap-14 flex-grow">
-  <ion-grid>
-    <ion-row class="flex flex-col " [ngClass]="{ 'w-4/6 max-2xl:w-full': !isCard }">
-      <div class="flex flex-grow" [ngClass]="isEditTask ? 'flex-col gap-8' : 'gap-16'">
+  <ion-grid class="p-0">
+    <ion-row class="flex flex-col lg:w-full 1xl:w-4/6" [ngClass]="{ 'w-full lg:w-4/6 max-2xl:w-full': !isCard }">
+      <div class="flex flex-col lg:flex-grow lg:flex-row" [ngClass]="isEditTask ? 'flex-col gap-8' : 'gap-4 lg:gap-6 2xl:gap-16'">
         <!-- Left side -->
-        <div class="w-full flex flex-col gap-8">
+        <div class="w-full flex flex-col gap-6 lg:gap-8">
           <!-- Task Title -->
           <app-default-input-field [editValueMode]="currentTask.title" [fieldRequired]="true" [label]="'Title'" [placeholder]="'Enter a title'" [resetTrigger]="resetTrigger" [errorMessage]="isError.title" (outputValue)="setTaskData($event, 'title')"></app-default-input-field>
           <!-- Description -->
@@ -23,9 +23,9 @@
           </div>
         </div>
         <!-- Middle Line -->
-        <div *ngIf="!isEditTask" class="bg-[#D1D1D1] rounded-full min-h-full w-[2px]"></div>
+        <div *ngIf="!isEditTask" class="bg-[#D1D1D1] rounded-full min-h-full w-[2px] hidden lg:flex"></div>
         <!-- Right side -->
-        <div class="w-full flex flex-col gap-8">
+        <div class="w-full flex flex-col gap-6 lg:gap-8">
           <app-default-input-field [editValueMode]="currentTask.dueDate" [fieldRequired]="true" [label]="'Due date'" [type]="'date'" [resetTrigger]="resetTrigger" [errorMessage]="isError.dueDate" (outputValue)="setTaskData($event, 'dueDate')"></app-default-input-field>
           <!-- Prio -->
           <div>
@@ -49,14 +49,14 @@
   </ion-grid>
 </div>
 <!-- Bottom section with buttons and required field -->
-<div class="flex justify-between items-center font-inter pb-3" [ngClass]="{ 'w-4/6 max-2xl:w-full': !isCard }">
-  <ion-col size="12" size="6">
+<div class="flex justify-between items-center font-inter pb-3 lg:w-full 1xl:w-4/6" [ngClass]="{ 'w-full lg:w-4/6 max-2xl:w-full': !isCard }">
+  <ion-col size="12" size="6" class="text-xs md:text-base">
     <span class="text-lightRed">*</span> This field is required
   </ion-col>
   <ion-col size="12" size="6">
     <div *ngIf="!isEditTask" class="flex justify-end gap-4">
-      <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="onOpenDialog('clear')"></app-button-edge>
-      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (confirm)="onOpenDialog('create')"></app-button-filled>
+      <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="onOpenDialog('clear')" class="hidden md:flex"></app-button-edge>
+      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (confirm)="onOpenDialog('create')" class="w-full md:w-[unset]"></app-button-filled>
     </div>
     <div *ngIf="isEditTask" class="flex justify-end">
       <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('edit')"></app-button-filled>
