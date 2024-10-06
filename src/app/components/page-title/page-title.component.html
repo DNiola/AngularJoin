@@ -1,7 +1,7 @@
-<div class="flex items-center">
-    <span class="font-bold text-6xl">{{title}}</span>
-    <div *ngIf="text" class="flex items-center pl-4">
-        <span class="bg-lightBlue rounded-full h-12 w-[3px] "></span>
-        <span class="text-3xl pl-4 text-normalBlue">{{text}}</span>
+<div class="flex flex-col lg:items-center lg:flex-row">
+    <span class="text-nowrap font-bold text-3xl lg:text-6xl">{{title}}</span>
+    <div *ngIf="text" class="flex flex-col-reverse lg:flex-row lg:items-center lg:pl-4">
+        <span class="bg-lightBlue rounded-full h-[3px] w-24 lg:h-12 lg:w-[3px] "></span>
+        <span class="text-nowrap pb-2 lg:pb-[unset] lg:pl-4 text-normalBlue text-2xl lg:text-3xl">{{text}}</span>
     </div>
 </div>

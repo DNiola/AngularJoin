@@ -1,20 +1,21 @@
-<div
-  class="flex border border-gray-200 rounded-3xl shadow-overviewShadow hover:shadow-overviewShadowHover h-44 w-full bg-white hover:bg-normalBlue  hover:scale-105 transition-transform hover:text-[#FFFFFF] cursor-pointer" 
+<div class="flex border  border-gray-200 rounded-3xl shadow-overviewShadow hover:shadow-overviewShadowHover bg-white hover:bg-normalBlue hover:scale-105 transition-transform hover:text-[#FFFFFF] cursor-pointer
+  h-24 lg:h-44 lg:w-full " 
   (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
-  <div class="flex items-center gap-4 p-4   justify-center w-full">
-    <ion-img *ngIf="icon" class="w-14 hover:text-w" [src]="'../../../assets/img/' + (isHovered ? icon + 'Hover' : icon) + '.svg'"></ion-img>
+  <div class="flex items-center gap-3 lg:gap-4 justify-center w-full p-2 lg:p-4">
+    <ion-img *ngIf="icon" class="w-7 lg:w-14"
+      [src]="'../../../assets/img/' + (isHovered ? icon + 'Hover' : icon) + '.svg'"></ion-img>
     <div class="flex flex-col text-center">
-      <span class="text-6xl font-bold">{{number}}</span>
-      <span class="text-xl">{{text}}</span>
+      <span class="font-bold text-xl lg:text-6xl">{{number}}</span>
+      <span class="lg:text-xl">{{text}}</span>
     </div>
 
-    <div *ngIf="longBox" class="flex items-center ml-4 gap-8">
+    <div *ngIf="longBox" class="flex items-center ml-1 lg:ml-4 gap-4 lg:gap-8">
 
-      <div class="bg-[#D1D1D1] rounded-full h-24 w-[2px]"></div>
+      <div class="bg-[#D1D1D1] rounded-full h-16 lg:h-24 w-[2px]"></div>
 
-      <div class="flex flex-col text-xl">
+      <div class="flex flex-col lg:text-xl">
         <span class="font-bold">{{taskDeadline}}</span>
-        <span>{{taskDeadline ? 'Upcoming Deadline' : 'No Upcoming Deadline'}}</span>
+        <span class="text-nowrap">{{taskDeadline ? 'Upcoming Deadline' : 'No Upcoming Deadline'}}</span>
       </div>
     </div>
   </div>
