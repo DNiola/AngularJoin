@@ -1,6 +1,7 @@
-<ion-header class="shadow-headerShadow p-4 px-20 bg-white h-24" [ngClass]="{ 'items-center flex': !currentUser }">
+<ion-header class="shadow-headerShadow p-4 px-4 bg-white h-24 lg:px-20" [ngClass]="{ 'items-center flex': !currentUser }">
   <div class="flex items-center justify-between ">
-    <span size="large" class="font-inter text-2xl">Kanban Project Management Tool</span>
+    <ion-img class="w-10 lg:hidden" src="../../../assets/img/logo.svg" ></ion-img>
+    <span size="large" class="font-inter text-2xl hidden lg:flex">Kanban Project Management Tool</span>
     <div *ngIf="currentUser" class="flex items-center gap-8">
       <a routerLink="/info" class="w-10 justify-center flex">
         <ion-img class="w-7 hover:w-8" src="../../../assets/img/help.svg"></ion-img>
@@ -14,7 +15,7 @@
 </ion-header>
 
 <div #dropdownMenu *ngIf="isDropdownOpen"
-  class="dropdown-menu absolute slide-up right-20 top-24 w-48 bg-normalBlue text-smokeGray rounded-lg rounded-tr-none shadow-[#0000001A] inter p-3 z-40 cursor-pointer">
+  class="dropdown-menu absolute slide-up right-4 lg:right-20 top-24 w-48 bg-normalBlue text-smokeGray rounded-lg rounded-tr-none shadow-[#0000001A] inter p-3 z-40 cursor-pointer">
   <a *ngFor="let items of menuItems" routerLink="/{{items.link}}" class="block px-4 py-2 hover:bg-menuHoverBlue cursor-pointer">
     {{items.text}}
   </a>
