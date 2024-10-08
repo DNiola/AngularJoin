@@ -1,5 +1,5 @@
 <div class="flex justify-between group">
-  <span class="font-inter font-bold text-xl text-titleActiveBlue">{{title}}</span>
+  <span class="font-inter font-bold text-xl text-titleActiveBlue text-nowrap text-ellipsis overflow-hidden">{{title}}</span>
   <div *ngIf="icon" (mouseover)="hovered = true" (mouseout)="hovered = false" class="hover:transition-all">
     <ion-img *ngIf="!hovered" src="../../../assets/img/{{icon}}.svg"></ion-img>
     <ion-img *ngIf="hovered" class="cursor-pointer" src="../../../assets/img/{{icon}}Hover.svg"(click)="onOpenAddTask()"></ion-img>

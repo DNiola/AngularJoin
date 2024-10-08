@@ -1,19 +1,19 @@
 <ion-content [fullscreen]="true">
-  <div class="main-content ml-60 h-dvh bg-whiteSmoke">
+  <div class="main-content h-dvh bg-whiteSmoke lg:ml-60">
     <app-header [currentUser]="currentUser"></app-header>
-    <app-sidebar></app-sidebar>
-    <div class="flex-grow flex flex-col p-4 px-20 pt-20 gap-14 font-inter relative">
+    <app-sidebar class="fixed bottom-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-20"></app-sidebar>
+    <div class="flex-grow flex flex-col p-4 font-inter relative pb-24 bg-whiteSmoke pt-10 gap-10 lg:gap-14 lg:pt-20 xl:px-20 ">
       <div class="flex items-center justify-between">
         <app-page-title [title]="'Board'"></app-page-title>
         <div class="flex items-center gap-8">
-          <app-search-input-field [placeholder]="'Find a Task'" (input)="onSearch($event)"></app-search-input-field>
-          <app-button-filled [text]="'Add Task'" [iconName]="'add-outline'" (click)="isAddTaskOpen = true"></app-button-filled>
+          <app-search-input-field class="hidden lg:flex" [placeholder]="'Find a Task'" (input)="onSearch($event)"></app-search-input-field>
+          <app-button-filled class="hidden lg:flex" [text]="'Add Task'" [iconName]="'add-outline'" (click)="isAddTaskOpen = true"></app-button-filled>
+          <app-button-filled class="flex lg:hidden" [iconName]="'add-outline'" (click)="isAddTaskOpen = true"></app-button-filled>
         </div>
       </div>
-      <div class="flex gap-14 flex-grow">
-        <ion-grid>
-          <ion-row class="flex flex-col">
-            <div class="flex gap-14 flex-grow">
+      <app-search-input-field class="flex lg:hidden" [placeholder]="'Find a Task'" (input)="onSearch($event)"></app-search-input-field>
+      <div class="flex gap-14 flex-col lg:flex-grow">
+            <div class="flex gap-0 2xl:gap-8 flex-col lg:flex-row lg:flex-grow">
               <!-- todo -->
               <app-board-section 
               (taskDropped)="onTaskDragStart($event)" 
@@ -62,17 +62,15 @@
                 class="w-full">
               </app-board-section>
             </div>
-          </ion-row>
-        </ion-grid>
       </div>
     </div>
   </div>
-  <div *ngIf="isAddTaskOpen || isTaskOverviewOpen" class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
-    <div *ngIf="isTaskOverviewOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-1/4 max-2xl:w-2/4">
-      <app-task-card-overview [task]="currentOpenedTask" (editTask)="editTask()" (isCardOpen)="isTaskOverviewOpen = false" ></app-task-card-overview>
+  <div *ngIf="isAddTaskOpen || isTaskOverviewOpen" class="fixed flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[11]">
+    <div *ngIf="isTaskOverviewOpen" class="absolute z-[12] bg-whiteSmoke sm:rounded-3xl shadow-taskShadow overflow-auto h-full pb-20 lg:pb-0 w-full md:w-[90%] sm:h-5/6 lg:h-auto lg:w-[80%] 1xl:w-2/5">
+      <app-task-card-overview [task]="currentOpenedTask" (editTask)="editTask()" (isCardOpen)="isTaskOverviewOpen = false"></app-task-card-overview>
     </div>
-    <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow "
-    [ngClass]="isEditTask ? 'h-4/5 overflow-y-auto w-2/5 max-2xl:w-2/3' : 'w-3/5 max-2xl:w-10/12'">
+    <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke sm:rounded-3xl shadow-taskShadow overflow-auto h-full pb-4 md:w-[90%] sm:h-5/6 lg:h-auto "
+    >
       <app-task-card-add 
       (isCardOpen)="closeAddTask()" 
       [currentUser]="currentUser" 
@@ -87,3 +85,4 @@
     </div>
   </div>
 </ion-content>
+ 

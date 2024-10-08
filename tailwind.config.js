@@ -32,6 +32,7 @@ module.exports = {
       screens: {
         'xs': '420px',
         '1xl': '1384px',
+        '3xl': '1584px',
         'min-h-700': { 'raw': '(min-height: 700px)' },
       }
       ,

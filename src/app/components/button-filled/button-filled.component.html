@@ -1,5 +1,6 @@
 <ion-button type="submit" [disabled]="disabled" (click)="onConfirm()"
-  class="font-inter h-10 flex border-2 px-6 rounded-[10px] font-bold items-center border-normalBlue hover:border-lightBlue bg-normalBlue hover:bg-lightBlue active:bg-darkBlue active:border-darkBlue hover:shadow-lightShadow">
+[ngClass]="text ? 'px-6' : 'px-0'"
+  class="font-inter h-10 flex border-2 rounded-[10px] font-bold items-center border-normalBlue hover:border-lightBlue bg-normalBlue hover:bg-lightBlue active:bg-darkBlue active:border-darkBlue hover:shadow-lightShadow">
   {{ text }}
-  <ion-icon  *ngIf="iconName" slot="end" name="{{iconName}}" class="text-2xl"></ion-icon>
+  <ion-icon  *ngIf="iconName" name="{{iconName}}" [ngClass]="text ?'ml-1':'ml-0'" class=" text-2xl"></ion-icon>
 </ion-button>

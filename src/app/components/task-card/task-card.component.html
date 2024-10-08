@@ -3,7 +3,7 @@
     {{ category?.text }}
   </span>
   <span class="pt-5 pb-1 font-bold text-normalBlue">{{task?.title}}</span>
-  <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description}}</span>
+  <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description ? task?.description : 'No description'}}</span>
 </div>
 
 <div *ngIf="this.task?.subtasks?.length" class="flex pt-4 items-center">
@@ -11,16 +11,16 @@
     <div class="absolute h-2 w-full bg-shadowGray rounded-lg"></div>
     <div class="absolute h-2 bg-coverBlue rounded-lg" [ngStyle]="{ 'width.%': percentDoneSubtasks }"></div>
   </div>
-  <span class="w-full justify-center flex">{{doneSubtasks.length}}/{{task?.subtasks?.length}} Subtasks</span>
+  <span class="w-full justify-center flex lg:text-sm xl:text-base text-nowrap">{{doneSubtasks.length}}/{{task?.subtasks?.length}} Subtasks</span>
 </div>
 
 <div>
   <div class="flex pt-4 items-center">
-    <div class="-mr-4" *ngFor="let assignedTo of task?.assignedTo?.slice(0, 4)">
+    <div class="-mr-4" *ngFor="let assignedTo of task?.assignedTo?.slice(0, 3)">
       <app-user-bubble [borderColor]="'white'" [text]="assignedTo?.initials" [color]="assignedTo?.color"></app-user-bubble>
     </div>
-    <div *ngIf="(task?.assignedTo?.length ?? 0) > 4" class="flex items-center justify-center bg-gray-300 rounded-full w-8 h-8 text-sm font-medium text-black p-3">
-      +{{ (task?.assignedTo?.length ?? 0) - 4 }}
+    <div *ngIf="(task?.assignedTo?.length ?? 0) > 3" class="flex items-center justify-center bg-gray-300 rounded-full w-8 h-8 text-sm font-medium text-black p-3">
+      +{{ (task?.assignedTo?.length ?? 0) - 3 }}
     </div>
     <div class="flex w-full justify-end pr-4">
       <ion-img class="w-6" src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>

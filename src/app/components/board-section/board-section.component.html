@@ -1,6 +1,26 @@
-<div class="flex flex-col gap-4" (dragover)="allowDrop($event)" (drop)="onDrop($event)">
-  <app-big-title [title]="title" [icon]="icon" [status]="status" (openAddTask)="onOpenAddTask()"></app-big-title>
-  <app-task-card *ngFor="let task of tasks" [task]="task" draggable="true" (click)="onOpenTaskCard(task)" (dragstart)="onDragStart($event, task)"
-    class="bg-white shadow-taskShadow p-4 border-0 rounded-3xl cursor-pointer">
+<app-big-title class="lg:hidden" 
+  [title]="title" 
+  [icon]="icon" 
+  [status]="status" 
+  (openAddTask)="onOpenAddTask()">
+</app-big-title>
+
+<div class="flex gap-4 lg:gap-8 scrollbar-hide px-2 xl:px-3  pt-5 pb-8 overflow-x-auto w-full lg:w-[unset] lg:overflow-x-hidden lg:flex-col">
+
+  <app-big-title class="hidden lg:block" 
+    [title]="title" [icon]="icon" 
+    [status]="status" 
+    (openAddTask)="onOpenAddTask()">
+  </app-big-title>
+
+  <app-task-card *ngFor="let task of tasks" 
+    [task]="task" 
+    draggable="true" 
+    (click)="onOpenTaskCard(task)"
+    (dragstart)="onDragStart($event, task)"
+    class="bg-white flex flex-col justify-between shadow-taskShadow p-3 xl:p-4 border-0 rounded-3xl cursor-pointer min-h-72 w-56 lg:w-[unset]">
   </app-task-card>
+
 </div>
+ 
+ 

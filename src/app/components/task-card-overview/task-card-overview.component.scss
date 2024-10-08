@@ -1,0 +1,14 @@
+.inputField {
+    outline: none;
+    box-sizing: border-box;
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    flex: none;
+    cursor: pointer;
+    font-family: "inter";
+    font-size: 16px;
+    --padding-start: 16px;
+    --padding-end: 10px;
+}
