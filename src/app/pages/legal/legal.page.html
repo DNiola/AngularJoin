@@ -1,11 +1,11 @@
 <ion-content [fullscreen]="true">
-  <div class="main-content ml-60 h-dvh flex flex-col bg-whiteSmoke ">
+  <div class="main-content ml-0 lg:ml-44 xl:ml-60 h-dvh flex flex-col bg-whiteSmoke">
     <app-header></app-header>
-    <app-sidebar></app-sidebar>
-    <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter bg-whiteSmoke">
+    <app-sidebar class="fixed bottom-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-20"></app-sidebar>
+    <div class="flex flex-col p-4 px-4 xl:px-20 py-20 pt-10 xl:pt-20 gap-14 font-inter bg-whiteSmoke">
       <div class="flex items-center justify-between">
         <app-page-title class="flex" [title]="'Legal Notice'"></app-page-title>
-        <div class="group cursor-pointer ">
+        <div class="group cursor-pointer pr-1">
           <ion-img (click)="goBack()" class="w-6 transition duration-300 group-hover:filter group-hover:brightness-0"
             src="../../assets/img/back.svg"></ion-img>
         </div>
@@ -13,7 +13,7 @@
 
       <div class="flex flex-col gap-6">
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Imprint</span>
+          <span class="font-semibold text-xl md:text-2xl">Imprint</span>
           <ul class="pl-4">
             <li>Davide Niola</li>
             <li>Ringlerstraße</li>
@@ -22,74 +22,69 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Exploring the Board</span>
+          <span class="font-semibold text-xl md:text-2xl">Exploring the Board</span>
           <span>Email: Davide.n2&#64;gmx.de</span>
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl"> Acceptance of terms</span>
+          <span class="font-semibold text-xl md:text-2xl">Acceptance of terms</span>
           <span>
             By accessing and using <span class="text-lightBlue">Join</span> (Product), you acknowledge and agree to the
-            following terms and conditions, and
-            any policies, guidelines, or amendments thereto that may be presented to you from time to time. We, the
-            listed students, may update or change the terms and conditions from time to time without notice.</span>
+            following terms and conditions, and any policies, guidelines, or amendments thereto that may be presented to
+            you from time to time. We, the listed students, may update or change the terms and conditions from time to
+            time without notice.
+          </span>
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Scope and ownership of the product</span>
+          <span class="font-semibold text-xl md:text-2xl">Scope and ownership of the product</span>
           <span>
             <span class="text-lightBlue">Join</span> has been developed as part of a student group project in a web
             development bootcamp at the <span class="text-lightBlue">Developer Akademie GmbH</span>. It has an
-            educational purpose and is not intended for extensive personal & business usage. As
-            such, we cannot guarantee consistent availability, reliability, accuracy, or any other aspect of quality
-            regarding this Product.
+            educational purpose and is not intended for extensive personal & business usage. As such, we cannot
+            guarantee consistent availability, reliability, accuracy, or any other aspect of quality regarding this
+            Product.
             <br><br>
             The design of <span class="text-lightBlue">Join</span> is owned by the <span
-              class="text-lightBlue">Developer Akademie GmbH</span>.
-            Unauthorized use, reproduction, modification, distribution, or replication of the design is strictly
-            prohibited.</span>
+              class="text-lightBlue">Developer Akademie GmbH</span>. Unauthorized use, reproduction, modification,
+            distribution, or replication of the design is strictly prohibited.
+          </span>
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Proprietary rights</span>
+          <span class="font-semibold text-xl md:text-2xl">Proprietary rights</span>
           <span>
             Aside from the design owned by <span class="text-lightBlue">Developer Akademie GmbH</span>, we, the listed
-            students, retain all proprietary
-            rights in <span class="text-lightBlue">Join</span>, including any associated copyrighted material,
-            trademarks, and other proprietary
-            information.
+            students, retain all proprietary rights in <span class="text-lightBlue">Join</span>, including any
+            associated copyrighted material, trademarks, and other proprietary information.
           </span>
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Use of the product</span>
+          <span class="font-semibold text-xl md:text-2xl">Use of the product</span>
           <span>
             <span class="text-lightBlue">Join</span> is intended to be used for lawful purposes only, in accordance with
-            all applicable laws and
-            regulations. Any
-            use of <span class="text-lightBlue">Join</span> for illegal activities, or to harass, harm, threaten, or
-            intimidate another person, is strictly
-            prohibited. You are solely responsible for your interactions with other users of <span
-              class="text-lightBlue">Join</span>.
+            all applicable laws and regulations. Any use of <span class="text-lightBlue">Join</span> for illegal
+            activities, or to harass, harm, threaten, or intimidate another person, is strictly prohibited. You are
+            solely responsible for your interactions with other users of <span class="text-lightBlue">Join</span>.
           </span>
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Disclaimer of warranties and limitation of liability</span>
+          <span class="font-semibold text-xl md:text-2xl">Disclaimer of warranties and limitation of liability</span>
           <span>
             <span class="text-lightBlue">Join</span> is provided "as is" without warranty of any kind, whether express
-            or implied, including but not limited
-            to the implied warranties of merchantability, fitness for a particular purpose, and non-infringement. In no
-            event will we, the listed students, or the Developer Akademie, be liable for any direct, indirect,
-            incidental, special, consequential or exemplary damages, including but not limited to, damages for loss of
-            profits, goodwill, use, data, or other intangible losses, even if we have been advised of the possibility of
-            such damages, arising out of or in connection with the use or performance of
-            <span class="text-lightBlue">Join</span>.
+            or implied, including but not limited to the implied warranties of merchantability, fitness for a particular
+            purpose, and non-infringement. In no event will we, the listed students, or the Developer Akademie, be
+            liable for any direct, indirect, incidental, special, consequential or exemplary damages, including but not
+            limited to, damages for loss of profits, goodwill, use, data, or other intangible losses, even if we have
+            been advised of the possibility of such damages, arising out of or in connection with the use or performance
+            of <span class="text-lightBlue">Join</span>.
           </span>
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Indemnity</span>
+          <span class="font-semibold text-xl md:text-2xl">Indemnity</span>
           <span>
             You agree to indemnify, defend and hold harmless us, the listed students, the Developer Akademie, and our
             affiliates, partners, officers, directors, agents, and employees, from and against any claim, demand, loss,
@@ -100,7 +95,6 @@
           </span>
           Date: Oktober 03, 2024
         </div>
-
       </div>
     </div>
   </div>

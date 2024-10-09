@@ -1,20 +1,19 @@
 <ion-content [fullscreen]="true">
-  <div class="main-content ml-60 h-dvh flex flex-col bg-whiteSmoke ">
+  <div class="main-content ml-0 lg:ml-44 xl:ml-60 h-dvh flex flex-col bg-whiteSmoke">
     <app-header></app-header>
-    <app-sidebar></app-sidebar>
-    <div class="flex flex-col p-4 px-20 pt-20 gap-14 font-inter  bg-whiteSmoke"> 
-
+    <app-sidebar class="fixed bottom-0 left-0 right-0 w-full lg:static lg:w-auto z-20"></app-sidebar>
+    <div class="flex flex-col p-4 xl:px-20 py-20 pt-10 xl:pt-20 gap-10 md:gap-14 font-inter bg-whiteSmoke flex-grow">
       <div class="flex items-center justify-between">
         <app-page-title class="flex" [title]="'Privacy Policy'"></app-page-title>
-        <div class="group cursor-pointer ">
-          <ion-img (click)="goBack()" class="w-6 transition duration-300 group-hover:filter group-hover:brightness-0"
+        <div class="group cursor-pointer">
+          <ion-img (click)="goBack()" class="w-6 transition duration-300 group-hover:filter group-hover:brightness-0 pr-1"
             src="../../assets/img/back.svg"></ion-img>
         </div>
       </div>
       
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 md:gap-6">
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Our Standard</span>
+          <span class="font-semibold text-xl md:text-2xl">Our Standard</span>
           <span>
             We are committed to protecting your personal information and ensuring transparency about how your data is
             handled. This Privacy Policy outlines the types of information we collect, how it is used, and your rights
@@ -23,7 +22,7 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Data Collection</span>
+          <span class="font-semibold text-xl md:text-2xl">Data Collection</span>
           <span>
             We may collect personal data such as your name, email address, and any information you provide through our
             contact forms. Additionally, we collect browsing data through cookies and similar technologies to better
@@ -32,7 +31,7 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Use of Data</span>
+          <span class="font-semibold text-xl md:text-2xl">Use of Data</span>
           <span>
             The data we collect is used to enhance your experience on our website, process any inquiries or requests you
             submit, and analyze website traffic for improvement. Your data is kept confidential, and we do not share or
@@ -41,7 +40,7 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Data Sharing</span>
+          <span class="font-semibold text-xl md:text-2xl">Data Sharing</span>
           <span>
             In some cases, we may share your personal data with third-party service providers that assist us with
             website hosting, maintenance, or analytics. These service providers are contractually obligated to protect
@@ -50,7 +49,7 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Your Rights</span>
+          <span class="font-semibold text-xl md:text-2xl">Your Rights</span>
           <span>
             You have the right to access, correct, or request the deletion of your personal data at any time.
             Additionally, you may request that we restrict or stop processing your data. Please contact us to exercise
@@ -59,7 +58,7 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <span class="font-semibold text-2xl">Contact Us</span>
+          <span class="font-semibold text-xl md:text-2xl">Contact Us</span>
           <span>
             If you have any questions or concerns regarding our Privacy Policy, or if you would like to make a request
             concerning your data, please reach out to us at Davide.n2&#64;gmx.de. We are here to help and will respond
