@@ -75,11 +75,13 @@
             <div class="flex flex-col gap-2 font-inter pt-2 w-full lg:flex-row lg:justify-end lg:gap-4">
               <ion-col size="12">
                 <div *ngIf="!isEditContact" class="flex w-full gap-2 justify-center lg:justify-start">
-                  
+
                   <app-button-edge
                     [text]="'Cancel'"
                     [iconName]="'close-outline'"
-                    (click)="onHandleDialog('cancel')">
+                    (click)="onHandleDialog('cancel')"
+                    class="hidden lg:block"
+                    >
                   </app-button-edge>
 
                   <app-button-filled

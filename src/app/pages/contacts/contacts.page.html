@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true" scroll-y="false">
   <div class="main-content lg:ml-44 xl:ml-60 bg-whiteSmoke flex flex-col h-dvh overflow-hidden">
-    <app-header [currentUser]="currentUser"></app-header>
+    <app-header class="z-[11]" [currentUser]="currentUser"></app-header>
     <app-sidebar class="fixed bottom-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-20"></app-sidebar>
 
     <div class="flex flex-grow bg-whiteSmoke">
@@ -19,10 +19,15 @@
         </div>
       </div>
       
-      <div class="hidden lg:flex flex-col p-4 pt-20 gap-14 font-inter w-7/12 xl:px-20">
+      <div *ngIf="selectedContact" class="absolute z-10 lg:static bg-whiteSmoke w-full   lg:h-[unset] lg:bg-[unset] h-[calc(100vh-10rem)] overflow-auto           lg:flex flex-col p-4 lg:pt-20 lg:gap-14 font-inter lg:w-7/12 xl:px-20">
+        <div class="group cursor-pointer lg:hidden">
+          <ion-img (click)="selectedContact = null" class="absolute w-6 right-6 top-6"
+            src="../../assets/img/back.svg"></ion-img>
+        </div>
         <app-page-title class="flex" [title]="'Contacts'" [text]="'Better with a team'"></app-page-title>
-        <app-contact-overview [selectedContact]="selectedContact" (handleContact)="handleContact($event)"></app-contact-overview>
+        <app-contact-overview  [selectedContact]="selectedContact" (handleContact)="handleContact($event)"></app-contact-overview>
       </div>
+
     </div>
   </div>
 </ion-content>
