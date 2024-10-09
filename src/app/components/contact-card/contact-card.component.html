@@ -1,49 +1,119 @@
-<div class="h-full flex items-center">
+<div class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-20">
+  <div class="absolute z-[12] bg-whiteSmoke shadow-taskShadow w-4/5 sm:w-4/6 1xl:w-1/2 rounded-3xl">
+    <div class="h-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8 bg-normalBlue rounded-3xl">
 
-  <div class="bg-normalBlue text-white p-20 gap-1 flex flex-col rounded-l-3xl h-full justify-center">
-    <img class="h-28 w-28" src="../../../assets/img/sideLogo.svg">
-    <app-page-title class="flex pt-4 w-max" [title]="isEditContact ? 'Edit contact' : 'Add contact'"></app-page-title>
-    <span *ngIf="!isEditContact">Tasks are better with a team!</span>
-    <div class="h-1 w-20 bg-lightBlue rounded-lg"></div>
-  </div>
-  <div class="flex w-full items-center justify-evenly">
-    <ion-icon class="cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0 absolute right-14 top-14"
-      name="close-outline" (click)="onCloseCard()">
-    </ion-icon>
-    <app-user-bubble [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
-    </app-user-bubble>
+      <div class="text-white pt-4 pb-8 px-5 gap-2 flex flex-col w-full h-auto justify-center lg:w-1/2 lg:pt-0 lg:pb-20 2xl:px-16">
+        <img class="h-14 w-14 hidden lg:block" src="../../../assets/img/sideLogo.svg">
+        <app-page-title class="flex pt-2 w-max" [title]="isEditContact ? 'Edit contact' : 'Add contact'"></app-page-title>
+        <span *ngIf="!isEditContact" class="text-sm lg:text-base">Tasks are better with a team!</span>
+        <div class="h-1 w-16 bg-lightBlue rounded-lg"></div>
 
-    <form (submit)="isEditContact ? onHandleDialog('edit') : onHandleDialog('create')" class="flex flex-col justify-center items-center pt-16">
-
-      <div class="flex flex-col justify-center gap-8  w-96">
-        <app-auth-input-fields (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
-          [type]="'text'" [placeholder]="'Full Name'" [icon]="'user.svg'">
-        </app-auth-input-fields>
-
-        <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField class="w-full"
-          [type]="'email'" [placeholder]="'E-Mail'" [icon]="'email.svg'">
-        </app-auth-input-fields>
-
-        <app-auth-input-fields (input)="helperService.EmptyErrorField(phoneField)" #phoneField class="w-full"
-          [type]="'number'" [placeholder]="'Phone number'" [icon]="'phone.svg'">
-        </app-auth-input-fields>
-
-
-        <div class="flex justify-between items-center font-inter pt-3">
-          <ion-col size="12" size="6">
-            <div *ngIf="!isEditContact" class="flex w-max gap-4">
-              <app-button-edge [text]="'Cancel'" [iconName]="'close-outline'" (click)="onHandleDialog('cancel')"></app-button-edge>
-              <app-button-filled [text]="'Create contact'" [iconName]="'checkmark-outline'" type="submit"></app-button-filled>
-            </div>
-            <div *ngIf="isEditContact" class="flex justify-end">
-              <app-button-edge [text]="'Delete'" (click)="onHandleDialog('delete')"></app-button-edge>
-              <app-button-filled [text]="'Save'" [iconName]="'checkmark-outline'" type="submit"></app-button-filled>
-            </div>
-          </ion-col>
-        </div>
+        <ion-icon
+          class="cursor-pointer text-3xl rounded-full hover:bg-smokeGray border-0 absolute z-10 text-white lg:text-normalBlue right-4 top-4"
+          name="close-outline" 
+          (click)="onCloseCard()">
+        </ion-icon>
       </div>
-    </form>
+
+      <div class="flex flex-col w-full items-center justify-evenly relative p-2 px-5 lg:w-4/5 rounded-b-3xl lg:rounded-r-3xl lg:rounded-l-none bg-whiteSmoke">
+        <app-user-bubble
+          [borderColor]="'white'"
+          [size]="'70px'"
+          [fontSize]="'18px'"
+          [borderWidth]="'2px'"
+          class="-mt-9 lg:hidden">
+        </app-user-bubble>
+
+        <form (submit)="isEditContact ? onHandleDialog('edit') : onHandleDialog('create')"
+          class="flex flex-col lg:flex-row justify-center items-center pt-4 w-full lg:pt-0">
+
+          <app-user-bubble
+            [borderColor]="'white'"
+            [size]="'70px'"
+            [fontSize]="'18px'"
+            [borderWidth]="'2px'"
+            class="hidden mb-8 lg:block 2xl:hidden">
+          </app-user-bubble>
+
+          <app-user-bubble
+            [borderColor]="'white'"
+            [size]="'100px'"
+            [fontSize]="'20px'"
+            [borderWidth]="'4px'"
+            class="hidden mb-8 2xl:block 2xl:pl-14">
+          </app-user-bubble>
+
+          <div class="flex flex-col justify-center gap-3 w-full lg:gap-6 1xl:gap-10 lg:px-5 lg:pr-0 2xl:px-16 lg:pt-24 lg:pb-10">
+            <app-auth-input-fields
+              (input)="helperService.EmptyErrorField(nameField)"
+              #nameField
+              class="w-full"
+              [type]="'text'"
+              [placeholder]="'Full Name'"
+              [icon]="'user.svg'">
+            </app-auth-input-fields>
+
+            <app-auth-input-fields
+              (input)="helperService.EmptyErrorField(emailField)"
+              #emailField
+              class="w-full"
+              [type]="'email'"
+              [placeholder]="'E-Mail'"
+              [icon]="'email.svg'">
+            </app-auth-input-fields>
+
+            <app-auth-input-fields
+              (input)="helperService.EmptyErrorField(phoneField)"
+              #phoneField
+              class="w-full"
+              [type]="'tel'"
+              [placeholder]="'Phone number'"
+              [icon]="'phone.svg'"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+            </app-auth-input-fields>
+
+            <div class="flex flex-col gap-2 font-inter pt-2 w-full lg:flex-row lg:justify-end lg:gap-4">
+              <ion-col size="12">
+                <div *ngIf="!isEditContact" class="flex w-full gap-2 justify-center lg:justify-start">
+                  
+                  <app-button-edge
+                    [text]="'Cancel'"
+                    [iconName]="'close-outline'"
+                    (click)="onHandleDialog('cancel')">
+                  </app-button-edge>
+
+                  <app-button-filled
+                    [text]="'Create contact'"
+                    [iconName]="'checkmark-outline'"
+                    type="submit">
+                  </app-button-filled>
+
+                </div>
+                <div *ngIf="isEditContact" class="flex w-full gap-2 justify-center lg:justify-start">
+
+                  <app-button-edge
+                    [text]="'Delete'"
+                    (click)="onHandleDialog('delete')">
+                  </app-button-edge>
+
+                  <app-button-filled
+                    [text]="'Save'"
+                    [iconName]="'checkmark-outline'"
+                    type="submit">
+                  </app-button-filled>
+
+                </div>
+              </ion-col>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
-<app-dialog *ngIf="isDialog" [dialogMessage]="dialogMessage" (confirm)="dialogMessage.action == 'cancel' ? emptyField() : dialogMessage.action == 'delete' ? onDeleteContact(contact) : onHandleForm()" (cancel)="isDialog = false"></app-dialog>
+<app-dialog *ngIf="isDialog"
+  [dialogMessage]="dialogMessage"
+  (cancel)="isDialog = false"
+  (confirm)="dialogMessage.action == 'cancel' ? emptyField() : dialogMessage.action == 'delete' ? onDeleteContact(contact) : onHandleForm()">
+</app-dialog>
