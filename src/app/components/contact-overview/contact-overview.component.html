@@ -1,7 +1,7 @@
 <div *ngIf="selectedContact" class="flex flex-col gap-7 pt-7 lg:gap-14 lg:pt-0 ">
   <div class="flex gap-4">
 
-    <app-user-bubble class="hidden lg:static" [text]="selectedContact.initials" [color]="selectedContact.color" [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
+    <app-user-bubble class="hidden lg:block" [text]="selectedContact.initials" [color]="selectedContact.color" [borderColor]="'white'" [size]="'100px'" [fontSize]="'24px'" [borderWidth]="'4px'">
     </app-user-bubble>
 
     <app-user-bubble class="lg:hidden" [text]="selectedContact.initials" [color]="selectedContact.color" [borderColor]="'white'" [size]="'70px'" [fontSize]="'20px'" [borderWidth]="'2px'">
