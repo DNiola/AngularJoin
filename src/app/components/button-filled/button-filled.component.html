@@ -1,6 +1,6 @@
 <ion-button type="submit" [disabled]="disabled" (click)="onConfirm()"
-[ngClass]="text ? 'px-6' : 'px-0'"
+  [ngClass]="{'shadow-overviewShadowHover rounded-full h-14 w-14' : roundButton}"
   class="font-inter h-10 flex border-2 rounded-[10px] font-bold items-center border-normalBlue hover:border-lightBlue bg-normalBlue hover:bg-lightBlue active:bg-darkBlue active:border-darkBlue hover:shadow-lightShadow">
   {{ text }}
-  <ion-icon  *ngIf="iconName" name="{{iconName}}" [ngClass]="text ?'ml-1':'ml-0'" class=" text-2xl"></ion-icon>
+  <ion-icon *ngIf="iconName" name="{{iconName}}" [ngClass]="text ?'ml-3':'ml-0'" class=" text-2xl"></ion-icon>
 </ion-button>

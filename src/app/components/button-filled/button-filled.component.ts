@@ -9,6 +9,7 @@ export class ButtonFilledComponent {
   @Input() text = '';
   @Input() iconName? = '';
   @Input() disabled = false;
+  @Input() roundButton = false;
 
   @Output() confirm = new EventEmitter<void>();
   constructor() { }
