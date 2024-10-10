@@ -4,8 +4,8 @@
     <app-sidebar class="fixed bottom-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-20"></app-sidebar>
 
     <div class="flex flex-grow bg-whiteSmoke">
-      <div class="w-full lg:w-[29%] 1xl:w-1/4 2xl:w-2/6 bg-white flex flex-col pt-4 lg:pt-0 pb-4 px-4 xl:px-8 shadow-rightShadow z-10 h-[calc(100vh-10rem)] lg:h-[calc(100vh-6rem)] overflow-y-auto">
-        <div class="hidden lg:block sticky top-0 bg-white py-4">
+      <div class="w-full lg:w-[29%] lg:min-w-[29%] 1xl:w-[29%] 2xl:max-w-[20%] 2xl:min-w-[unset] bg-white flex flex-col pt-4 lg:pt-0 pb-4 px-4 xl:px-8 shadow-rightShadow z-10 h-[calc(100vh-10rem)] lg:h-[calc(100vh-6rem)] overflow-y-auto">
+        <div class="hidden lg:block sticky top-0 bg-white py-4 border-0">
           <app-button-filled class="w-full" [text]="'Add new contact'" [iconName]="'person-add-outline'" (click)="onOpenAddContact()"></app-button-filled>
         </div>
 
