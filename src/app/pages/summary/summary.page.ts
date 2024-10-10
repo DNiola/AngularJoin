@@ -73,7 +73,6 @@ export class SummaryPage implements OnInit {
       this.upcomingDeadline = formatDate(nextDeadlineTask.dueDate, 'MMMM d, y', 'en-US');
     } else {
       this.upcomingDeadline = null;
-      console.log('No urgent tasks found.');
     }
   }
 

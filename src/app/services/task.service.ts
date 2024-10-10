@@ -19,10 +19,7 @@ export class TaskService {
     task.id = taskId;
 
     return taskRef.set(task)
-      .then(() => {
-        console.log("Task erfolgreich erstellt mit ID:", taskId);
-        return taskId;
-      });
+      .then(() => { return taskId; });
   }
 
 

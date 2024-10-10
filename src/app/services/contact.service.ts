@@ -32,9 +32,7 @@ export class ContactService {
     const userRef = this.firestore.collection('users').doc(userId);
 
     return userRef.update(updatedContact)
-      .then(() => {
-        console.log("Benutzerprofil erfolgreich aktualisiert");
-      })
+      .then(() => { })
       .catch((error) => {
         console.error("Fehler beim Aktualisieren des Benutzerprofils:", error);
       });

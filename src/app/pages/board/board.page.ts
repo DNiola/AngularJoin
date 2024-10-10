@@ -137,16 +137,12 @@ export class BoardPage implements OnInit {
     if (this.currentDraggedTask && targetStatus) {
       this.updateTaskStatus(this.currentDraggedTask, targetStatus);
       this.currentDraggedTask = null;
-    } else {
-      console.log('currentDraggedTask ist null oder targetStatus ist nicht gesetzt.');
     }
   }
 
 
   updateTaskStatus(task: Task, newStatus: string): void {
-    this.taskService.updateTaskStatus(task.id, newStatus).then(() => {
-      console.log(`Task mit ID ${task.id} wurde nach ${newStatus} verschoben.`);
-    });
+    this.taskService.updateTaskStatus(task.id, newStatus)
   }
 
 }
