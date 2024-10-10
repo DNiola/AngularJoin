@@ -48,16 +48,19 @@ export class ContactsPage implements OnInit {
   private groupContactsByLetter(): void {
     this.groupedContacts = {};
     this.contacts.forEach((contact) => {
-      const firstLetter = contact.name.charAt(0).toUpperCase();
+      let contactName = contact.name;
+      if (this.currentUser && contact.userId === this.currentUser.userId) {
+        contactName += ' (You)';
+      }
+      const firstLetter = contactName.charAt(0).toUpperCase();
       if (!this.groupedContacts[firstLetter]) {
         this.groupedContacts[firstLetter] = [];
       }
-      this.groupedContacts[firstLetter].push(contact);
+      this.groupedContacts[firstLetter].push({ ...contact, name: contactName });
     });
-
   }
 
-
+  
   public handleContact(action: any): void {
     if (action.action === 'delete' && this.currentUser) {
       this.handleDeleteContact(this.selectedContact!, this.currentUser);

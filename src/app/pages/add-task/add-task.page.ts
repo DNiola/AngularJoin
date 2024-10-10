@@ -35,9 +35,16 @@ export class AddTaskPage implements OnInit {
       const userContacts = users as Contact[];
       const personalContacts = currentUser?.contacts || [];
       const visibleUserContacts = userContacts.filter((contact) => !currentUser?.hidden?.includes(contact.userId));
-      this.contacts = [...visibleUserContacts, ...personalContacts];
+      
+      this.contacts = [...visibleUserContacts, ...personalContacts].map(contact => {
+        if (contact.userId === currentUser.userId) {
+          return { ...contact, name: `${contact.name} (You)` };
+        }
+        return contact;
+      });
     });
   }
+  
 
 }
 
