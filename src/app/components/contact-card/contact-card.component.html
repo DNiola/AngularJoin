@@ -68,8 +68,7 @@
               class="w-full"
               [type]="'tel'"
               [placeholder]="'Phone number'"
-              [icon]="'phone.svg'"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+              [icon]="'phone.svg'">
             </app-auth-input-fields>
 
             <div class="flex flex-col gap-2 font-inter pt-2 w-full lg:flex-row lg:justify-end lg:gap-4">
@@ -87,6 +86,7 @@
                   <app-button-filled
                     [text]="'Create contact'"
                     [iconName]="'checkmark-outline'"
+                    [disabled]="isFieldsEmpty()"
                     type="submit">
                   </app-button-filled>
 
@@ -101,6 +101,7 @@
                   <app-button-filled
                     [text]="'Save'"
                     [iconName]="'checkmark-outline'"
+                    [disabled]="isFieldsEmpty()"
                     type="submit">
                   </app-button-filled>
 

@@ -6,11 +6,13 @@ import { HelperService } from 'src/app/services/helper.service';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/app/models/user.model';
+
 @Component({
   selector: 'app-contact-card',
   templateUrl: './contact-card.component.html',
   styleUrls: ['./contact-card.component.scss'],
 })
+
 export class ContactCardComponent {
   @ViewChild('nameField') nameField!: AuthInputFieldsComponent;
   @ViewChild('emailField') emailField!: AuthInputFieldsComponent;
@@ -25,6 +27,7 @@ export class ContactCardComponent {
   public dialogMessage = { title: '', message: '', action: '' };
   public isDialog = false;
 
+  
   constructor(private contactService: ContactService, private firestore: AngularFirestore, private afAuth: AngularFireAuth, public helperService: HelperService, private cdr: ChangeDetectorRef) { }
 
 
@@ -34,6 +37,7 @@ export class ContactCardComponent {
     }
     this.cdr.detectChanges();
   }
+  
 
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -60,28 +64,32 @@ export class ContactCardComponent {
     };
   }
 
-
-  public onHandleForm(): void {
-    this.isEditContact ? this.handleEditContact() : this.handleCreateContact();
+ 
+  public isFieldsEmpty(): boolean {
+    return !this.nameField?.getValue().trim() || !this.emailField?.getValue().trim();
   }
 
 
-  private handleEditContact(): void {
-    this.afAuth.currentUser.then((user) => {
-      if (user) {
-        const creatorId = this.contact.creatorId ? this.contact.creatorId : '';
-        const { userId, newContact } = this.getEditContactData(creatorId);
-        creatorId ? this.editContact(creatorId, newContact) : this.editUserContact(userId, newContact)
-      }
-    });
+  public async onHandleForm(): Promise<void> {
+    this.isEditContact ? await this.handleEditContact() : await this.handleCreateContact();
+  }
+
+
+  private async handleEditContact(): Promise<void> {
+    const user = await this.afAuth.currentUser;
+    if (user) {
+      const creatorId = this.contact.creatorId ? this.contact.creatorId : '';
+      const { userId, newContact } = this.getEditContactData(creatorId);
+      creatorId ? await this.editContact(creatorId, newContact) : await this.editUserContact(userId, newContact);
+    }
   }
 
 
   private getEditContactData(creatorId: Contact['creatorId']): { userId: Contact['userId'], newContact: Contact } {
     const { name, email, phone } = this.getFormValues();
     const initials = this.helperService.getInitials(name);
-    const color = this.contact.color
-    const userId = this.contact.userId
+    const color = this.contact.color;
+    const userId = this.contact.userId;
 
     const newContact: Contact = {
       userId,
@@ -97,14 +105,13 @@ export class ContactCardComponent {
   }
 
 
-  private handleCreateContact(): void {
-    this.afAuth.currentUser.then((user) => {
-      if (user) {
-        const creatorId = user.uid;
-        const newContact = this.getCreateContactData(creatorId);
-        this.createContact(creatorId, newContact)
-      }
-    });
+  private async handleCreateContact(): Promise<void> {
+    const user = await this.afAuth.currentUser;
+    if (user) {
+      const creatorId = user.uid;
+      const newContact = this.getCreateContactData(creatorId);
+      await this.createContact(creatorId, newContact);
+    }
   }
 
 
@@ -128,39 +135,36 @@ export class ContactCardComponent {
   }
 
 
-  private editContact(creatorId: Contact['creatorId'], newContact: Contact): void {
-    this.contactService.updateCreatorContact(creatorId, newContact)
-      .then(() => {
-        this.closeCard.emit(newContact);
-        this.emptyField();
-      })
-      .catch((error) => {
-        console.error('Fehler beim Aktualisieren des Kontakts:', error);
-      });
+  private async editContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
+    try {
+      await this.contactService.updateCreatorContact(creatorId, newContact);
+      this.closeCard.emit(newContact);
+      this.emptyField();
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren des Kontakts:', error);
+    }
   }
 
 
-  private editUserContact(userId: User['userId'], newContact: Contact): void {
-    this.contactService.updateUserContact(userId, newContact)
-      .then(() => {
-        this.closeCard.emit(newContact);
-        this.emptyField();
-      })
-      .catch((error) => {
-        console.error('Fehler beim Aktualisieren des Kontakts:', error);
-      });
+  private async editUserContact(userId: User['userId'], newContact: Contact): Promise<void> {
+    try {
+      await this.contactService.updateUserContact(userId, newContact);
+      this.closeCard.emit(newContact);
+      this.emptyField();
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren des Kontakts:', error);
+    }
   }
 
 
-  private createContact(creatorId: Contact['creatorId'], newContact: Contact): void {
-    this.contactService.saveContact(creatorId, newContact)
-      .then(() => {
-        this.closeCard.emit(newContact);
-        this.emptyField();
-      })
-      .catch((error) => {
-        console.error('Fehler beim Speichern des Kontakts:', error);
-      });
+  private async createContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
+    try {
+      await this.contactService.saveContact(creatorId, newContact);
+      this.closeCard.emit(newContact);
+      this.emptyField();
+    } catch (error) {
+      console.error('Fehler beim Speichern des Kontakts:', error);
+    }
   }
 
 
@@ -183,21 +187,13 @@ export class ContactCardComponent {
 
 
   public onHandleDialog(action: 'cancel' | 'create' | 'delete' | 'edit'): void {
-    if (action == 'create') {
-      this.dialogMessage = { title: 'Add new contact', message: 'Are you sure to create this contact?', action: action }
-    }
-    if (action == 'cancel') {
-      this.dialogMessage = { title: 'Cancel', message: 'Are you sure to cancel this action?', action: action }
-
-    }
-    if (action == 'delete') {
-      this.dialogMessage = { title: 'Delete contact', message: 'Are you sure to delete this contact?', action: action }
-
-    }
-    else if (action == 'edit') {
-      this.dialogMessage = { title: 'Edit contact', message: 'Are you sure to edit this contact?', action: action }
-    }
+    const dialogMessages = {
+      create: { title: 'Add new contact', message: 'Are you sure to create this contact?', action: 'create' },
+      cancel: { title: 'Cancel', message: 'Are you sure to cancel this action?', action: 'cancel' },
+      delete: { title: 'Delete contact', message: 'Are you sure to delete this contact?', action: 'delete' },
+      edit: { title: 'Edit contact', message: 'Are you sure to edit this contact?', action: 'edit' },
+    };
+    this.dialogMessage = dialogMessages[action];
     this.isDialog = true;
   }
-
 }
