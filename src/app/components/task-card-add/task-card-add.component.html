@@ -17,7 +17,7 @@
           <!-- Assigned to -->
           <app-dropdown-input-field [editValueMode]="currentTask.assignedTo" [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
           <!-- Assigned Bubble -->
-          <div class="flex flex-wrap gap-4" [ngClass]="{ '-mt-6': isEditTask }">
+          <div class="flex flex-wrap gap-4" >
             <div *ngFor="let item of selectedBubble">
               <app-user-bubble [color]="item.color" [text]="item.initials" [size]="'48px'" [borderWidth]="'3px'" [borderColor]="'white'"></app-user-bubble>
             </div>
@@ -41,7 +41,7 @@
           <app-dropdown-input-field [editValueMode]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select task category'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
           <!-- Subtasks -->
           <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
-          <div class="-mt-8">
+          <div class="-mt-6">
             <app-subtask-list [subtasks]="subtasks"></app-subtask-list>
           </div>
         </div>
