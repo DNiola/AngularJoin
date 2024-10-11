@@ -11,8 +11,15 @@ import { HelperService } from './helper.service';
 export class UserService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
-
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private helperService: HelperService) {
+  
+  /**
+   * Initializes the UserService and sets up authentication state subscription.
+   *
+   * @param {AngularFireAuth} afAuth - The Firebase Authentication service.
+   * @param {AngularFirestore} firestore - The Firestore database service.
+   * @param {HelperService} helperService - Helper service for utility functions.
+   */
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.loadUserData(user.uid);
@@ -114,7 +121,7 @@ export class UserService {
         console.error('Fehler beim Gast-Login:', error);
       });
   }
-  
+
 
   /**
    * Sends a password reset email to the specified email address.
