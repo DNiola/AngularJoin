@@ -35,8 +35,13 @@ export class BoardPage implements OnInit {
 
   constructor(private userService: UserService, private taskService: TaskService, private subtaskService: SubtaskService) { }
 
-
-  public ngOnInit() {
+  
+  /**
+   * Initializes the board page by setting up user, tasks, and subtasks.
+   *
+   * @returns {void}
+   */
+  public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.contactsInit();
@@ -49,16 +54,26 @@ export class BoardPage implements OnInit {
     this.tasksInit();
   }
 
-
+  
+  /**
+   * Initializes the contacts list by fetching all users if the current user is available.
+   *
+   * @returns {void}
+   */
   public contactsInit(): void {
     if (this.currentUser) {
       this.userService.getAllUsers().then(users => {
-        this.contacts = users as Contact[]
+        this.contacts = users as Contact[];
       });
     }
   }
 
-
+  
+  /**
+   * Initializes tasks for each status by fetching them from the task service.
+   *
+   * @returns {void}
+   */
   private tasksInit(): void {
     this.taskService.getTasksByStatus('todo', this.searchTerm).subscribe(tasks => {
       this.todoTasks = tasks;
@@ -77,33 +92,61 @@ export class BoardPage implements OnInit {
     });
   }
 
-
+  
+  /**
+   * Opens the add task section with a specific status.
+   *
+   * @param {'todo' | 'inProgress' | 'awaitFeedback' | 'done'} status - The status for the new task.
+   * @returns {void}
+   */
   public openAddTask(status: 'todo' | 'inProgress' | 'awaitFeedback' | 'done'): void {
     this.isAddTaskOpen = true;
     this.taskStatus = status;
   }
 
-
+  
+  /**
+   * Closes the add task section and resets editing state.
+   *
+   * @returns {void}
+   */
   public closeAddTask(): void {
     this.isAddTaskOpen = false;
     this.isEditTask = false;
     this.currentOpenedTask = null;
   }
 
-
+  
+  /**
+   * Opens the task card overview for a specific task.
+   *
+   * @param {Task} task - The task to be opened in the overview.
+   * @returns {void}
+   */
   public openTaskCard(task: Task): void {
     this.currentOpenedTask = task;
     this.isTaskOverviewOpen = true;
   }
 
-
+  
+  /**
+   * Switches to edit mode for the currently opened task.
+   *
+   * @returns {void}
+   */
   public editTask(): void {
     this.isTaskOverviewOpen = false;
     this.isAddTaskOpen = true;
     this.isEditTask = true;
   }
 
-
+  
+  /**
+   * Handles the search input event and updates the task list based on the search term.
+   *
+   * @param {Event} event - The search input event.
+   * @returns {void}
+   */
   public onSearch(event: Event): void {
     const inputElement = event.target as HTMLInputElement | null;
 
@@ -113,23 +156,38 @@ export class BoardPage implements OnInit {
     }
   }
 
-
-  // Listener for setting the task that is currently being dragged
-  onTaskDragStart(event: { task: Task, newStatus: string }): void {
+  
+  /**
+   * Sets the task that is currently being dragged.
+   *
+   * @param {{ task: Task, newStatus: string }} event - The drag event containing the task and its new status.
+   * @returns {void}
+   */
+  public onTaskDragStart(event: { task: Task, newStatus: string }): void {
     this.currentDraggedTask = event.task;
   }
 
-
-  // listener for allowing the drop event (global)
+  
+  /**
+   * Allows the global dragover event to prevent default behavior.
+   *
+   * @param {DragEvent} event - The drag event.
+   * @returns {void}
+   */
   @HostListener('dragover', ['$event'])
-  onGlobalDragOver(event: DragEvent): void {
+  public onGlobalDragOver(event: DragEvent): void {
     event.preventDefault();
   }
 
-
-  // Listener for the drop event (global)
+  
+  /**
+   * Handles the global drop event and updates the task status.
+   *
+   * @param {DragEvent} event - The drop event.
+   * @returns {void}
+   */
   @HostListener('drop', ['$event'])
-  onGlobalDrop(event: DragEvent): void {
+  public onGlobalDrop(event: DragEvent): void {
     event.preventDefault();
     let targetElement = (event.target as HTMLElement).closest('[data-status]');
     const targetStatus = targetElement ? targetElement.getAttribute('data-status') : null;
@@ -140,9 +198,15 @@ export class BoardPage implements OnInit {
     }
   }
 
-
-  updateTaskStatus(task: Task, newStatus: string): void {
-    this.taskService.updateTaskStatus(task.id, newStatus)
+  
+  /**
+   * Updates the status of a task.
+   *
+   * @param {Task} task - The task to be updated.
+   * @param {string} newStatus - The new status to assign to the task.
+   * @returns {void}
+   */
+  public updateTaskStatus(task: Task, newStatus: string): void {
+    this.taskService.updateTaskStatus(task.id, newStatus);
   }
-
 }
