@@ -13,7 +13,7 @@
   <div 
   *ngFor="let item of filteredItems" 
   (click)="onToggleItem(item)"
-  [ngClass]="{ 'bg-slate-600': selectedItems.includes(item) && label !== 'Category' }"
+  [ngClass]="{ 'bg-slate-600': selectedItems.includes(item)  }"
   class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500 group "
   >
     <app-user-bubble 
@@ -25,14 +25,14 @@
     [borderColor]="'white'">
     </app-user-bubble>
 
-    <ion-label class="text-gray-700 group-hover:text-white" [ngClass]="{ 'text-white': selectedItems.includes(item) && label !== 'Category' }">
-      {{ item.name || item.text }}
+    <ion-label class="text-gray-700 group-hover:text-white" [ngClass]="{ 'text-white': selectedItems.includes(item) }">
+      {{ item.name }}
     </ion-label>
     
     <ion-checkbox *ngIf="item.initials" [checked]="selectedItems.includes(item)" class="ml-auto"></ion-checkbox>
   </div>
   <!-- Search Not Found -->
-  <div *ngIf="filteredItems.length === 0" class="p-4 -mb-2 text-sm text-red-500">
+  <div *ngIf="filteredItems?.length === 0" class="p-4 -mb-2 text-sm text-red-500">
     Search not found
   </div>
 </div>

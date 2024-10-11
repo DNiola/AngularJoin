@@ -11,23 +11,21 @@ import { Category } from 'src/app/models/category.model';
   styleUrls: ['./dropdown-input-field-single-select.component.scss'],
 })
 export class DropdownInputFieldSingleSelectComponent implements OnInit {
-
+  @Input() label = '';
+  @Input() placeholder = '';
   @Input() items: Category[] = [];
-  @Input() editValueMode: Category | null = null;
+  @Input() preselectedItems: Category | null = null;
+  @Input() resetTrigger = false;
   @Input() fieldRequired = false;
-  @Input() resetTrigger: boolean = false;
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
-  @Input() errorMessage: boolean = false;
+  @Input() errorMessage = false;
 
-  @Output() outputValue = new EventEmitter<Category>();
+  @Output() selectedItemsChange = new EventEmitter<Category>();
   @Output() dropdownOpened = new EventEmitter<boolean>();
 
-  public filteredItems: Category[] = [];
+  public selectedItemName = '';
   public isDropdownOpen = false;
   public selectedItemValue: Category | null = null;
-  public selectedItemName = '';
-
+  public filteredItems: Category[] = [];
 
   constructor(private eRef: ElementRef) { }
 
@@ -40,11 +38,11 @@ export class DropdownInputFieldSingleSelectComponent implements OnInit {
    * Additionally, it copies all items to `filteredItems` for display.
    */
   public ngOnInit(): void {
-    if (this.editValueMode) {
+    if (this.preselectedItems) {
       this.items.forEach(item => {
         item.selected = false;
       });
-      const editItem = this.items.find(item => item.name === this.editValueMode?.name);
+      const editItem = this.items.find(item => item.name === this.preselectedItems?.name);
       if (editItem) {
         editItem.selected = true;
         this.selectedItemValue = editItem;
@@ -99,7 +97,7 @@ export class DropdownInputFieldSingleSelectComponent implements OnInit {
     this.selectedItemValue = item;
     this.isDropdownOpen = false;
     this.selectedItemName = item.name;
-    this.outputValue.emit(item);
+    this.selectedItemsChange.emit(item);
   }
 
 
