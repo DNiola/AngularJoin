@@ -9,3 +9,5 @@ export interface Contact {
     phone?: string;
     creatorId ?: string;
 }
+
+export type Contacts = Contact[];
