@@ -17,7 +17,14 @@ export class AddTaskPage implements OnInit {
 
   constructor(private userService: UserService, private subtaskService: SubtaskService) { }
 
-
+  /**
+   * Initializes the AddTaskPage component.
+   *
+   * Subscribes to the currentUser and subtasks observables to keep track of the user and subtask data.
+   * Populates the contacts list based on the current user.
+   *
+   * @returns {void}
+   */
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
@@ -29,7 +36,13 @@ export class AddTaskPage implements OnInit {
     });
   }
 
-
+  /**
+   * Initializes the contacts list based on the current user's contacts and all available users.
+   * Filters out hidden contacts and marks the current user in the contact list.
+   *
+   * @param {User} currentUser - The current user object.
+   * @returns {void}
+   */
   public contactsInit(currentUser: User): void {
     this.userService.getAllUsers().then(users => {
       const userContacts = users as Contact[];
@@ -44,7 +57,4 @@ export class AddTaskPage implements OnInit {
       });
     });
   }
-  
-
 }
-
