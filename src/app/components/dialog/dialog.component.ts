@@ -7,26 +7,42 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class DialogComponent {
   @Input() public dialogMessage = { title: '', message: '' };
-  @Input() public showAgain = false
-  @Input() public isSingUpSection = false
+  @Input() public showAgain = false;
+  @Input() public isSingUpSection = false;
 
-  @Output() confirm = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() public confirm = new EventEmitter<void>();
+  @Output() public cancel = new EventEmitter<void>();
 
-
+  
+  /**
+   * Handles the confirmation action by saving user preference and emitting the confirm event.
+   *
+   * @returns {void}
+   */
   public onConfirm(): void {
-    if (this.showAgain == true) {
+    if (this.showAgain) {
       localStorage.setItem('disclaimerUnderstood', 'true');
     }
     this.confirm.emit();
   }
 
-
+  
+  /**
+   * Handles the cancel action by emitting the cancel event.
+   *
+   * @returns {void}
+   */
   public onCancel(): void {
     this.cancel.emit();
   }
 
-
+  
+  /**
+   * Updates the "showAgain" property based on the checkbox state.
+   *
+   * @param {boolean} checked - The state of the checkbox.
+   * @returns {void}
+   */
   public onCheckboxChange(checked: boolean): void {
     this.showAgain = checked;
   }

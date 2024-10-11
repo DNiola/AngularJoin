@@ -14,7 +14,15 @@ export class UserBubbleComponent {
   @Input() borderColor: string = '';
   @Input() fontSize: string = '14px';
 
-
+  
+  /**
+   * Returns the style object for the bubble element.
+   * 
+   * This method constructs an object containing the CSS styles for the user bubble, 
+   * including background color, border color, size, border width, and font size.
+   * 
+   * @returns { { [key: string]: string } } An object representing the styles for the user bubble.
+   */
   public get bubbleStyles(): { [key: string]: string } {
     return {
       'background-color': this.color ?? 'gray',

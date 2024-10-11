@@ -18,6 +18,13 @@ export class CreatorInputFieldComponent {
   public isClicked = false;
 
 
+  /**
+   * Lifecycle hook that is called when any data-bound property of a directive changes.
+   * Updates the subtasks list when changes are detected.
+   * 
+   * @param {SimpleChanges} changes - The changes that have been detected.
+   * @returns {void}
+   */
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['subtasks']) {
       this.subtasks = [...changes['subtasks'].currentValue];
@@ -25,6 +32,12 @@ export class CreatorInputFieldComponent {
   }
 
 
+  /**
+   * Adds a new subtask to the list of subtasks.
+   * Emits the updated list of subtasks through the selectedData output.
+   * 
+   * @returns {void}
+   */
   public addSubtask(): void {
     if (this.newSubtask.title.trim()) {
       this.subtasks.push(this.newSubtask);

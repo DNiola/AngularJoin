@@ -12,7 +12,6 @@ export class ButtonFilledComponent {
   @Input() roundButton = false;
 
   @Output() confirm = new EventEmitter<void>();
-  constructor() { }
 
   public onConfirm(): void {
     this.confirm.emit();
