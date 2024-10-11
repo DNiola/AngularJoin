@@ -12,7 +12,12 @@ export class TaskService {
   constructor(private firestore: AngularFirestore) { }
 
 
-  // create task in Firestore
+  /**
+   * Creates a new task in Firestore.
+   *
+   * @param {Task} task - The task object to be created.
+   * @returns {Promise<any>} A promise that resolves with the task ID when the task is created.
+   */
   public async createTask(task: Task): Promise<any> {
     const taskRef = this.firestore.collection('tasks').doc();
     const taskId = taskRef.ref.id;
@@ -23,7 +28,12 @@ export class TaskService {
   }
 
 
-  // update full task in Firestore
+  /**
+   * Updates an existing task in Firestore.
+   *
+   * @param {Task} task - The task object containing updated data.
+   * @returns {Promise<void>} A promise that resolves when the task is updated.
+   */
   public async updateTask(task: Task): Promise<void> {
     if (task.id) {
       return this.firestore.collection('tasks').doc(task.id).update(task);
@@ -33,13 +43,26 @@ export class TaskService {
   }
 
 
-  // update task status
+  /**
+   * Updates the status of a task.
+   *
+   * @param {string} taskId - The ID of the task to be updated.
+   * @param {string} newStatus - The new status of the task.
+   * @returns {Promise<void>} A promise that resolves when the task status is updated.
+   */
   public updateTaskStatus(taskId: string, newStatus: string): Promise<void> {
     return this.firestore.collection('tasks').doc(taskId).update({ status: newStatus });
   }
 
 
-  // update subtask status in Firestore
+  /**
+   * Updates the status of a specific subtask in Firestore.
+   *
+   * @param {string} taskId - The ID of the task containing the subtask.
+   * @param {number} subtaskIndex - The index of the subtask to be updated.
+   * @param {boolean} done - The new status of the subtask.
+   * @returns {Promise<void>} A promise that resolves when the subtask status is updated.
+   */
   public async updateSubtaskStatus(taskId: string, subtaskIndex: number, done: boolean): Promise<void> {
     return this.firestore.collection('tasks').doc(taskId).get().toPromise().then((taskDoc) => {
       const taskData = taskDoc?.data() as Task;
@@ -57,7 +80,12 @@ export class TaskService {
   }
 
 
-  // load tasks and optionally filter by title or description
+  /**
+   * Retrieves tasks from Firestore, optionally filtered by a search term.
+   *
+   * @param {string} [searchTerm] - The term to filter tasks by title or description.
+   * @returns {Observable<Task[]>} An observable that emits the list of tasks.
+   */
   public getTasks(searchTerm?: string): Observable<Task[]> {
     return this.firestore.collection<Task>('tasks').valueChanges().pipe(
       map(tasks => {
@@ -73,7 +101,13 @@ export class TaskService {
   }
 
 
-  // filter tasks by status
+  /**
+   * Retrieves tasks from Firestore filtered by status.
+   *
+   * @param {string} status - The status to filter tasks by.
+   * @param {string} [searchTerm] - An optional search term to further filter tasks.
+   * @returns {Observable<Task[]>} An observable that emits the list of filtered tasks.
+   */
   public getTasksByStatus(status: string, searchTerm?: string): Observable<Task[]> {
     return this.getTasks(searchTerm).pipe(
       map(tasks => tasks.filter(task => task.status === status))
@@ -81,7 +115,12 @@ export class TaskService {
   }
 
 
-  // filter tasks by priority
+  /**
+   * Retrieves tasks from Firestore filtered by priority.
+   *
+   * @param {string} prio - The priority level to filter tasks by.
+   * @returns {Observable<Task[]>} An observable that emits the list of filtered tasks.
+   */
   public getTasksByPriority(prio: string): Observable<Task[]> {
     return this.getTasks().pipe(
       map(tasks => tasks.filter(task => task.prio === prio))
@@ -89,7 +128,12 @@ export class TaskService {
   }
 
 
-  // delete task in Firestore
+  /**
+   * Deletes a task from Firestore.
+   *
+   * @param {string} taskId - The ID of the task to be deleted.
+   * @returns {Promise<void>} A promise that resolves when the task is deleted.
+   */
   public deleteTask(taskId: string): Promise<void> {
     return this.firestore.collection('tasks').doc(taskId).delete();
   }
