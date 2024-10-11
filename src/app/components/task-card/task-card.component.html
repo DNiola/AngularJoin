@@ -1,6 +1,6 @@
 <div class="flex flex-col">
-  <span [ngStyle]="{ 'background-color': category?.color }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
-    {{ category?.text }}
+  <span [ngStyle]="{ 'background-color': task?.category?.color }" class="font-medium  p-1 px-4 rounded-lg w-max text-white">
+    {{ task?.category?.name }}
   </span>
   <span class="pt-5 pb-1 font-bold text-normalBlue">{{task?.title}}</span>
   <span class="text-lightGray overflow-hidden text-ellipsis verticalEllipsis">{{task?.description ? task?.description : 'No description'}}</span>
@@ -22,7 +22,7 @@
     <div *ngIf="(task?.assignedTo?.length ?? 0) > 3" class="flex items-center justify-center bg-gray-300 rounded-full w-8 h-8 text-sm font-medium text-black p-3">
       +{{ (task?.assignedTo?.length ?? 0) - 3 }}
     </div>
-    <div class="flex w-full justify-end pr-4">
+    <div class="flex w-full justify-end pr-2 pl-4 lg:pr-4 lg:pl-0">
       <ion-img class="w-6" src="../../../assets/img/prio-{{task?.prio}}.svg"></ion-img>
     </div>
   </div>

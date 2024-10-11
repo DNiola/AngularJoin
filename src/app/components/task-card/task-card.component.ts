@@ -15,25 +15,12 @@ export class TaskCardComponent implements OnInit {
   public percentDoneSubtasks = 0;
 
 
-  public ngOnInit(): void {
-    this.initCategory();
+  public ngOnInit(): void { 
     this.initSubtasks();
   }
 
-
-  private initCategory(): void {
-    if (Array.isArray(this.task?.category) && this.task?.category.length > 0) {
-      const category = this.task?.category?.[0];
-      if (category) {
-        this.category = category
-      }
-    }
-  }
-
-
   private initSubtasks(): void {
     this.doneSubtasks = this.task?.subtasks?.filter(subtask => subtask.done) || [];
-
     this.percentDoneSubtasks = this.doneSubtasks.length / (this.task?.subtasks?.length || 1) * 100;
   }
 

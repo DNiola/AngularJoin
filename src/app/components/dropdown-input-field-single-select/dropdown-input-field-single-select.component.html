@@ -1,0 +1,23 @@
+<ion-label position="floating" class="font-medium">
+  {{label}}
+  <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
+</ion-label>
+
+<ion-input class="inputField cursor-pointer z-10" (click)="toggleDropdown()"
+  [(ngModel)]="selectedItemName" [placeholder]="placeholder" readonly>
+  <ion-icon *ngIf="!isDropdownOpen" name="chevron-down-outline" slot="end" (click)="toggleDropdown()"></ion-icon>
+  <ion-icon *ngIf="isDropdownOpen" name="chevron-up-outline" slot="end" (click)="toggleDropdown()"></ion-icon>
+</ion-input>
+
+<!-- Dropdown List -->
+<div *ngIf="isDropdownOpen" class="bg-white border border-gray-300 rounded-b-lg max-h-40 overflow-auto -mt-2">
+  <div 
+    *ngFor="let item of filteredItems" 
+    (click)="selectItem(item)"
+    class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500">
+    <ion-label class="text-gray-700 group-hover:text-white">
+      {{ item.name }}
+    </ion-label>
+  </div>
+</div>
+<span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1 mb-1">This field is required</span>

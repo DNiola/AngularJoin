@@ -1,5 +1,5 @@
 export interface Category {
-  text: string;
+  name: string;
   selected: boolean;
   color: string;
 }

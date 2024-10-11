@@ -1,28 +1,24 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, SimpleChanges } from '@angular/core';
-import { Category } from 'src/app/models/category.model';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Contact } from 'src/app/models/contact.model';
 
 @Component({
-  selector: 'app-dropdown-input-field',
-  templateUrl: './dropdown-input-field.component.html',
-  styleUrls: ['./dropdown-input-field.component.scss'],
+  selector: 'app-dropdown-input-field-multi-select',
+  templateUrl: './dropdown-input-field-multi-select.component.html',
+  styleUrls: ['./dropdown-input-field-multi-select.component.scss'],
 })
-export class DropdownInputFieldComponent {
+export class DropdownInputFieldMultiSelectComponent implements OnInit {
   @Input() label = '';
-  @Input() items: any[] = [];
   @Input() placeholder = '';
-  @Input() fieldRequired = false;
-
-  @Input() errorMessage = false;
-  @Input() resetTrigger = false;
-
+  @Input() items: any[] = [];
   @Input() editValueMode = [] as any;
+  @Input() resetTrigger = false;
 
   @Output() outputValue = new EventEmitter<Array<any>>();
 
-  public filteredItems: any[] = [];
-  public isDropdownOpen = false;
-  public selectedItems: Array<any> = [];
   public searchTerm = '';
+  public filteredItems: any[] = [];
+  public selectedItems: Array<any> = [];
+  public isDropdownOpen = false;
 
   constructor(private eRef: ElementRef) { }
 
@@ -64,18 +60,12 @@ export class DropdownInputFieldComponent {
     if (this.searchTerm) {
       this.isDropdownOpen = true;
     }
-    if (!this.searchTerm && this.isDropdownOpen === false && this.fieldRequired) {
-      this.errorMessage = true;
-      this.selectedItems = [];
-      this.outputValue.emit(this.selectedItems);
-    }
   }
 
 
   public filterItems(): void {
     this.filteredItems = this.items.filter(item =>
-    (item.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      item.text?.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      (item.name?.toLowerCase().includes(this.searchTerm.toLowerCase()))
     );
     if (this.searchTerm) {
       this.isDropdownOpen = true;
@@ -83,7 +73,7 @@ export class DropdownInputFieldComponent {
   }
 
 
-  public toggleItem(item: Category): void {
+  public onToggleItem(item: Contact): void {
     if (item.selected) {
       item.selected = false;
       this.selectedItems = this.selectedItems.filter(selected => selected !== item);
@@ -95,29 +85,10 @@ export class DropdownInputFieldComponent {
   }
 
 
-  public selectItem(item: Category): void {
-    if (item.text) {
-      this.searchTerm = item.text;
-      this.isDropdownOpen = false;
-    }
-  }
-
-
-  public onHandleItems(item: Category): void {
-    this.toggleItem(item)
-    this.selectItem(item)
-    this.errorMessage = false
-  }
-
-
   @HostListener('document:click', ['$event'])
   clickout(event: Event) {
     if (this.isDropdownOpen && !this.eRef.nativeElement.contains(event.target)) {
       this.isDropdownOpen = false;
-    }
-    if (this.searchTerm === '' && this.fieldRequired) {
-      this.searchTerm = this.selectedItems[0]?.text || '';
-      this.outputValue.emit(this.selectedItems);
     }
 
   }

@@ -27,11 +27,11 @@ export class TaskCardAddComponent implements OnInit {
   @Output() isCardOpen = new EventEmitter<void>();
 
   public categories: Categorys = [
-    { text: 'Technical Task', selected: false, color: '#1FD7C1' },
-    { text: 'User history', selected: false, color: '#0038FF' },
+    { name: 'Technical Task', selected: false, color: '#1FD7C1' },
+    { name: 'User History', selected: false, color: '#0038FF' },
   ];
 
-  public currentTask: Task = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', id: '', status: 'todo' };
+  public currentTask: Task = { title: '', dueDate: '', category: { name: '', selected: false, color: '' }, creatorId: this.currentUser?.userId || '', id: '', status: 'todo' };
   public dialogMessage = { title: '', message: '', action: '' };
 
   public isError = { title: false, dueDate: false, category: false };
@@ -60,6 +60,7 @@ export class TaskCardAddComponent implements OnInit {
 
   public onCreateTask(isCreate: boolean): void {
     this.checkRequiredFields();
+    debugger
     if (this.isError.title || this.isError.dueDate || this.isError.category) {
       console.error('Fehler beim Erstellen des Tasks:', this.isError);
       this.isDialog = false;
@@ -106,7 +107,7 @@ export class TaskCardAddComponent implements OnInit {
     if (this.currentTask.dueDate === '') {
       this.isError.dueDate = true;
     }
-    if (this.currentTask.category.text === '') {
+    if (this.currentTask.category.name === '' || !this.currentTask.category.name) {
       this.isError.category = true;
     }
   }
@@ -134,7 +135,7 @@ export class TaskCardAddComponent implements OnInit {
     this.isDialog = false
     this.subtaskService.clearSubtasks();
     this.contacts = this.contacts.map(contact => { return { ...contact, selected: false } });
-    this.currentTask = { title: '', dueDate: '', category: { text: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
+    this.currentTask = { title: '', dueDate: '', category: { name: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
     setTimeout(() => {
       this.resetTrigger = false;
       this.isAnimation = false;
@@ -142,7 +143,7 @@ export class TaskCardAddComponent implements OnInit {
   }
 
 
-  public setTaskData(data: string | Category | Contact[], section: string): void {
+  public setTaskData(data: string | Category | Contact[] | any, section: string): void {
     switch (section) {
       case 'title':
         this.currentTask.title = data as string;

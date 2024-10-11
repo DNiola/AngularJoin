@@ -15,7 +15,7 @@
           <!-- Description -->
           <app-default-input-field [editValueMode]="currentTask.description" [label]="'Description'" [type]="'textarea'" [placeholder]="'Enter a description'" [resetTrigger]="resetTrigger" (outputValue)="setTaskData($event, 'description')"></app-default-input-field>
           <!-- Assigned to -->
-          <app-dropdown-input-field [editValueMode]="currentTask.assignedTo" [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field>
+          <app-dropdown-input-field-multi-select [editValueMode]="currentTask.assignedTo" [label]="'Assigned to'" [items]="contacts" [placeholder]="'Select contacts to assign'" (outputValue)="onDisplayedBubble($event, 'assignedTo')"></app-dropdown-input-field-multi-select>
           <!-- Assigned Bubble -->
           <div class="flex flex-wrap gap-4" >
             <div *ngFor="let item of selectedBubble">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <!-- Category -->
-          <app-dropdown-input-field [editValueMode]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select task category'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field>
+          <app-dropdown-input-field-single-select [editValueMode]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select task category'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (outputValue)="setTaskData($event, 'category')"></app-dropdown-input-field-single-select>
           <!-- Subtasks -->
           <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
           <div class="-mt-6">

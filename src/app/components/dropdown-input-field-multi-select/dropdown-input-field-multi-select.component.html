@@ -1,6 +1,5 @@
 <ion-label position="floating font-medium">
   {{label}}
-  <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
 
 <ion-input class="inputField cursor-pointer z-10" (click)="toggleDropdown()" (input)="filterItems()"
@@ -13,7 +12,7 @@
 <div *ngIf="isDropdownOpen" class="bg-white border border-gray-300 rounded-b-lg max-h-40 overflow-auto -mt-2">
   <div 
   *ngFor="let item of filteredItems" 
-  (click)="onHandleItems(item)"
+  (click)="onToggleItem(item)"
   [ngClass]="{ 'bg-slate-600': selectedItems.includes(item) && label !== 'Category' }"
   class="px-4 p-1 last:pb-1 first:pt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-500 group "
   >
@@ -37,4 +36,3 @@
     Search not found
   </div>
 </div>
-<span *ngIf="errorMessage" class="absolute text-xs text-lightRed pt-1 mb-1">This field is required</span>
