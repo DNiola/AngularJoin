@@ -14,13 +14,25 @@ export class ContactOverviewComponent {
   public isDialog = false;
 
 
+  /**
+   * Emits an event to delete the selected contact and closes the confirmation dialog.
+   *
+   * @param {Contact} contact - The contact to be deleted.
+   * @returns {void}
+   */
   public onDeleteContact(contact: Contact): void {
     this.handleContact.emit({ action: 'delete', contact });
     this.isDialog = false;
   }
 
+
+  /**
+   * Emits an event to edit the selected contact.
+   *
+   * @param {Contact} contact - The contact to be edited.
+   * @returns {void}
+   */
   public onEditContact(contact: Contact): void {
     this.handleContact.emit({ action: 'edit', contact });
   }
-
 }
