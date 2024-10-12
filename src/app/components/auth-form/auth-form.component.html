@@ -14,13 +14,13 @@
         </div>
 
         <!-- Title -->
-        <div class="flex justify-center items-center mb-6 ">
-          <b class="flex flex-col items-center text-2xl sm:text-5xl font-inter text-black">{{ isForgotPassword ? 'Forgot Password' : isLogin ? 'Log in' : 'Sign up' }}
-            <div class="bg-lightBlue h-[0.1rem] w-4/5 mt-2 rounded-xl"></div>
+        <div class="flex justify-center items-center mb-2 min-h-700:mb-6">
+          <b class="flex flex-col items-center text-2xl sm:text-3xl lg:text-5xl font-inter text-black">{{ isForgotPassword ? 'Forgot Password' : isLogin ? 'Log in' : 'Sign up' }}
+            <div class="bg-lightBlue h-[0.1rem] w-4/5 min-h-700:mt-2 rounded-xl"></div>
           </b>
         </div>
 
-        <form (ngSubmit)="onSubmit()" class="flex flex-col items-center space-y-3 lg:space-y-8 ">
+        <form (ngSubmit)="onSubmit()" class="flex flex-col items-center space-y-5 min-h-700:space-y-8">
           <!-- Name input (only shown if not login) -->
           <app-auth-input-fields *ngIf="!isLogin && !isForgotPassword" (input)="helperService.EmptyErrorField(nameField)" #nameField class="w-full"
             [type]="'name'" [placeholder]="'Name'" [icon]="'user.svg'" [errorMessage]="errorMessage">
