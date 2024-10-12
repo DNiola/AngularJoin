@@ -27,10 +27,9 @@
           </app-auth-input-fields>
 
           <!-- Email input -->
-          <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField name="email" class="w-full"
-            [type]="'email'" [placeholder]="'Email'" [icon]="'email.svg'">
+          <app-auth-input-fields (input)="helperService.EmptyErrorField(emailField)" #emailField class="w-full" [type]="'email'" 
+          [placeholder]="'Email'" [icon]="'email.svg'">
           </app-auth-input-fields>
-
 
           <!-- Password input -->
           <app-auth-input-fields  *ngIf="!isForgotPassword" (input)="helperService.EmptyErrorField(passwordField)" #passwordField class="w-full"
