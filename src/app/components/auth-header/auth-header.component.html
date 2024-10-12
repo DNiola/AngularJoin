@@ -1,9 +1,7 @@
 <ion-grid class="h-dvh absolute w-dvw">
   <ion-row class="p-16">
-    <ion-col size="12" size-md="6">
-    </ion-col>
-    <ion-col *ngIf="isLogin" size="12" class="flex items-center absolute justify-evenly left-0 top-2 min-h-700:top-[unset] min-h-700:bottom-20 lg:justify-end lg:gap-20 lg:static">
-      <span class="xs:flex min-h-700:flex hidden">
+    <ion-col *ngIf="isLogin" size="12" class="flex items-center absolute justify-evenly left-0 top-2 min-h-740:top-[unset] min-h-740:bottom-20 lg:justify-end lg:gap-20 lg:static">
+      <span class="xs:flex min-h-740:flex hidden">
         <b class="font-inter">Not a Join user?</b>
       </span>
       <app-button-filled [routerLink]="['/sign-up']" [text]="'Sign Up'"></app-button-filled>
@@ -16,5 +14,5 @@
   [href]="isAnimationComplete ? 'login' : null" 
   [style.pointer-events]="isAnimationComplete ? 'auto' : 'none'"
   >
-  <ion-img class="absolute w-10 sm:w-16 sm:m-3 lg:w-[unset] lg:m-12" [ngClass]="{ 'initial-logo lg:top-1/2 lg:left-1/2': isLogin }" src="../../assets/img/logo.svg" (animationend)="onAnimationEnd()"></ion-img>
+  <ion-img class="absolute w-10 sm:w-16 sm:m-3 lg:w-[unset] lg:m-12" [ngClass]="isLogin ? 'initial-logo lg:top-1/2 lg:left-1/2' : 'm-4 sm:m-7 lg:m-16'" src="../../assets/img/logo.svg" (animationend)="onAnimationEnd()"></ion-img>
 </a>
