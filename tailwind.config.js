@@ -34,6 +34,7 @@ module.exports = {
         '1xl': '1384px',
         '3xl': '1584px',
         'min-h-700': { 'raw': '(min-height: 700px)' },
+        'min-h-740': { 'raw': '(min-height: 740px)' },
       }
       ,
     },
