@@ -1,6 +1,6 @@
 <ion-grid class="flex items-center justify-center h-dvh ">
 
-  <app-animated-badge *ngIf="isAnimation" [text]="isForgotPassword ? 'Email was sucessfully send': 'You Signed Up sucessfully' " class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10"></app-animated-badge>
+  <app-animated-badge *ngIf="isAnimation" [text]="isLogin ? 'Email was sucessfully send' : 'You Signed Up sucessfully' " class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10"></app-animated-badge>
 
   <ion-row class="justify-center sm:w-1/2 sm:max-w-[506px]" >
     <ion-col>
@@ -54,7 +54,7 @@
 
           <!-- Buttons -->
           <div class="flex items-center justify-around w-full mt-4 flex-col sm:flex-row">
-            <app-button-filled [text]=" isForgotPassword ? 'Reset password' : isLogin ? 'Login' : 'Sign Up'" [ngClass]="isForgotPassword ? 'w-full lg:w-[unset]' : isLogin ? 'sm:w-[36%]' : 'w-full lg:w-[36%]'" class="w-full"></app-button-filled>
+            <app-button-filled [disabled]="isLoading" [text]=" isForgotPassword ? 'Reset password' : isLogin ? 'Login' : 'Sign Up'" [ngClass]="isForgotPassword ? 'w-full lg:w-[unset]' : isLogin ? 'sm:w-[36%]' : 'w-full lg:w-[36%]'" class="w-full"></app-button-filled>
             <app-button-edge *ngIf="isLogin && !isForgotPassword" [text]="'Guest Log in'" (click)="onGuestLogin()" class="w-full sm:w-[unset]"></app-button-edge>
           </div>
         </form>

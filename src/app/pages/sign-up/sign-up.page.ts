@@ -16,13 +16,14 @@ export class SignUpPage implements OnInit {
     message: 'Please do not use real credentials to log in to this site. This site was created for educational and training purposes and the security of the data cannot be fully guaranteed. Please also note that all data stored on this site can only be deleted manually by the administrators. For more information, please see our legal notice.',
   };
 
+  public isError = false;
   public showAgain = false
-  public isDialogOpen = true;
-  public isSingUpSection = true
-
+  public isLoading = false;
   public isAnimation = false;
   public emptyInputFields = false;
-  public isError = false;
+
+  public isDialogOpen = true;
+  public isSingUpSection = true
 
   public firebaseErrorPhat = '';
 
@@ -38,6 +39,7 @@ export class SignUpPage implements OnInit {
 
 
   public async onSignUp(userData: AuthData) {
+    this.isLoading = true;
     try {
       const result = await this.afAuth.createUserWithEmailAndPassword(userData.email, userData.password);
       const userId = result.user?.uid;
@@ -57,7 +59,7 @@ export class SignUpPage implements OnInit {
       this.firebaseErrorPhat = error as string;
       return;
     }
-
+    this.isLoading = false;
   }
 
 

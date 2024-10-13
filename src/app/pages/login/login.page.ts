@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginPage {
   public isError = false;
+  public isLoading = false;
   public isAnimation = false;
   public isForgotPassword = false;
 
@@ -24,7 +25,7 @@ export class LoginPage {
     private router: Router,
     private userService: UserService,
     public helperService: HelperService
-  ) {}
+  ) { }
 
 
   /**
@@ -34,6 +35,7 @@ export class LoginPage {
    * @returns {Promise<void>} Resolves when login is successful and redirects to the summary page, or sets an error message on failure.
    */
   public async onLogin(loginData: AuthData): Promise<void> {
+    this.isLoading = true;
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(loginData.email, loginData.password);
       const user = result.user;
@@ -54,6 +56,7 @@ export class LoginPage {
     } catch (error) {
       this.firebaseErrorPhat = error as string;
     }
+    this.isLoading = false;
   }
 
 
@@ -64,16 +67,20 @@ export class LoginPage {
    * @returns {void}
    */
   public onResetPassword(email: string): void {
+    this.isLoading = true;
     this.userService.resetPassword(email)
       .then(() => {
         this.isAnimation = true;
         this.isForgotPassword = false;
         setTimeout(() => {
+          this.isLoading = false;
           this.isAnimation = false;
         }, 1000);
       })
       .catch((error) => {
+        this.isLoading = false;
         this.firebaseErrorPhat = error as string;
       });
   }
+
 }

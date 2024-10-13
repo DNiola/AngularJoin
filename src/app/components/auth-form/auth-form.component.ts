@@ -5,7 +5,7 @@ import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields
 import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/services/user.service';
-import { AuthData, User } from 'src/app/models/user.model';
+import { AuthData } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
@@ -23,6 +23,7 @@ export class AuthFormComponent {
   @ViewChild('rememberMeCheckbox') public rememberMeCheckbox!: AuthCheckboxComponent;
 
   @Input() public isLogin = false;
+  @Input() public isLoading = false;
   @Input() public isAnimation = false;
   @Input() public emptyFildsEmpty = false;
   @Input() public isForgotPassword = false;
@@ -33,7 +34,7 @@ export class AuthFormComponent {
   public errorMessage = '';
 
   private isError = false;
-
+  
   @Output() public tryToSignUp = new EventEmitter<AuthData>();
   @Output() public tryToLogin = new EventEmitter<AuthData>();
   @Output() public tryToResetPW = new EventEmitter<string>();
@@ -85,6 +86,7 @@ export class AuthFormComponent {
    */
   public onSubmit(): void {
     if (this.isForgotPassword) {
+      debugger
       this.resetPassword();
     }
     if (!this.isLogin) {
@@ -296,6 +298,7 @@ export class AuthFormComponent {
    */
   public emptyInputFields(): void {
     if (this.isForgotPassword && this.isLogin) {
+      this.isLoading = false;
       this.isForgotPassword = false;
     } else if (this.emptyFildsEmpty) {
       this.nameField.inputValue = '';
@@ -306,6 +309,7 @@ export class AuthFormComponent {
       this.showConfirmPassword = false;
       this.privacyCheckbox.checkboxValue = false;
       this.isAnimation = false;
+      this.isLoading = false;
     }
   }
 

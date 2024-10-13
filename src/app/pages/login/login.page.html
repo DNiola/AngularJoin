@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="bg-whiteSmoke">
     <app-auth-header [isLogin]="true"></app-auth-header>
-    <app-auth-form (tryToLogin)="onLogin($event)" (tryToResetPW)="onResetPassword($event)" [isForgotPassword]="isForgotPassword"  [errorPhat]="firebaseErrorPhat" [isAnimation]="isAnimation" [isLogin]="true"></app-auth-form>
+    <app-auth-form (tryToLogin)="onLogin($event)" (tryToResetPW)="onResetPassword($event)" [isForgotPassword]="isForgotPassword"  [errorPhat]="firebaseErrorPhat" [isAnimation]="isAnimation" [isLoading]="isLoading" [isLogin]="true"></app-auth-form>
   </div>
   <app-auth-footer [leftFooter]="false"></app-auth-footer>
 </ion-content>
