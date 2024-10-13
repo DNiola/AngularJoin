@@ -5,10 +5,10 @@
     <span class="font-bold text-3xl flex justify-center pt-2">{{dialogMessage.title}}</span>
     <span  [ngClass]="{'text-center' : !isSingUpSection }" class="font-medium">{{dialogMessage.message}}</span>
 
-    <div [ngClass]="{'flex flex-col xs:flex-row' : isSingUpSection }" class="flex items-center justify-center gap-4">
+    <div [ngClass]="{'flex-col xs:flex-row' : isSingUpSection }" class="flex items-center justify-center gap-4">
       <app-auth-checkbox *ngIf="isSingUpSection" [text]="'Dont show again !'" (checkedChange)="onCheckboxChange($event)"> </app-auth-checkbox>
       <app-button-edge *ngIf="!isSingUpSection" [text]="'Cancel'" (click)="onCancel()"></app-button-edge>
-      <app-button-filled [text]="isSingUpSection ? 'Understood !' :'Yes'" (click)="onConfirm()"></app-button-filled>
+      <app-button-filled [ngClass]="{'w-28' : !isSingUpSection}" [text]="isSingUpSection ? 'Understood !' :'Yes'" (click)="onConfirm()"></app-button-filled>
     </div>
 
   </div>

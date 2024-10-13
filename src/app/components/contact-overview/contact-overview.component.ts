@@ -10,19 +10,18 @@ export class ContactOverviewComponent {
   @Input() selectedContact: Contact | null = null;
 
   @Output() handleContact = new EventEmitter<{ action: 'delete' | 'edit'; contact: Contact }>();
+  @Output() triggerDialog = new EventEmitter<boolean>();
 
   public isDialog = false;
 
-
+  
   /**
-   * Emits an event to delete the selected contact and closes the confirmation dialog.
+   * Emits an event to delete the selected contact.
    *
-   * @param {Contact} contact - The contact to be deleted.
    * @returns {void}
    */
-  public onDeleteContact(contact: Contact): void {
-    this.handleContact.emit({ action: 'delete', contact });
-    this.isDialog = false;
+  public onOpenDialog(): void {
+    this.triggerDialog.emit(true);
   }
 
 

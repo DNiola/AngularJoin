@@ -19,6 +19,7 @@ export class ContactsPage implements OnInit {
   public isContactCardOpen = false;
   public isEditContact = false;
   public isAnimation = false;
+  public isDialog = false;
 
   constructor(private userService: UserService, private contactService: ContactService) { }
 
@@ -232,5 +233,27 @@ export class ContactsPage implements OnInit {
   public onOpenAddContact(): void {
     this.isEditContact = false;
     this.isContactCardOpen = true;
+  }
+
+
+  /**
+   * Opens the dialog to delete the selected contact.
+   *
+   * @returns {void}
+   */
+  public onOpenDialog(dialogStatus: boolean): void {
+    this.isDialog = dialogStatus;
+  }
+
+
+  /**
+ * Emits an event to delete the selected contact and closes the confirmation dialog.
+ *
+ * @param {Contact} contact - The contact to be deleted.
+ * @returns {void}
+ */
+  public onDeleteContact(contact: Contact): void {
+    this.handleContact({ action: 'delete', contact });
+    this.isDialog = false;
   }
 }

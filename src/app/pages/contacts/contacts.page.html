@@ -25,7 +25,7 @@
             src="../../assets/img/back.svg"></ion-img>
         </div>
         <app-page-title class="flex" [title]="'Contacts'" [text]="'Better with a team'"></app-page-title>
-        <app-contact-overview  [selectedContact]="selectedContact" (handleContact)="handleContact($event)"></app-contact-overview>
+        <app-contact-overview  [selectedContact]="selectedContact" (triggerDialog)="onOpenDialog($event)" (handleContact)="handleContact($event)"></app-contact-overview>
       </div>
 
     </div>
@@ -34,4 +34,6 @@
  
 <app-contact-card *ngIf="isContactCardOpen" (closeCard)="onContactCreated($event)" (deleteContact)="handleContact($event)" [isEditContact]="isEditContact" [contact]="selectedContact!"></app-contact-card>
 
-<app-animated-badge *ngIf="isAnimation" [text]="'Contact was successfully created'" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
+<app-animated-badge *ngIf="isAnimation" [text]="'Contact was successfully created'" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-20 left-0 top-0"></app-animated-badge>
+
+<app-dialog *ngIf="isDialog" [dialogMessage]="{title:'Delete contact', message:'You are sure to delete this contact?'}" (confirm)="onDeleteContact(selectedContact!)" (cancel)="isDialog = false"></app-dialog>
