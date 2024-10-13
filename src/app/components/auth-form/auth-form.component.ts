@@ -34,7 +34,7 @@ export class AuthFormComponent {
   public errorMessage = '';
 
   private isError = false;
-  
+
   @Output() public tryToSignUp = new EventEmitter<AuthData>();
   @Output() public tryToLogin = new EventEmitter<AuthData>();
   @Output() public tryToResetPW = new EventEmitter<string>();
@@ -86,7 +86,6 @@ export class AuthFormComponent {
    */
   public onSubmit(): void {
     if (this.isForgotPassword) {
-      debugger
       this.resetPassword();
     }
     if (!this.isLogin) {

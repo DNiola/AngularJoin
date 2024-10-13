@@ -54,7 +54,7 @@
 
           <!-- Buttons -->
           <div class="flex items-center justify-around w-full mt-4 flex-col sm:flex-row">
-            <app-button-filled [disabled]="isLoading" [text]=" isForgotPassword ? 'Reset password' : isLogin ? 'Login' : 'Sign Up'" [ngClass]="isForgotPassword ? 'w-full lg:w-[unset]' : isLogin ? 'sm:w-[36%]' : 'w-full lg:w-[36%]'" class="w-full"></app-button-filled>
+            <app-button-filled [disabled]="isLoading" [isLoading]="isLoading" [text]=" isForgotPassword ? 'Reset password' : isLogin ? 'Login' : 'Sign Up'" [ngClass]="isForgotPassword ? 'w-full lg:w-[unset]' : isLogin ? 'sm:w-[36%]' : 'w-full lg:w-[36%]'" class="w-full"></app-button-filled>
             <app-button-edge *ngIf="isLogin && !isForgotPassword" [text]="'Guest Log in'" (click)="onGuestLogin()" class="w-full sm:w-[unset]"></app-button-edge>
           </div>
         </form>
