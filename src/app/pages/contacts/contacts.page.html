@@ -12,7 +12,7 @@
         <app-button-filled class="fixed bottom-24 right-6 lg:hidden" [roundButton]="true" [iconName]="'person-add-outline'" (click)="onOpenAddContact()"></app-button-filled>
 
         <div *ngFor="let contacts of groupedContacts | keyvalue" class="flex flex-col">
-          <span class="font-semibold text-xl border-b w-full flex pt-2 px-9">{{ contacts.key }}</span>
+          <span class="font-semibold text-xl border-b w-full flex pt-2 px-5 2xl:px-8">{{ contacts.key }}</span>
           <div *ngFor="let contact of contacts.value" class="pt-2" (click)="selectContact(contact)">
             <app-contact-item [contact]="contact" [selectedContact]="selectedContact"></app-contact-item>
           </div>

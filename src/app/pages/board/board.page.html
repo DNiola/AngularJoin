@@ -16,9 +16,9 @@
             <div class="flex gap-0 2xl:gap-8 flex-col lg:flex-row lg:flex-grow">
               <!-- todo -->
               <app-board-section 
-              (taskDropped)="onTaskDragStart($event)" 
-              (openAddTask)="openAddTask($event)"
-              (openTaskCard)="openTaskCard($event)"
+                (taskDropped)="onTaskDragStart($event)" 
+                (openAddTask)="openAddTask($event)"
+                (openTaskCard)="openTaskCard($event)"
                 [attr.data-status]="'todo'" 
                 [tasks]="todoTasks" 
                 [status]="'todo'" 
@@ -71,14 +71,14 @@
     </div>
     <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke sm:rounded-3xl shadow-taskShadow overflow-auto h-full pb-4 w-full sm:w-[90%] xl:max-w-[1200px] sm:h-5/6 lg:h-auto slide"
     >
-      <app-task-card-add 
-      (isCardOpen)="closeAddTask()" 
+      <app-task-card-add
+      (isCardOpen)="closeAddTask()"
       (isAnimation)="triggerAnimation($event)"
-      [currentUser]="currentUser" 
+      [currentUser]="currentUser"
       [subtasks]="subtasks"
-      [taskStatus]="taskStatus" 
+      [taskStatus]="taskStatus"
       [contacts]="contacts"
-      [isCard]="true" 
+      [isCard]="true"
       [isEditTask]="isEditTask"
       [editTask]="currentOpenedTask"
       class="flex-grow flex flex-col">

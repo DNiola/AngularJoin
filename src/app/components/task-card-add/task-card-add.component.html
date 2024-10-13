@@ -1,4 +1,4 @@
-<div class="flex-grow flex flex-col gap-10 lg:gap-14 font-inter" [ngClass]="isCard ? 'p-14' :'pb-24 p-4 pt-[136px] xl:px-20  lg:pt-20 bg-whiteSmoke'">
+<div class="flex-grow flex flex-col gap-10 lg:gap-14 font-inter" [ngClass]="isCard ? 'p-4 sm:p-14' :'pb-24 p-4 pt-[136px] xl:px-20  lg:pt-20 bg-whiteSmoke'">
 
 <app-page-title *ngIf="!isEditTask" [title]="'Add Task'"></app-page-title> 
 <app-page-title *ngIf="isEditTask" [title]="'Edit Task'"></app-page-title> 
@@ -50,7 +50,7 @@
   </ion-grid>
 </div>
 <!-- Bottom section with buttons and required field -->
-<div class="flex justify-between items-center font-inter pb-3 lg:w-full " [ngClass]="{ 'w-full lg:w-4/6 max-2xl:w-full 1xl:w-4/6': !isCard }">
+<div class="flex justify-between items-center font-inter pb-3 lg:w-full" [ngClass]="{ 'w-full lg:w-4/6 max-2xl:w-full 1xl:w-4/6': !isCard }">
   <ion-col size="12" size="6" class="text-xs md:text-base">
     <span class="text-lightRed">*</span> This field is required
   </ion-col>
