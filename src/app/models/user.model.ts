@@ -11,3 +11,9 @@ export interface User {
     isGuest?: boolean;
   }
   
+
+  export interface AuthData {
+    name?: string;
+    email: string;
+    password: string;
+}
