@@ -8,7 +8,8 @@
       </a>
 
       <div #userInitials class="relative flex items-center gap-8 cursor-pointer" (click)=" this.isDropdownOpen = !this.isDropdownOpen;">
-        <app-user-bubble [color]="currentUser.color" [text]="currentUser.initials ? currentUser.initials : 'X X'" [size]="'64px'" [borderWidth]="'4px'"></app-user-bubble>
+        <app-user-bubble [color]="currentUser.color" [text]="currentUser.initials ? currentUser.initials : 'X X'" [size]="'64px'" [borderWidth]="'4px'" class="hidden sm:block"></app-user-bubble>
+        <app-user-bubble [color]="currentUser.color" [text]="currentUser.initials ? currentUser.initials : 'X X'" [size]="'58px'" [borderWidth]="'4px'" class="sm:hidden"></app-user-bubble>
       </div>
     </div>
   </div>
@@ -22,4 +23,5 @@
   <a (click)="isDialog = true" class="block px-4 py-2 hover:bg-[#3b3d59]">Log out</a>
 </div>
 
-<app-dialog *ngIf="isDialog" (confirm)="logout()" (cancel)="isDialog = false"  [dialogMessage]="{ title: 'Logout ?', message: 'Are you sure you want to logout?'}"></app-dialog>
+<app-dialog *ngIf="isDialog" (confirm)="onLogout()" (cancel)="isDialog = false"  [dialogMessage]="{ title: 'Logout ?', message: 'Are you sure you want to logout?'}"></app-dialog>
+<app-animated-badge *ngIf="isAnimation" [text]="'You successfully Logout'" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-10 left-0 top-0"></app-animated-badge>
