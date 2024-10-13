@@ -51,15 +51,16 @@ export class SignUpPage implements OnInit {
 
       this.isAnimation = true;
       setTimeout(() => {
+        this.isLoading = false;
         this.emptyInputFields = true;
         this.router.navigate(['/login']);
       }, 1000);
     }
     catch (error) {
+      this.isLoading = false;
       this.firebaseErrorPhat = error as string;
       return;
     }
-    this.isLoading = false;
   }
 
 

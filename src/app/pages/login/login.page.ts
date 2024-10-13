@@ -51,12 +51,13 @@ export class LoginPage {
         color: userData.color,
         contacts: userData.contacts
       });
-
+      
+      this.isLoading = false;
       this.router.navigate(['/summary']);
     } catch (error) {
+      this.isLoading = false;
       this.firebaseErrorPhat = error as string;
     }
-    this.isLoading = false;
   }
 
 
