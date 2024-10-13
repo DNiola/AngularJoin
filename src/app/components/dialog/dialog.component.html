@@ -1,19 +1,14 @@
 <div class=" flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-[99] fixed">
-  <div
+  <div [ngClass]="{'sm:w-3/5' : isSingUpSection }"
     class="absolute z-[12] bg-whiteSmoke rounded-3xl shadow-taskShadow w-11/12 sm:w-2/5 2xl:w-1/3 font-inter p-4 flex flex-col gap-4">
 
     <span class="font-bold text-3xl flex justify-center pt-2">{{dialogMessage.title}}</span>
-
     <span  [ngClass]="{'text-center' : !isSingUpSection }" class="font-medium">{{dialogMessage.message}}</span>
 
-    <div *ngIf="isSingUpSection" class="flex items-center justify-center gap-4">
-      <app-auth-checkbox [text]="'Dont show again !'" (checkedChange)="onCheckboxChange($event)"> </app-auth-checkbox>
-      <app-button-filled [text]="'Understood !'" (click)="onConfirm()"></app-button-filled>
-    </div>
-
-    <div *ngIf="!isSingUpSection" class="flex items-center justify-center gap-4">
-      <app-button-edge [text]="'Cancel'" (click)="onCancel()"></app-button-edge>
-      <app-button-filled [text]="'Yes'" (click)="onConfirm()"></app-button-filled>
+    <div [ngClass]="{'flex flex-col xs:flex-row' : isSingUpSection }" class="flex items-center justify-center gap-4">
+      <app-auth-checkbox *ngIf="isSingUpSection" [text]="'Dont show again !'" (checkedChange)="onCheckboxChange($event)"> </app-auth-checkbox>
+      <app-button-edge *ngIf="!isSingUpSection" [text]="'Cancel'" (click)="onCancel()"></app-button-edge>
+      <app-button-filled [text]="isSingUpSection ? 'Understood !' :'Yes'" (click)="onConfirm()"></app-button-filled>
     </div>
 
   </div>

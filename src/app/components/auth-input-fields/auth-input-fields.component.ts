@@ -18,11 +18,13 @@ export class AuthInputFieldsComponent {
   public showPassword = false;
   public inputValue = '';
 
-  getValue(): string {
+
+  public getValue(): string {
     return this.inputValue;
   }
 
-  setValue(value: string): void {
+  
+  public setValue(value: string): void {
     this.inputValue = value;
   }
 

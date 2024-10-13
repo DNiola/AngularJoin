@@ -14,6 +14,7 @@ export class SidebarComponent {
 
   constructor(private userService: UserService) { }
 
+  
   public ngOnInit(): void {
      this.userService.currentUser$.subscribe((user) => {
       this.currentUser = user;

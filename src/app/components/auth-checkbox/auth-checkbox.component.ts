@@ -13,6 +13,7 @@ export class AuthCheckboxComponent {
 
   @Output() checkedChange = new EventEmitter<boolean>();
 
+  
   public checkboxValue = false;
 
 

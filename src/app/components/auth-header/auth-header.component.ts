@@ -10,7 +10,8 @@ export class AuthHeaderComponent {
 
   public isAnimationComplete = false;
 
-  onAnimationEnd() {
+
+  public onAnimationEnd(): void {
     this.isAnimationComplete = true;
     this.isAnimationComplete = false;
   }

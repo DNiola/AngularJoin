@@ -1,11 +1,11 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/models/user.model';
+import { AuthData, User } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
@@ -14,27 +14,39 @@ import { HelperService } from 'src/app/services/helper.service';
   styleUrls: ['./auth-form.component.scss'],
 })
 export class AuthFormComponent {
-  @ViewChild('nameField') nameField!: AuthInputFieldsComponent;
-  @ViewChild('emailField') emailField!: AuthInputFieldsComponent;
-  @ViewChild('passwordField') passwordField!: AuthInputFieldsComponent;
-  @ViewChild('confirmPasswordField') confirmPasswordField!: AuthInputFieldsComponent;
+  @ViewChild('nameField') public nameField!: AuthInputFieldsComponent;
+  @ViewChild('emailField') public emailField!: AuthInputFieldsComponent;
+  @ViewChild('passwordField') public passwordField!: AuthInputFieldsComponent;
+  @ViewChild('confirmPasswordField') public confirmPasswordField!: AuthInputFieldsComponent;
 
-  @ViewChild('privacyCheckbox') privacyCheckbox!: AuthCheckboxComponent;
-  @ViewChild('rememberMeCheckbox') rememberMeCheckbox!: AuthCheckboxComponent;
+  @ViewChild('privacyCheckbox') public privacyCheckbox!: AuthCheckboxComponent;
+  @ViewChild('rememberMeCheckbox') public rememberMeCheckbox!: AuthCheckboxComponent;
 
-  @Input() isLogin = false;
+  @Input() public isLogin = false;
+  @Input() public isAnimation = false;
+  @Input() public emptyFildsEmpty = false;
+  @Input() public isForgotPassword = false;
+  @Input() public errorPhat = '';
 
   public showPassword = false;
   public showConfirmPassword = false;
   public errorMessage = '';
 
   private isError = false;
-  public isAnimation = false;
-  public isForgotPassword = false;
+
+  @Output() public tryToSignUp = new EventEmitter<AuthData>();
+  @Output() public tryToLogin = new EventEmitter<AuthData>();
+  @Output() public tryToResetPW = new EventEmitter<string>();
+
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) {}
 
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) { }
-
+  /**
+   * Initializes the component after the view has been fully initialized.
+   * 
+   * Checks if a saved email is available in local storage and sets it in the email input field if found.
+   * Also restores the "Remember Me" checkbox state.
+   */
   public ngAfterViewInit(): void {
     const savedEmail = localStorage.getItem('email');
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
@@ -46,6 +58,31 @@ export class AuthFormComponent {
   }
 
 
+  /**
+   * Handles changes in the input properties of the component.
+   * 
+   * If emptyFildsEmpty or isAnimation changes, calls emptyInputFields().
+   * If errorPhat changes, handles Firebase errors.
+   * 
+   * @param {SimpleChanges} SimpleChange - The changes in input properties.
+   */
+  public ngOnChanges(SimpleChange: SimpleChanges): void {
+    if (this.emptyFildsEmpty && SimpleChange['emptyFildsEmpty'] || this.isAnimation) {
+      this.emptyInputFields();
+    }
+    if (this.errorPhat && SimpleChange['errorPhat']) {
+      const error = this.errorPhat;
+      this.handleErrorFromFirebase(error);
+    }
+  }
+
+
+  /**
+   * Handles the form submission.
+   * 
+   * Depending on the form state (isForgotPassword, isLogin), either initiates the password reset process,
+   * retrieves sign-up data, or retrieves login data.
+   */
   public onSubmit(): void {
     if (this.isForgotPassword) {
       this.resetPassword();
@@ -58,17 +95,12 @@ export class AuthFormComponent {
   }
 
 
-  public onGuestLogin(): void {
-    this.userService.signInAsGuest()
-      .then(() => {
-        this.router.navigate(['/summary']);
-      })
-      .catch((error) => {
-        console.error('Fehler beim Gast-Login:', error);
-      });
-  }
-
-
+  /**
+   * Retrieves and processes data for sign-up.
+   * 
+   * Retrieves name, email, password, and confirmPassword from input fields.
+   * Checks the input field values and emits the sign-up data if all values are valid.
+   */
   private getSignUpData(): void {
     const name = this.helperService.capitalizeName(this.nameField.getValue());
     const email = this.emailField.getValue();
@@ -80,88 +112,94 @@ export class AuthFormComponent {
     if (this.isError) {
       this.isError = false;
     } else {
-      this.signUp(name, email, password);
+      const singUpData: AuthData = { name, email, password };
+      this.tryToSignUp.emit(singUpData);
     }
   }
 
 
-  private async signUp(name: string, email: string, password: string): Promise<void> {
-    try {
-      const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      const userId = result.user?.uid;
-
-      const initials = this.helperService.getInitials(name);
-      const color = this.helperService.getRandomColor();
-
-      await this.saveUserToFirestore(userId, name, email, initials, color);
-
-      this.isAnimation = true;
-      setTimeout(() => {
-        this.EmptyInputFields();
-        this.router.navigate(['/login']);
-      }, 1000);
-    }
-    catch (error) {
-      this.handleErrorFromFirebase(error);
-      return;
-    }
-  }
-
-
-  private async getLoginData() {
+  /**
+   * Retrieves and processes data for login.
+   * 
+   * Retrieves email and password from input fields and checks the input field values.
+   * Emits the login data if all values are valid and manages persistence for "Remember Me".
+   */
+  private async getLoginData(): Promise<void> {
     const email = this.emailField.getValue();
     const password = this.passwordField.getValue();
     const rememberMe = this.rememberMeCheckbox.checkboxValue;
 
-    this.persistenceRememberMe(rememberMe, email)
+    this.persistenceRememberMe(rememberMe, email);
     this.checkLoginInputFields(email, password);
     if (this.isError) {
       this.isError = false;
     } else {
-      await this.login(email, password);
+      const loginData: AuthData = { email, password };
+      this.tryToLogin.emit(loginData);
     }
   }
 
 
-  private async login(email: string, password: string) {
-    try {
-
-      const result = await this.afAuth.signInWithEmailAndPassword(email, password);
-      const user = result.user;
-
-
-      const userDataSnapshot = await this.firestore.collection('users').doc(user?.uid).get().toPromise();
-      const userData = userDataSnapshot?.data() as User;
-
-      this.userService.setUser({
-        userId: user?.uid || '',
-        name: userData.name || '',
-        email: user?.email || '',
-        initials: userData.initials,
-        color: userData.color,
-        contacts: userData.contacts
-      });
-
-      this.router.navigate(['/summary']);
-    } catch (error) {
-      this.handleErrorFromFirebase(error);
-    }
-  }
-
-
-  private async persistenceRememberMe(rememberMe: boolean, email: string) {
-    await this.afAuth.setPersistence(rememberMe ? 'local' : 'session');
-
-    if (rememberMe) {
-      localStorage.setItem('email', email);
-      localStorage.setItem('rememberMe', 'true');
+  /**
+   * Initiates the password reset process.
+   * 
+   * Emits the email address for password reset if the email field is not empty.
+   * Displays an error message if the email field is empty.
+   */
+  public resetPassword(): void {
+    if (this.emailField.inputValue) {
+      this.tryToResetPW.emit(this.emailField.inputValue);
     } else {
-      localStorage.removeItem('email');
-      localStorage.removeItem('rememberMe');
+      this.emailField.errorMessage = 'Please enter your email address.';
     }
   }
 
 
+  /**
+   * Handles guest login.
+   * 
+   * Signs in the user as a guest and navigates to the summary page.
+   * Logs an error message if the guest login fails.
+   */
+  public onGuestLogin(): void {
+    this.userService.signInAsGuest()
+      .then(() => {
+        this.router.navigate(['/summary']);
+      })
+      .catch((error) => {
+        console.error('Fehler beim Gast-Login:', error);
+      });
+  }
+
+
+  /**
+   * Checks the input fields for the login process.
+   * 
+   * Validates the email and password fields and sets isError if any validation fails.
+   * 
+   * @param {string} email - The email address.
+   * @param {string} password - The password.
+   */
+  private checkLoginInputFields(email: string, password: string): void {
+    this.isError = false;
+
+    if (!this.validateField(this.emailField, email, { required: true })) this.isError = true;
+    if (!this.validateField(this.passwordField, password, { required: true })) this.isError = true;
+  }
+
+
+  /**
+   * Checks the input fields for the sign-up process.
+   * 
+   * Validates the name, email, password, and confirmPassword fields.
+   * Sets error messages and isError if any validation fails.
+   * 
+   * @param {string} name - The user's name.
+   * @param {string} email - The email address.
+   * @param {string} password - The password.
+   * @param {string} confirmPassword - The confirmation password.
+   * @param {boolean} checkbox - The value of the privacy policy acceptance checkbox.
+   */
   private checkValueInputFields(name: string, email: string, password: string, confirmPassword: string, checkbox: boolean): void {
     this.isError = false;
 
@@ -170,6 +208,21 @@ export class AuthFormComponent {
     if (!this.validateField(this.passwordField, password, { required: true, minLength: 6 })) this.isError = true;
     if (!this.validateField(this.confirmPasswordField, confirmPassword, { required: true, minLength: 6 })) this.isError = true;
 
+    this.setErrorMessage(password, confirmPassword, checkbox);
+  }
+
+
+  /**
+   * Sets error messages for the password and privacy checkbox fields.
+   * 
+   * Checks if passwords match and if the privacy policy is accepted.
+   * Sets the appropriate error messages if any condition is not met.
+   * 
+   * @param {string} password - The password.
+   * @param {string} confirmPassword - The confirmation password.
+   * @param {boolean} checkbox - The value of the privacy policy acceptance checkbox.
+   */
+  public setErrorMessage(password: string, confirmPassword: string, checkbox: boolean): void {
     if (password !== confirmPassword) {
       this.passwordField.errorMessage = "Your passwords don't match. Please try again.";
       this.confirmPasswordField.errorMessage = "Your passwords don't match. Please try again.";
@@ -183,6 +236,17 @@ export class AuthFormComponent {
   }
 
 
+  /**
+   * Validates a given field based on specified rules.
+   * 
+   * Validates if the field is required and checks for minimum length if applicable.
+   * Sets an error message if the validation fails.
+   * 
+   * @param {AuthInputFieldsComponent} field - The input field component to validate.
+   * @param {string} value - The value of the input field.
+   * @param {Object} rules - The validation rules (required, minLength).
+   * @returns {boolean} - Whether the field value passes the validation.
+   */
   private validateField(field: AuthInputFieldsComponent, value: string, rules: { required?: boolean, minLength?: number }): boolean {
     field.errorMessage = '';
 
@@ -200,6 +264,11 @@ export class AuthFormComponent {
   }
 
 
+  /**
+   * Handles Firebase errors by setting appropriate error messages for input fields.
+   * 
+   * @param {any} error - The Firebase error object.
+   */
   private handleErrorFromFirebase(error: any): void {
     if (error.code === 'auth/email-already-in-use') {
       this.emailField.errorMessage = 'This email is already in use. Please try again.';
@@ -220,18 +289,15 @@ export class AuthFormComponent {
   }
 
 
-  private checkLoginInputFields(email: string, password: string) {
-    this.isError = false;
-
-    if (!this.validateField(this.emailField, email, { required: true })) this.isError = true;
-    if (!this.validateField(this.passwordField, password, { required: true })) this.isError = true;
-  }
-
-
-  public EmptyInputFields(): void {
-    if (this.isForgotPassword = true) {
+  /**
+   * Clears the values of all input fields.
+   * 
+   * Resets the state of the form and its input fields to the initial state.
+   */
+  public emptyInputFields(): void {
+    if (this.isForgotPassword && this.isLogin) {
       this.isForgotPassword = false;
-    } else {
+    } else if (this.emptyFildsEmpty) {
       this.nameField.inputValue = '';
       this.emailField.inputValue = '';
       this.passwordField.inputValue = '';
@@ -244,34 +310,24 @@ export class AuthFormComponent {
   }
 
 
-  private saveUserToFirestore(userId: string | undefined, name: string, email: string, initials: string, color: string): Promise<void> {
-    return this.firestore.collection('users').doc(userId).set({
-      userId: userId,
-      name: name,
-      email: email,
-      initials: initials,
-      color: color
-    });
-  }
+  /**
+   * Manages persistence for the "Remember Me" functionality.
+   * 
+   * Sets the persistence to local or session based on the "Remember Me" value.
+   * Stores or removes the email and rememberMe state in/from local storage.
+   * 
+   * @param {boolean} rememberMe - The value of the "Remember Me" checkbox.
+   * @param {string} email - The email address to remember.
+   */
+  private async persistenceRememberMe(rememberMe: boolean, email: string): Promise<void> {
+    await this.afAuth.setPersistence(rememberMe ? 'local' : 'session');
 
-
-  public resetPassword(): void {
-    if (this.emailField.inputValue) {
-      this.userService.resetPassword(this.emailField.inputValue)
-        .then(() => {
-          this.isAnimation = true;
-          setTimeout(() => {
-            this.isForgotPassword = false;
-            this.isAnimation = false;
-          }, 1000);
-        })
-        .catch((error) => {
-          this.handleErrorFromFirebase(error);
-        });
+    if (rememberMe) {
+      localStorage.setItem('email', email);
+      localStorage.setItem('rememberMe', 'true');
     } else {
-      this.emailField.errorMessage = 'Please enter your email address.';
+      localStorage.removeItem('email');
+      localStorage.removeItem('rememberMe');
     }
   }
-
 }
-
