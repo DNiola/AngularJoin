@@ -24,8 +24,14 @@ export class SummaryPage implements OnInit {
   public urgentTasks: Task[] = [];
   public allTasks: Task[] = [];
 
-  constructor(private userService: UserService, private taskService: TaskService, private router: Router,) { }
+  constructor(private userService: UserService, private taskService: TaskService, private router: Router) { }
 
+
+  /**
+   * Initializes the component, subscribes to user and task data.
+   *
+   * @returns {void}
+   */
   public ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
@@ -33,7 +39,6 @@ export class SummaryPage implements OnInit {
 
     this.taskService.getTasks().subscribe((tasks) => {
       this.allTasks = tasks;
-
     });
 
     this.taskService.getTasksByStatus('todo').subscribe((tasks) => {
@@ -55,27 +60,38 @@ export class SummaryPage implements OnInit {
     this.taskService.getTasksByPriority('urgent').subscribe((tasks) => {
       this.urgentTasks = tasks;
       this.calculateUpcomingDeadline();
-
     });
+    
     this.getGreetings();
   }
 
 
+  /**
+   * Calculates the upcoming deadline from the list of urgent tasks.
+   * Sets the upcomingDeadline property to the formatted date of the earliest urgent task.
+   *
+   * @returns {void}
+   */
   private calculateUpcomingDeadline(): void {
     if (this.urgentTasks.length > 0) {
-      // Find the task with the earliest due date
       const nextDeadlineTask = this.urgentTasks.reduce((earliest, current) => {
         const currentDate = new Date(current.dueDate);
         return currentDate < new Date(earliest.dueDate) ? current : earliest;
       });
 
-      // Format the due date as "Month Day, Year"
       this.upcomingDeadline = formatDate(nextDeadlineTask.dueDate, 'MMMM d, y', 'en-US');
     } else {
       this.upcomingDeadline = null;
     }
   }
 
+
+  /**
+   * Determines the appropriate greeting based on the current time of day.
+   * Sets the greeting property to a string such as 'Good Morning', 'Good Afternoon', etc.
+   *
+   * @returns {void}
+   */
   private getGreetings(): void {
     const currentHour = new Date().getHours();
 
@@ -90,8 +106,13 @@ export class SummaryPage implements OnInit {
     }
   }
 
-  public onRouteToBoard() {
+
+  /**
+   * Navigates the user to the board page.
+   *
+   * @returns {void}
+   */
+  public onRouteToBoard(): void {
     this.router.navigate(['/board']);
   }
-
 }
