@@ -14,6 +14,7 @@ export class AddTaskPage implements OnInit {
   public currentUser: User | null = null;
   public contacts: Contact[] = [];
   public subtasks: Subtask[] = [];
+  public isAnimation = false;
 
   constructor(private userService: UserService, private subtaskService: SubtaskService) { }
 
@@ -57,4 +58,16 @@ export class AddTaskPage implements OnInit {
       });
     });
   }
+
+
+  /**
+   * Change the animation state of the AddTaskPage component.
+   *
+   * @param {boolean} animationStatus - The new animation state.
+   * @returns {void}
+   */
+  public triggerAnimation(animationStatus: boolean): void {
+    this.isAnimation = animationStatus;
+  }
+
 }

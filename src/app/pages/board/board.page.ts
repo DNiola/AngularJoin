@@ -28,6 +28,7 @@ export class BoardPage implements OnInit {
   public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
   public isEditTask = false;
+  public isAnimation = false;
 
   public taskStatus: Task['status'] = 'todo';
 
@@ -35,7 +36,7 @@ export class BoardPage implements OnInit {
 
   constructor(private userService: UserService, private taskService: TaskService, private subtaskService: SubtaskService) { }
 
-  
+
   /**
    * Initializes the board page by setting up user, tasks, and subtasks.
    *
@@ -54,7 +55,7 @@ export class BoardPage implements OnInit {
     this.tasksInit();
   }
 
-  
+
   /**
    * Initializes the contacts list by fetching all users if the current user is available.
    *
@@ -68,7 +69,7 @@ export class BoardPage implements OnInit {
     }
   }
 
-  
+
   /**
    * Initializes tasks for each status by fetching them from the task service.
    *
@@ -92,7 +93,7 @@ export class BoardPage implements OnInit {
     });
   }
 
-  
+
   /**
    * Opens the add task section with a specific status.
    *
@@ -104,7 +105,7 @@ export class BoardPage implements OnInit {
     this.taskStatus = status;
   }
 
-  
+
   /**
    * Closes the add task section and resets editing state.
    *
@@ -116,7 +117,7 @@ export class BoardPage implements OnInit {
     this.currentOpenedTask = null;
   }
 
-  
+
   /**
    * Opens the task card overview for a specific task.
    *
@@ -128,7 +129,7 @@ export class BoardPage implements OnInit {
     this.isTaskOverviewOpen = true;
   }
 
-  
+
   /**
    * Switches to edit mode for the currently opened task.
    *
@@ -140,7 +141,7 @@ export class BoardPage implements OnInit {
     this.isEditTask = true;
   }
 
-  
+
   /**
    * Handles the search input event and updates the task list based on the search term.
    *
@@ -156,7 +157,7 @@ export class BoardPage implements OnInit {
     }
   }
 
-  
+
   /**
    * Sets the task that is currently being dragged.
    *
@@ -167,7 +168,7 @@ export class BoardPage implements OnInit {
     this.currentDraggedTask = event.task;
   }
 
-  
+
   /**
    * Allows the global dragover event to prevent default behavior.
    *
@@ -179,7 +180,7 @@ export class BoardPage implements OnInit {
     event.preventDefault();
   }
 
-  
+
   /**
    * Handles the global drop event and updates the task status.
    *
@@ -198,7 +199,7 @@ export class BoardPage implements OnInit {
     }
   }
 
-  
+
   /**
    * Updates the status of a task.
    *
@@ -209,4 +210,19 @@ export class BoardPage implements OnInit {
   public updateTaskStatus(task: Task, newStatus: string): void {
     this.taskService.updateTaskStatus(task.id, newStatus);
   }
+
+
+  /**
+   * Triggers the task animation by setting the animation state to true.
+   *
+   * @param {boolean} animationStatus - The animation state to be set.
+   * @returns {void}
+   */
+  public triggerAnimation(animationStatus: boolean): void {
+    this.isAnimation = animationStatus;
+    setTimeout(() => {
+      this.isAnimation = false;
+    }, 1000);
+  }
+
 }

@@ -24,6 +24,7 @@ export class TaskCardAddComponent implements OnInit {
   @Input() public editTask: Task | null = null;
 
   @Output() isCardOpen = new EventEmitter<void>();
+  @Output() isAnimation = new EventEmitter<boolean>(false);
 
   public categories: Categorys = [
     { name: 'Technical Task', selected: false, color: '#1FD7C1' },
@@ -40,12 +41,11 @@ export class TaskCardAddComponent implements OnInit {
   public selectedBubble: Contact[] = [];
   public activeButton = '';
 
-  public isAnimation = false;
   public isDialog = false;
 
   constructor(private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
 
-  
+
   /**
    * Initializes the component by setting up the current task if in edit mode.
    *
@@ -61,7 +61,7 @@ export class TaskCardAddComponent implements OnInit {
     }
   }
 
-  
+
   /**
    * Handles the creation or editing of a task based on the provided flag.
    * Validates required fields before proceeding.
@@ -72,7 +72,6 @@ export class TaskCardAddComponent implements OnInit {
   public onCreateTask(isCreate: boolean): void {
     this.checkRequiredFields();
     if (this.isError.title || this.isError.dueDate || this.isError.category) {
-      console.error('Fehler beim Erstellen des Tasks:', this.isError);
       this.isDialog = false;
       return;
     }
@@ -84,7 +83,7 @@ export class TaskCardAddComponent implements OnInit {
     }
   }
 
-  
+
   /**
    * Edits the task by updating it in the task service.
    *
@@ -98,7 +97,7 @@ export class TaskCardAddComponent implements OnInit {
     });
   }
 
-  
+
   /**
    * Gathers all the necessary data for the task, such as priority, creator ID, subtasks, and status.
    *
@@ -117,7 +116,7 @@ export class TaskCardAddComponent implements OnInit {
     this.currentTask.status = this.taskStatus;
   }
 
-  
+
   /**
    * Checks if the required fields (title, due date, category) are filled.
    * Updates the `isError` object accordingly.
@@ -138,7 +137,7 @@ export class TaskCardAddComponent implements OnInit {
     }
   }
 
-  
+
   /**
    * Creates a new task by using the task service to save it to the database.
    * Shows animation and navigates to the board page upon success.
@@ -148,8 +147,8 @@ export class TaskCardAddComponent implements OnInit {
   private createTask(): void {
     this.taskService.createTask(this.currentTask)
       .then(() => {
-        this.isAnimation = true;
-        this.clearTask();
+        this.isAnimation.emit(true);
+        this.onCloseCard();
         setTimeout(() => {
           this.router.navigate(['/board']);
         }, 1000);
@@ -159,7 +158,7 @@ export class TaskCardAddComponent implements OnInit {
       });
   }
 
-  
+
   /**
    * Clears the current task and resets various fields and states to their default values.
    *
@@ -175,11 +174,11 @@ export class TaskCardAddComponent implements OnInit {
     this.currentTask = { title: '', dueDate: '', category: { name: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
     setTimeout(() => {
       this.resetTrigger = false;
-      this.isAnimation = false;
+      this.isAnimation.emit(false);
     }, 1000);
   }
 
-  
+
   /**
    * Sets task data for a specific section based on the provided data and section identifier.
    *
@@ -209,7 +208,7 @@ export class TaskCardAddComponent implements OnInit {
     }
   }
 
-  
+
   /**
    * Displays the selected contacts in a bubble format and updates the task data.
    *
@@ -222,7 +221,7 @@ export class TaskCardAddComponent implements OnInit {
     this.setTaskData(selectedContacts, section);
   }
 
-  
+
   /**
    * Sets the active priority button and updates the task's priority value.
    *
@@ -234,7 +233,7 @@ export class TaskCardAddComponent implements OnInit {
     this.setTaskData(this.activeButton, 'prio');
   }
 
-  
+
   /**
    * Checks if the provided priority button is active.
    *
@@ -245,7 +244,7 @@ export class TaskCardAddComponent implements OnInit {
     return this.activeButton === button;
   }
 
-  
+
   /**
    * Displays the subtasks and updates the subtask service.
    *
@@ -256,7 +255,7 @@ export class TaskCardAddComponent implements OnInit {
     this.subtaskService.updateSubtasks(newSubtasks);
   }
 
-  
+
   /**
    * Opens a dialog with a specified action (clear, create, edit).
    *
@@ -274,7 +273,7 @@ export class TaskCardAddComponent implements OnInit {
     this.isDialog = true;
   }
 
-  
+
   /**
    * Closes the task card, clears the task data, and emits an event to notify the parent component.
    *
