@@ -21,7 +21,7 @@ export class TaskCardOverviewComponent implements OnInit {
   public statusItem = ['To do', 'In progress', 'Awaiting feedback', 'Done'];
   public selectedItem = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) { }
 
 
   /**
@@ -77,7 +77,7 @@ export class TaskCardOverviewComponent implements OnInit {
       if (this.selectedItem === 'Done') {
         this.task.status = 'done';
       }
-      this.taskService.updateTask(this.task).then(() => {}).catch(error => {
+      this.taskService.updateTask(this.task).then(() => { }).catch(error => {
         console.error('Fehler beim Aktualisieren des Tasks:', error);
       });
     }
@@ -101,11 +101,9 @@ export class TaskCardOverviewComponent implements OnInit {
    * @returns {void}
    */
   private initCategory(): void {
-    if (Array.isArray(this.task?.category) && this.task?.category.length > 0) {
-      const category = this.task?.category?.[0];
-      if (category) {
-        this.category = category;
-      }
+    const category = this.task?.category;
+    if (category) {
+      this.category = category;
     }
   }
 
@@ -130,7 +128,8 @@ export class TaskCardOverviewComponent implements OnInit {
   public onSubtaskStatusChange(subtaskIndex: number, event: any): void {
     const done = event.detail.checked;
     if (this.task && this.task.id) {
-      this.taskService.updateSubtaskStatus(this.task.id, subtaskIndex, done).then(() => {}).catch(error => {
+      this.taskService.updateSubtaskStatus(this.task.id, subtaskIndex, done).then(() => { })
+      .catch(error => {
         console.error('Fehler beim Aktualisieren des Subtask-Status:', error);
       });
     }

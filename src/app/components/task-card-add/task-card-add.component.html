@@ -1,8 +1,8 @@
-<div class="flex-grow flex flex-col gap-10 lg:gap-14 font-inter" [ngClass]="isCard ? 'p-4 sm:p-14' :'pb-24 p-4 pt-[136px] xl:px-20  lg:pt-20 bg-whiteSmoke'">
+<div class="flex-grow flex flex-col gap-10 lg:gap-14 font-inter" [ngClass]="isCard ? 'p-4 pb-14 sm:p-14' :'pb-24 p-4 pt-[136px] xl:px-20  lg:pt-20 bg-whiteSmoke'">
 
 <app-page-title *ngIf="!isEditTask" [title]="'Add Task'"></app-page-title> 
 <app-page-title *ngIf="isEditTask" [title]="'Edit Task'"></app-page-title> 
-<ion-icon *ngIf="isCard" [ngClass]="{ 'top-6': isEditTask }" class="absolute right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
+<ion-icon *ngIf="isCard" [ngClass]="{ 'sm:top-6': isEditTask }" class="absolute right-4 sm:right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
 
 <div class="flex gap-14 flex-grow">
   <ion-grid class="p-0">
