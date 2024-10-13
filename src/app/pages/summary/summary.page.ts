@@ -27,16 +27,37 @@ export class SummaryPage implements OnInit {
   constructor(private userService: UserService, private taskService: TaskService, private router: Router) { }
 
 
-  /**
-   * Initializes the component, subscribes to user and task data.
+   /**
+   * Initializes the component by subscribing to user and task data streams.
+   * Fetches current user, tasks, and sets up necessary data for displaying summary metrics.
    *
    * @returns {void}
    */
-  public ngOnInit(): void {
+   public ngOnInit(): void {
+    this.initializeUser();
+    this.initializeTasks();
+    this.getGreetings();
+  }
+
+
+  /**
+   * Subscribes to the current user observable and sets the current user property.
+   *
+   * @returns {void}
+   */
+  private initializeUser(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+  }
 
+
+  /**
+   * Subscribes to different task observables and initializes task lists for various task statuses and priorities.
+   *
+   * @returns {void}
+   */
+  private initializeTasks(): void {
     this.taskService.getTasks().subscribe((tasks) => {
       this.allTasks = tasks;
     });
@@ -61,8 +82,6 @@ export class SummaryPage implements OnInit {
       this.urgentTasks = tasks;
       this.calculateUpcomingDeadline();
     });
-    
-    this.getGreetings();
   }
 
 

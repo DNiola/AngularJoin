@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
@@ -38,7 +38,7 @@ export class AuthFormComponent {
   @Output() public tryToLogin = new EventEmitter<AuthData>();
   @Output() public tryToResetPW = new EventEmitter<string>();
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) {}
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) { }
 
 
   /**
