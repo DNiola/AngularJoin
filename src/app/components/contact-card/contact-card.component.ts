@@ -32,7 +32,7 @@ export class ContactCardComponent {
     private afAuth: AngularFireAuth,
     public helperService: HelperService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
 
   /**
@@ -86,7 +86,7 @@ export class ContactCardComponent {
    */
   private getFormValues(): { name: string, email: string, phone: string } {
     return {
-      name: this.nameField.getValue(),
+      name: this.helperService.capitalizeName(this.nameField.getValue()),
       email: this.emailField.getValue(),
       phone: this.phoneField.getValue(),
     };
