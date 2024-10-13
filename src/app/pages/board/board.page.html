@@ -69,7 +69,7 @@
     <div *ngIf="isTaskOverviewOpen" class="absolute z-[12] bg-whiteSmoke sm:rounded-3xl shadow-taskShadow overflow-auto h-full pb-20 lg:pb-0 w-full md:w-[90%] sm:h-5/6 lg:h-auto lg:w-[80%] 1xl:w-2/5">
       <app-task-card-overview [task]="currentOpenedTask" (editTask)="editTask()" (isCardOpen)="isTaskOverviewOpen = false"></app-task-card-overview>
     </div>
-    <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke sm:rounded-3xl shadow-taskShadow overflow-auto h-full pb-4 md:w-[90%] sm:h-5/6 lg:h-auto "
+    <div *ngIf="isAddTaskOpen" class="absolute z-[12] bg-whiteSmoke sm:rounded-3xl shadow-taskShadow overflow-auto h-full pb-4 md:w-[90%] sm:h-5/6 lg:h-auto slide"
     >
       <app-task-card-add 
       (isCardOpen)="closeAddTask()" 
