@@ -13,15 +13,14 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['./task-card-add.component.scss'],
 })
 export class TaskCardAddComponent implements OnInit {
+  @Input() public taskStatus: Task['status'] = 'todo';
   @Input() public currentUser: User | null = null;
+  @Input() public editTask: Task | null = null;
   @Input() public subtasks: Subtask[] = [];
   @Input() public contacts: Contact[] = [];
 
-  @Input() public taskStatus: Task['status'] = 'todo';
   @Input() public isCard = false;
-
   @Input() public isEditTask = false;
-  @Input() public editTask: Task | null = null;
 
   @Output() isCardOpen = new EventEmitter<void>();
   @Output() isAnimation = new EventEmitter<boolean>(false);
@@ -42,6 +41,7 @@ export class TaskCardAddComponent implements OnInit {
   public activeButton = '';
 
   public isDialog = false;
+  public isLoading = false;
 
   constructor(private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
 
@@ -90,11 +90,13 @@ export class TaskCardAddComponent implements OnInit {
    * @returns {void}
    */
   public editTaskData(): void {
+    this.isLoading = true;
     this.taskService.updateTask(this.currentTask).then(() => {
       this.onCloseCard();
     }).catch(error => {
       console.error('Fehler beim Aktualisieren des Tasks:', error);
     });
+    this.isLoading = false;
   }
 
 
@@ -145,15 +147,18 @@ export class TaskCardAddComponent implements OnInit {
    * @returns {void}
    */
   private createTask(): void {
+    this.isLoading = true;
     this.taskService.createTask(this.currentTask)
       .then(() => {
         this.isAnimation.emit(true);
         this.onCloseCard();
         setTimeout(() => {
+          this.isLoading = false;
           this.router.navigate(['/board']);
         }, 1000);
       })
       .catch(error => {
+        this.isLoading = false;
         console.error('Fehler beim Speichern des Tasks:', error);
       });
   }

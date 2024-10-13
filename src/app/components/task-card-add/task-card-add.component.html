@@ -57,7 +57,7 @@
   <ion-col size="12" size="6">
     <div *ngIf="!isEditTask" class="flex justify-end gap-4">
       <app-button-edge [text]="'Clear'" [iconName]="'close-outline'" (click)="onOpenDialog('clear')" class="hidden md:flex"></app-button-edge>
-      <app-button-filled [text]="'Create Task'" [iconName]="'checkmark-outline'" (confirm)="onOpenDialog('create')" class="w-full md:w-[unset]"></app-button-filled>
+      <app-button-filled [disabled]="isLoading" [text]="'Create Task'" [iconName]="'checkmark-outline'" (confirm)="onOpenDialog('create')" class="w-full md:w-[unset]"></app-button-filled>
     </div>
     <div *ngIf="isEditTask" class="flex justify-end">
       <app-button-filled [text]="'Ok'" [iconName]="'checkmark-outline'" (click)="onOpenDialog('edit')"></app-button-filled>
