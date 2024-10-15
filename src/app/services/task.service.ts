@@ -11,6 +11,16 @@ export class TaskService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  
+  /**
+   * Retrieves all tasks from Firestore.
+   *
+   * @returns {Observable<Task[]>} An observable that emits the list of all tasks.
+   */
+  public getAllTasks(): Observable<Task[]> {
+    return this.firestore.collection<Task>('tasks').valueChanges();
+  }
+
 
   /**
    * Creates a new task in Firestore.
@@ -86,7 +96,7 @@ export class TaskService {
    * @param {string} [searchTerm] - The term to filter tasks by title or description.
    * @returns {Observable<Task[]>} An observable that emits the list of tasks.
    */
-  public getTasks(searchTerm?: string): Observable<Task[]> {
+  public getTasksBySearchTerm(searchTerm?: string): Observable<Task[]> {
     return this.firestore.collection<Task>('tasks').valueChanges().pipe(
       map(tasks => {
         if (searchTerm) {
@@ -109,7 +119,7 @@ export class TaskService {
    * @returns {Observable<Task[]>} An observable that emits the list of filtered tasks.
    */
   public getTasksByStatus(status: string, searchTerm?: string): Observable<Task[]> {
-    return this.getTasks(searchTerm).pipe(
+    return this.getTasksBySearchTerm(searchTerm).pipe(
       map(tasks => tasks.filter(task => task.status === status))
     );
   }
@@ -122,7 +132,7 @@ export class TaskService {
    * @returns {Observable<Task[]>} An observable that emits the list of filtered tasks.
    */
   public getTasksByPriority(prio: string): Observable<Task[]> {
-    return this.getTasks().pipe(
+    return this.getTasksBySearchTerm().pipe(
       map(tasks => tasks.filter(task => task.prio === prio))
     );
   }
