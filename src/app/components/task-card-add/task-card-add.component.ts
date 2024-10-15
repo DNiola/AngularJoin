@@ -108,7 +108,7 @@ export class TaskCardAddComponent implements OnInit {
   private getTaskData(): void {
     this.currentTask.prio = this.activeButton;
     if (this.currentTask.prio === '') {
-      this.currentTask.prio = 'low';
+      this.currentTask.prio = 'medium';
     }
 
     if (this.currentUser) {
