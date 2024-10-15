@@ -65,9 +65,6 @@ export class ContactsPage implements OnInit {
     this.groupedContacts = {};
     this.contacts.forEach((contact) => {
       let contactName = contact.name;
-      if (this.currentUser && contact.userId === this.currentUser.userId) {
-        contactName += ' (You)';
-      }
       const firstLetter = contactName.charAt(0).toUpperCase();
       if (!this.groupedContacts[firstLetter]) {
         this.groupedContacts[firstLetter] = [];
