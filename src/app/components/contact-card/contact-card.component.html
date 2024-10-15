@@ -1,21 +1,27 @@
 <div class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-20 ">
   <div class="absolute z-[12] bg-whiteSmoke shadow-taskShadow w-4/5 sm:w-4/6 1xl:w-1/2 rounded-3xl slide">
-    <div class="h-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8 bg-normalBlue rounded-3xl">
+    <div class="h-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8 bg-normalBlue rounded-3xl relative">
 
-      <div class="text-white pt-4 pb-8 px-5 gap-2 flex flex-col w-full h-auto justify-center lg:w-1/2 lg:pt-0 lg:pb-20 2xl:px-16">
+      <div class="text-white pt-4 pb-8 px-5 gap-2 flex flex-col w-full h-auto justify-center lg:w-1/2 lg:pt-0 lg:pb-20 2xl:px-16 ">
         <img class="h-14 w-14 hidden lg:block" src="../../../assets/img/sideLogo.svg">
         <app-page-title class="flex pt-2 w-max" [title]="isEditContact ? 'Edit contact' : 'Add contact'"></app-page-title>
         <span *ngIf="!isEditContact" class="text-sm lg:text-base">Tasks are better with a team!</span>
         <div class="h-1 w-16 bg-lightBlue rounded-lg"></div>
+      </div>
 
+      <ion-icon
+        class="cursor-pointer text-3xl rounded-full hover:bg-smokeGray border-0 absolute z-10 text-white  right-4 top-7 lg:hidden"
+        name="close-outline" 
+        (click)="onCloseCard()">
+      </ion-icon>
+
+      <div class="flex flex-col w-full items-center justify-evenly relative p-2 px-5 lg:w-4/5 rounded-b-3xl lg:rounded-r-3xl lg:rounded-l-none bg-whiteSmoke">
         <ion-icon
-          class="cursor-pointer text-3xl rounded-full hover:bg-smokeGray border-0 absolute z-10 text-white lg:text-normalBlue right-4 top-4"
+          class="cursor-pointer text-3xl rounded-full hover:bg-smokeGray border-0 absolute z-10 text-normalBlue right-4 top-4 hidden lg:block"
           name="close-outline" 
           (click)="onCloseCard()">
         </ion-icon>
-      </div>
 
-      <div class="flex flex-col w-full items-center justify-evenly relative p-2 px-5 lg:w-4/5 rounded-b-3xl lg:rounded-r-3xl lg:rounded-l-none bg-whiteSmoke">
         <app-user-bubble
           [borderColor]="'white'"
           [size]="'70px'"
