@@ -2,7 +2,7 @@
 
 <app-page-title *ngIf="!isEditTask" [title]="'Add Task'"></app-page-title> 
 <app-page-title *ngIf="isEditTask" [title]="'Edit Task'"></app-page-title> 
-<ion-icon *ngIf="isCard" [ngClass]="{ 'sm:top-6': isEditTask }" class="absolute right-4 sm:right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0" name="close-outline" (click)="onCloseCard()"></ion-icon>
+<ion-icon *ngIf="isCard" [ngClass]="{ 'sm:top-6': isEditTask }" class="absolute right-4 sm:right-20 cursor-pointer text-4xl rounded-full hover:bg-smokeGray border-0 transition-all" name="close-outline" (click)="onCloseCard()"></ion-icon>
 
 <div class="flex gap-14 flex-grow">
   <ion-grid class="p-0">

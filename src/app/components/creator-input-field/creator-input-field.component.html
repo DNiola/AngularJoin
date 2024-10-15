@@ -12,10 +12,10 @@
   </ion-icon>
 
   <div *ngIf="newSubtask.title" class="flex z-10 absolute right-2 top-3 gap-1 items-center">
-    <ion-icon (click)="addSubtask()" slot="end" class="text-lg hover:bg-slate-400 rounded-full p-1 cursor-pointer"
+    <ion-icon (click)="addSubtask()" slot="end" class="text-lg hover:bg-slate-400 rounded-full p-1 cursor-pointer transition-all"
       name="checkmark-outline"></ion-icon>
     <span class="text-slate-300">|</span>
-    <ion-icon (click)="newSubtask = { title: '', done: false }" slot="end" class="text-lg hover:bg-slate-400  rounded-full p-1 cursor-pointer"
+    <ion-icon (click)="newSubtask = { title: '', done: false }" slot="end" class="text-lg hover:bg-slate-400  rounded-full p-1 cursor-pointer transition-all"
       name="close-outline"></ion-icon>
   </div>
 </div>

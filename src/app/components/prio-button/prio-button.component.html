@@ -1,5 +1,5 @@
 <ion-button fill="solid" [ngStyle]="isActive ? {'background-color': color, 'color': 'white'} : {}"
-  class="bg-white text-black rounded-lg w-full hover:shadow-prioShadow shadow-overviewShadow">
+  class="bg-white text-black rounded-lg w-full hover:shadow-prioShadow shadow-overviewShadow transition-all">
   <img [src]="'../../../assets/img/' + (isActive ? icon + '-white' : icon) + '.svg'">
   <span class="pl-2 text-sm xs:text-base"> {{text}}</span>
 </ion-button>
