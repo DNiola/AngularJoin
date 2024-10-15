@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true">
   <div class="main-content h-dvh bg-whiteSmoke flex flex-col lg:ml-44 xl:ml-60">
-    <app-header class="fixed top-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-20" [currentUser]="currentUser"></app-header>
+    <app-header class="fixed top-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-20"></app-header>
     <app-sidebar class="fixed bottom-0 left-0 right-0 lg:bottom-[unset] lg:left-[unset] lg:right-[unset] lg:static z-[19]"></app-sidebar>
-    <app-task-card-add (isAnimation)="triggerAnimation($event)" [currentUser]="currentUser" [subtasks]="subtasks" [contacts]="contacts" [taskStatus]="'todo'" class="flex-grow flex flex-col"></app-task-card-add>
+    <app-task-card-add (isAnimation)="triggerAnimation($event)" [subtasks]="subtasks" [taskStatus]="'todo'" class="flex-grow flex flex-col"></app-task-card-add>
   </div>
 </ion-content>
 <app-animated-badge *ngIf="isAnimation" [text]="'Task was sucessfully created'" class="absolute flex justify-center items-center h-dvh w-dvw bg-[#00000042] z-[21] left-0 top-0"></app-animated-badge>
