@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 export class ButtonEdgeComponent {
   @Input() text = '';
   @Input() iconName? = '';
+  @Input() disabled = false;
   
 }

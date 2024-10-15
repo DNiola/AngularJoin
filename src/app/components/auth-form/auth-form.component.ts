@@ -163,11 +163,14 @@ export class AuthFormComponent {
    * Logs an error message if the guest login fails.
    */
   public onGuestLogin(): void {
+    this.isLoading = true;
     this.userService.signInAsGuest()
       .then(() => {
+        this.isLoading = false;
         this.router.navigate(['/summary']);
       })
       .catch((error) => {
+        this.isLoading = false;
         console.error('Fehler beim Gast-Login:', error);
       });
   }
