@@ -58,7 +58,7 @@ export class SummaryPage implements OnInit {
    * @returns {void}
    */
   private initializeTasks(): void {
-    this.taskService.getTasks().subscribe((tasks) => {
+    this.taskService.getAllTasks().subscribe((tasks) => {
       this.allTasks = tasks;
     });
 
