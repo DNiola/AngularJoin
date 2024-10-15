@@ -8,15 +8,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  },
-  {
     path: 'sign-up',
     loadChildren: () => import('./pages/sign-up/sign-up.module').then(m => m.SignUpPageModule)
   },
@@ -39,7 +30,8 @@ const routes: Routes = [
     path: 'contacts',
     loadChildren: () => import('./pages/contacts/contacts.module').then( m => m.ContactsPageModule),
     canActivate: [authGuard]
-  },  {
+  },
+  {
     path: 'legal',
     loadChildren: () => import('./pages/legal/legal.module').then( m => m.LegalPageModule)
   },
@@ -51,8 +43,11 @@ const routes: Routes = [
     path: 'info',
     loadChildren: () => import('./pages/info/info.module').then( m => m.InfoPageModule)
   },
-
-
+  {
+    path: '**',
+    redirectTo: 'summary',
+    pathMatch: 'full'
+  },
 
 ];
 
