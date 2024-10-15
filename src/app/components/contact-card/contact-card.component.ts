@@ -6,6 +6,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-contact-card',
@@ -18,6 +19,7 @@ export class ContactCardComponent {
   @ViewChild('phoneField') phoneField!: AuthInputFieldsComponent;
 
   @Input() public isEditContact = false;
+  @Input() public currentUser: User | null = null;
   @Input() public contact: Contact = { name: '', color: '', initials: '', userId: '' };
 
   @Output() closeCard = new EventEmitter<Contact>();
@@ -28,6 +30,7 @@ export class ContactCardComponent {
 
   constructor(
     private contactService: ContactService,
+    private userService: UserService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
     public helperService: HelperService,
@@ -210,8 +213,8 @@ export class ContactCardComponent {
   private async editContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
     try {
       await this.contactService.updateCreatorContact(creatorId, newContact);
-      this.closeCard.emit(newContact);
-      this.emptyField();
+      this.updateCurrentUser(newContact);
+      await this.updateCurrentUser(newContact);
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Kontakts:', error);
     }
@@ -229,8 +232,7 @@ export class ContactCardComponent {
   private async editUserContact(userId: User['userId'], newContact: Contact): Promise<void> {
     try {
       await this.contactService.updateUserContact(userId, newContact);
-      this.closeCard.emit(newContact);
-      this.emptyField();
+      await this.updateCurrentUser(newContact);
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Kontakts:', error);
     }
@@ -248,6 +250,23 @@ export class ContactCardComponent {
   private async createContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
     try {
       await this.contactService.saveContact(creatorId, newContact);
+      await this.updateCurrentUser(newContact);
+    } catch (error) {
+      console.error('Fehler beim Speichern des Kontakts:', error);
+    }
+  }
+
+
+  /**
+   * Updates the current user's data and emits the updated contact.
+   *
+   * @private
+   * @param {Contact} newContact - The new contact information.
+   * @returns {Promise<void>} A promise that resolves when the user's data is updated.
+   */
+  private async updateCurrentUser(newContact: Contact): Promise<void> {
+    try {
+      await this.userService.loadUserData(this.currentUser?.userId as User['userId']);
       this.closeCard.emit(newContact);
       this.emptyField();
     } catch (error) {
