@@ -12,10 +12,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./board.page.scss'],
 })
 export class BoardPage implements OnInit {
-
-  public currentUser: User | null = null;
-  public contacts: Contact[] = [];
-
   public todoTasks: Task[] = [];
   public inProgressTasks: Task[] = [];
   public awaitFeedbackTasks: Task[] = [];
@@ -43,30 +39,11 @@ export class BoardPage implements OnInit {
    * @returns {void}
    */
   public ngOnInit(): void {
-    this.userService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      this.contactsInit();
-    });
-
     this.subtaskService.subtasks$.subscribe((subtasks) => {
       this.subtasks = subtasks;
     });
 
     this.tasksInit();
-  }
-
-
-  /**
-   * Initializes the contacts list by fetching all users if the current user is available.
-   *
-   * @returns {void}
-   */
-  public contactsInit(): void {
-    if (this.currentUser) {
-      this.userService.getAllUsers().then(users => {
-        this.contacts = users as Contact[];
-      });
-    }
   }
 
 

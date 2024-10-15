@@ -6,6 +6,7 @@ import { Subtask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { TaskService } from 'src/app/services/task.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-task-card-add',
@@ -43,7 +44,7 @@ export class TaskCardAddComponent implements OnInit {
   public isDialog = false;
   public isLoading = false;
 
-  constructor(private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
+  constructor(private userService: UserService,private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
 
 
   /**
@@ -58,6 +59,27 @@ export class TaskCardAddComponent implements OnInit {
       this.selectedBubble = this.currentTask.assignedTo || [];
       this.activeButton = this.currentTask.prio || '';
       this.subtasks = this.currentTask.subtasks || [];
+    }
+    this.userService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      this.contactsInit(this.currentUser!);
+    });
+  }
+
+  
+  public contactsInit(currentUser: User): void {
+    if (this.currentUser) {
+      this.userService.getAllUsers().then(users => {
+        const userContacts = users as Contact[];
+        const personalContacts = currentUser?.contacts || [];
+        const visibleUserContacts = userContacts.filter((contact) => !currentUser?.hidden?.includes(contact.userId));
+        this.contacts = [...visibleUserContacts, ...personalContacts].map(contact => {
+          if (contact?.userId === currentUser?.userId) {
+            return { ...contact, name: `${contact.name} (You)` };
+          }
+          return contact;
+        });
+      });
     }
   }
 
