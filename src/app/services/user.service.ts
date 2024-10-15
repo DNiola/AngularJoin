@@ -36,7 +36,7 @@ export class UserService {
    * @param {string} uid - The unique user ID.
    * @returns {Promise<void>} A promise that resolves when the user data is loaded.
    */
-  private async loadUserData(uid: string): Promise<void> {
+  public async loadUserData(uid: string): Promise<void> {
     const userDataSnapshot = await this.firestore.collection('users').doc(uid).get().toPromise();
     const userData = userDataSnapshot?.data() as User;
     if (userData) {
