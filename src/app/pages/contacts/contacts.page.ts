@@ -122,9 +122,7 @@ export class ContactsPage implements OnInit {
   private deleteContact(currentUser: User, contact: Contact): void {
     this.contactService.deleteUserContact(currentUser.userId, contact.userId)
       .then(() => {
-        this.contacts = this.contacts.filter((c) => c.userId !== contact.userId);
-        this.selectedContact = null;
-        this.groupContactsByLetter();
+        this.removeContactFromList(contact);
       })
       .catch((error) => {
         console.error('Fehler beim Löschen des Kontakts:', error);
@@ -142,13 +140,27 @@ export class ContactsPage implements OnInit {
   private hiddeUserContact(currentUser: User, contact: Contact): void {
     this.contactService.hideUserForCurrentUser(currentUser.userId, contact)
       .then(() => {
-        this.contacts = this.contacts.filter((c) => c.userId !== contact.userId);
-        this.selectedContact = null;
-        this.groupContactsByLetter();
+        this.removeContactFromList(contact);
+
       })
       .catch((error) => {
         console.error('Fehler beim Verstecken des Benutzers:', error);
       });
+  }
+
+
+  /**
+   * Removes a contact from the contact list, reloads the current user's data, 
+   * resets the selected contact, and re-groups the contacts by the first letter of their name.
+   *
+   * @param {Contact} contact - The contact to be removed from the list.
+   * @returns {void}
+   */
+  private removeContactFromList(contact: Contact): void {
+    this.contacts = this.contacts.filter((c) => c.userId !== contact.userId);
+    this.userService.loadUserData(this.currentUser?.userId as User['userId']);
+    this.selectedContact = null;
+    this.groupContactsByLetter();
   }
 
 
