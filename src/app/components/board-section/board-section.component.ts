@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Task } from 'src/app/models/task.model';
 
 @Component({
@@ -16,57 +17,69 @@ export class BoardSectionComponent {
   @Output() openAddTask = new EventEmitter<Task['status']>();
   @Output() openTaskCard = new EventEmitter<Task>();
 
-  
+  public isDragOver: boolean = false;
+  public connectedDropLists: string[] = ['todo', 'inProgress', 'done', 'awaitFeedback'];
+
+
   /**
-   * Starts the drag event and passes the task being dragged.
+   * Handles the drop event when a task is moved via drag-and-drop.
+   * Updates the task list by rearranging tasks within the same list
+   * or transferring tasks between different lists.
+   * Emits an event to notify about the task's new status.
    *
-   * @param {DragEvent} event - The drag event triggered by the user.
-   * @param {Task} task - The task being dragged.
-   * @returns {void}
+   * @param {CdkDragDrop<Task[]>} event - The drag-and-drop event data.
    */
-  public onDragStart(event: DragEvent, task: Task): void {
-    event.dataTransfer?.setData('text/plain', task.id);
-    this.taskDropped.emit({ task: task, newStatus: this.status });
+  public drop(event: CdkDragDrop<Task[]>): void {
+    this.isDragOver = false;
+
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+    const movedTask = this.tasks[event.currentIndex];
+    this.taskDropped.emit({ task: movedTask, newStatus: this.status });
   }
 
-  
+
   /**
-   * Allows the drop event to occur.
-   *
-   * @param {DragEvent} event - The drag event triggered during the drag over.
+   * Handles the drag enter when a card is dragged over the drop list.
+   * 
    * @returns {void}
    */
-  public allowDrop(event: DragEvent): void {
-    event.preventDefault();
+  public onDragEnter(): void {
+    this.isDragOver = true;
   }
 
-  
+
   /**
-   * Handles the drop event and updates the task status.
-   *
-   * @param {DragEvent} event - The drop event triggered by the user.
+   * Handles the drag exit when a card is dragged out of the drop list.
+   * 
    * @returns {void}
    */
-  public onDrop(event: DragEvent): void {
-    event.preventDefault();
-    const newStatus = this.status;
+  public onDragExit(): void {
+    this.isDragOver = false;
   }
 
-  
+
   /**
    * Opens the add task dialog for the current board section.
-   *
+   * 
    * @returns {void}
    */
   public onOpenAddTask(): void {
     this.openAddTask.emit(this.status);
   }
 
-  
+
   /**
    * Opens the task card for the selected task.
-   *
-   * @param {Task} task - The task to be viewed or edited.
+   * 
    * @returns {void}
    */
   public onOpenTaskCard(task: Task): void {
