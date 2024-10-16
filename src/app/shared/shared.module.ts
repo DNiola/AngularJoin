@@ -34,9 +34,10 @@ import { DialogComponent } from '../components/dialog/dialog.component';
 import { AnimatedBadgeComponent } from '../components/animated-badge/animated-badge.component';
 import { DropdownInputFieldSingleSelectComponent } from '../components/dropdown-input-field-single-select/dropdown-input-field-single-select.component';
 import { DropdownInputFieldMultiSelectComponent } from '../components/dropdown-input-field-multi-select/dropdown-input-field-multi-select.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [DropdownInputFieldMultiSelectComponent, DropdownInputFieldSingleSelectComponent, AnimatedBadgeComponent, DialogComponent, ContactCardComponent, ContactOverviewComponent, ContactItemComponent, TaskCardOverviewComponent, SearchInputFieldComponent, PageTitleComponent, TaskCardAddComponent, BoardSectionComponent, TaskCardComponent, BigTitleComponent, SubtaskListComponent, CreatorInputFieldComponent, DropdownInputFieldMultiSelectComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent],
-  imports: [CommonModule, IonicModule, FormsModule, RouterModule],
+  imports: [CommonModule, IonicModule, FormsModule, RouterModule, DragDropModule],
   exports: [DropdownInputFieldMultiSelectComponent, DropdownInputFieldSingleSelectComponent, AnimatedBadgeComponent, DialogComponent, ContactCardComponent, ContactOverviewComponent, ContactItemComponent, TaskCardOverviewComponent, SearchInputFieldComponent, PageTitleComponent, TaskCardAddComponent, BoardSectionComponent, TaskCardComponent, BigTitleComponent, SubtaskListComponent, CreatorInputFieldComponent, DropdownInputFieldMultiSelectComponent, UserBubbleComponent, PrioButtonComponent, DefaultInputFieldComponent, FilterPipe, OverviewBoxComponent, SidebarButtonComponent, SidebarComponent, HeaderComponent, AuthFormComponent, AuthHeaderComponent, AuthInputFieldsComponent, AuthCheckboxComponent, AuthFooterComponent, ButtonFilledComponent, ButtonEdgeComponent]
 })
 export class SharedModule { }

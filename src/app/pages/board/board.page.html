@@ -16,10 +16,9 @@
             <div class="flex gap-0 2xl:gap-8 flex-col lg:flex-row lg:flex-grow">
               <!-- todo -->
               <app-board-section 
-                (taskDropped)="onTaskDragStart($event)" 
+                (taskDropped)="onTaskDropped($event)" 
                 (openAddTask)="openAddTask($event)"
                 (openTaskCard)="openTaskCard($event)"
-                [attr.data-status]="'todo'" 
                 [tasks]="todoTasks" 
                 [status]="'todo'" 
                 [icon]="'titlePlus'"
@@ -28,10 +27,9 @@
               </app-board-section>
               <!-- in progress -->
               <app-board-section 
-                (taskDropped)="onTaskDragStart($event)"
+                (taskDropped)="onTaskDropped($event)"
                 (openAddTask)="openAddTask($event)"
-                (openTaskCard)="openTaskCard($event)"
-                [attr.data-status]="'inProgress'"
+                (openTaskCard)="openTaskCard($event)" 
                 [tasks]="inProgressTasks" 
                 [status]="'inProgress'"
                 [icon]="'titlePlus'" 
@@ -40,10 +38,9 @@
               </app-board-section>
               <!-- awaitFeedbackTasks -->
               <app-board-section
-                (taskDropped)="onTaskDragStart($event)" 
+                (taskDropped)="onTaskDropped($event)" 
                 (openAddTask)="openAddTask($event)"
                 (openTaskCard)="openTaskCard($event)"
-                [attr.data-status]="'awaitFeedback'" 
                 [tasks]="awaitFeedbackTasks" 
                 [status]="'awaitFeedback'"
                 [icon]="'titlePlus'" 
@@ -52,10 +49,9 @@
               </app-board-section>
               <!-- doneTasks -->
               <app-board-section 
-                (taskDropped)="onTaskDragStart($event)"
+                (taskDropped)="onTaskDropped($event)"
                 (openAddTask)="openAddTask($event)"
                 (openTaskCard)="openTaskCard($event)"
-                [attr.data-status]="'done'" 
                 [tasks]="doneTasks" 
                 [status]="'done'" 
                 [title]="'Done'"

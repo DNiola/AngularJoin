@@ -18,7 +18,6 @@ export class BoardPage implements OnInit {
   public doneTasks: Task[] = [];
   public subtasks: Subtask[] = [];
 
-  public currentDraggedTask: Task | null = null;
   public currentOpenedTask: Task | null = null;
 
   public isTaskOverviewOpen = false;
@@ -34,7 +33,8 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Initializes the board page by setting up user, tasks, and subtasks.
+   * Lifecycle hook that is called after data-bound properties are initialized.
+   * Subscribes to subtask updates and initializes tasks.
    *
    * @returns {void}
    */
@@ -49,6 +49,7 @@ export class BoardPage implements OnInit {
 
   /**
    * Initializes tasks for each status by fetching them from the task service.
+   * Filters tasks based on the current search term.
    *
    * @returns {void}
    */
@@ -72,7 +73,7 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Opens the add task section with a specific status.
+   * Opens the add task modal with a specific status pre-selected.
    *
    * @param {'todo' | 'inProgress' | 'awaitFeedback' | 'done'} status - The status for the new task.
    * @returns {void}
@@ -84,7 +85,7 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Closes the add task section and resets editing state.
+   * Closes the add/edit task modal and resets editing states.
    *
    * @returns {void}
    */
@@ -96,9 +97,9 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Opens the task card overview for a specific task.
+   * Opens the task overview modal for the selected task.
    *
-   * @param {Task} task - The task to be opened in the overview.
+   * @param {Task} task - The task to display in the overview.
    * @returns {void}
    */
   public openTaskCard(task: Task): void {
@@ -120,7 +121,7 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Handles the search input event and updates the task list based on the search term.
+   * Handles the search input event, updates the search term, and refreshes task lists.
    *
    * @param {Event} event - The search input event.
    * @returns {void}
@@ -136,13 +137,14 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Sets the task that is currently being dragged.
+   * Handles the task dropped event from child components.
+   * Updates the task status in the backend.
    *
-   * @param {{ task: Task, newStatus: string }} event - The drag event containing the task and its new status.
+   * @param {{ task: Task; newStatus: string }} event - The event data containing the task and new status.
    * @returns {void}
    */
-  public onTaskDragStart(event: { task: Task, newStatus: string }): void {
-    this.currentDraggedTask = event.task;
+  public onTaskDropped(event: { task: Task, newStatus: string }): void {
+    this.updateTaskStatus(event.task, event.newStatus);
   }
 
 
@@ -159,28 +161,9 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Handles the global drop event and updates the task status.
+   * Updates the status of a task in the backend.
    *
-   * @param {DragEvent} event - The drop event.
-   * @returns {void}
-   */
-  @HostListener('drop', ['$event'])
-  public onGlobalDrop(event: DragEvent): void {
-    event.preventDefault();
-    let targetElement = (event.target as HTMLElement).closest('[data-status]');
-    const targetStatus = targetElement ? targetElement.getAttribute('data-status') : null;
-
-    if (this.currentDraggedTask && targetStatus) {
-      this.updateTaskStatus(this.currentDraggedTask, targetStatus);
-      this.currentDraggedTask = null;
-    }
-  }
-
-
-  /**
-   * Updates the status of a task.
-   *
-   * @param {Task} task - The task to be updated.
+   * @param {Task} task - The task to update.
    * @param {string} newStatus - The new status to assign to the task.
    * @returns {void}
    */
@@ -190,9 +173,10 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Triggers the task animation by setting the animation state to true.
+   * Triggers the task creation animation.
+   * Sets the animation flag to true and resets it after a delay.
    *
-   * @param {boolean} animationStatus - The animation state to be set.
+   * @param {boolean} animationStatus - The animation state to set.
    * @returns {void}
    */
   public triggerAnimation(animationStatus: boolean): void {
