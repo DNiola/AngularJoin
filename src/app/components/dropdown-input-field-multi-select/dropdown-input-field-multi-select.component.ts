@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, SimpleChanges } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 
 /**
@@ -9,51 +9,48 @@ import { Contact } from 'src/app/models/contact.model';
   templateUrl: './dropdown-input-field-multi-select.component.html',
   styleUrls: ['./dropdown-input-field-multi-select.component.scss'],
 })
-export class DropdownInputFieldMultiSelectComponent implements OnInit {
+export class DropdownInputFieldMultiSelectComponent {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() items: Contact[] = [];
-  @Input() preselectedItems: Contact[] | undefined = [];
+  @Input() preselectedItems?: Contact[] = [];
   @Input() resetTrigger = false;
 
-  @Output() selectedItemsChange = new EventEmitter<any[]>();
+  @Output() selectedItemsChange = new EventEmitter<Contact[]>();
 
   public searchTerm = '';
   public filteredItems: Contact[] | null = null;
-  public selectedItems: Array<any> = [];
+  public selectedItems: Array<Contact> = [];
   public isDropdownOpen = false;
 
   constructor(private eRef: ElementRef) { }
 
-  
-  /**
-   * Initializes the component by pre-selecting items if provided.
-   * Sets up the filtered items and selected items list based on the preselected items.
-   */
-  public ngOnInit(): void {
-    if (this.preselectedItems) {
-      this.items.forEach(item => item.selected = false);
-      this.items.forEach(item => {
-        const editItem = this.preselectedItems?.find((edit: any) => edit.userId === item.userId);
-        if (editItem) {
-          item.selected = editItem.selected;
-        }
-      });
-      this.filteredItems = [...this.items];
-      this.selectedItems = this.filteredItems.filter(item => item.selected);
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['resetTrigger'] && this.resetTrigger) {
+      this.clearDropdown();
+      return
+    }
+    if (changes['items'] && this.items && this.items.length > 0 && this.preselectedItems) {
+      this.initializeSelectedItems(this.preselectedItems);
     }
   }
 
 
-  /**
-   * Reacts to changes in input properties, specifically to reset the dropdown when triggered.
-   * 
-   * @param changes - The changes in input properties.
-   */
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['resetTrigger']) {
-      this.clearDropdown();
-    }
+  private initializeSelectedItems(preselectedItems: Contact[]): void {
+    this.items = this.items.map(item => ({ ...item }));
+    const preselectedIds = new Set(preselectedItems.map(item => item.userId));
+
+    this.items.forEach(item => {
+      if (preselectedIds.has(item.userId)) {
+        item.selected = true;
+      } else {
+        item.selected = false;
+      }
+    });
+
+    this.selectedItems = this.items.filter(item => item.selected);
+    this.filteredItems = [...this.items];
   }
 
 
@@ -104,13 +101,14 @@ export class DropdownInputFieldMultiSelectComponent implements OnInit {
    * @param item - The item to be toggled.
    */
   public onToggleItem(item: Contact): void {
+    item.selected = !item.selected;
+
     if (item.selected) {
-      item.selected = false;
-      this.selectedItems = this.selectedItems.filter(selected => selected !== item);
-    } else {
-      item.selected = true;
       this.selectedItems.push(item);
+    } else {
+      this.selectedItems = this.selectedItems.filter(selectedItem => (selectedItem.userId || selectedItem.email) !== (item.userId || item.email));
     }
+
     this.selectedItemsChange.emit(this.selectedItems);
   }
 

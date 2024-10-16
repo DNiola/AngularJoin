@@ -44,15 +44,20 @@ export class TaskCardAddComponent implements OnInit {
   public isDialog = false;
   public isLoading = false;
 
-  constructor(private userService: UserService,private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
+  constructor(private userService: UserService, private subtaskService: SubtaskService, private taskService: TaskService, private router: Router) { }
 
 
   /**
-   * Initializes the component by setting up the current task if in edit mode.
-   *
-   * @returns {void}
-   */
+    * Initializes the component by setting up the current task if in edit mode.
+    *
+    * @returns {void}
+    */
   public ngOnInit(): void {
+    this.userService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      this.contactsInit(this.currentUser!);
+    });
+
     if (this.isEditTask) {
       this.currentTask = { ...this.editTask } as Task;
       this.taskStatus = this.editTask?.status as Task['status'];
@@ -60,13 +65,16 @@ export class TaskCardAddComponent implements OnInit {
       this.activeButton = this.currentTask.prio || '';
       this.subtasks = this.currentTask.subtasks || [];
     }
-    this.userService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      this.contactsInit(this.currentUser!);
-    });
+
   }
 
-  
+
+  /**
+   * Initializes the contacts by fetching all users and filtering out the current user's hidden contacts.
+   *
+   * @param {User} currentUser - The current user to filter out hidden contacts.
+   * @returns {void}
+   */
   public contactsInit(currentUser: User): void {
     if (this.currentUser) {
       this.userService.getAllUsers().then(users => {
@@ -74,10 +82,11 @@ export class TaskCardAddComponent implements OnInit {
         const personalContacts = currentUser?.contacts || [];
         const visibleUserContacts = userContacts.filter((contact) => !currentUser?.hidden?.includes(contact.userId));
         this.contacts = [...visibleUserContacts, ...personalContacts].map(contact => {
+          const newContact = { ...contact, selected: false };
           if (contact?.userId === currentUser?.userId) {
-            return { ...contact, name: `${contact.name} (You)` };
+            newContact.name = `${contact.name} (You)`;
           }
-          return contact;
+          return newContact;
         });
       });
     }
