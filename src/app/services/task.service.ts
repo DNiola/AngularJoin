@@ -11,7 +11,7 @@ export class TaskService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  
+
   /**
    * Retrieves all tasks from Firestore.
    *
@@ -87,6 +87,42 @@ export class TaskService {
       // Add return value if no subtask was found
       return Promise.resolve(); // Returns a resolved promise if no subtasks were found
     });
+  }
+
+
+  /**
+   * Updates all tasks that contain the given contact with the new contact details.
+   * 
+   * @param {string} contactId - The ID of the contact to be updated in tasks.
+   * @param {string} newName - The new name of the contact.
+   * @param {string} newInitials - The new initials of the contact.
+   * @returns {Promise<void>} A promise that resolves when the tasks are updated.
+   */
+  public async updateTasksWithContact(contactId: string, newName: string, newInitials: string): Promise<void> {
+    const tasksSnapshot = await this.firestore.collection<Task>('tasks').get().toPromise();
+    const batch = this.firestore.firestore.batch();
+
+    tasksSnapshot?.forEach(doc => {
+      const taskData = doc.data() as any;
+
+      const updatedAssignedTo = taskData.assignedTo.map((contact: any) => {
+        if (contact.userId === contactId) {
+          return {
+            ...contact,
+            name: newName,
+            initials: newInitials
+          };
+        }
+        return contact;
+      });
+
+      if (JSON.stringify(taskData.assignedTo) !== JSON.stringify(updatedAssignedTo)) {
+        const taskRef = this.firestore.collection('tasks').doc(doc.id).ref;
+        batch.update(taskRef, { assignedTo: updatedAssignedTo });
+      }
+    });
+
+    await batch.commit();
   }
 
 
