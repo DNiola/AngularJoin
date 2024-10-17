@@ -7,6 +7,7 @@ import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-contact-card',
@@ -31,6 +32,7 @@ export class ContactCardComponent {
   constructor(
     private contactService: ContactService,
     private userService: UserService,
+    private taskService: TaskService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
     public helperService: HelperService,
@@ -213,10 +215,32 @@ export class ContactCardComponent {
   private async editContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
     try {
       await this.contactService.updateCreatorContact(creatorId, newContact);
-      this.updateCurrentUser(newContact);
+      await this.onContactUpdate(newContact.userId, newContact.name, newContact.initials);
       await this.updateCurrentUser(newContact);
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Kontakts:', error);
+    }
+  }
+
+
+  /**
+   * Updates the contact information in all tasks associated with the given contact ID.
+   *
+   * This method updates the name and initials of a contact in all tasks where the contact is involved.
+   * It logs a success message upon successful update and logs an error message if the update fails.
+   *
+   * @async
+   * @param {string} contactId - The ID of the contact to be updated.
+   * @param {string} newName - The new name of the contact.
+   * @param {string} newInitials - The new initials of the contact.
+   * @returns {Promise<void>} A promise that resolves when the contact information is updated in all tasks.
+   */
+  async onContactUpdate(contactId: string, newName: string, newInitials: string): Promise<void> {
+    try {
+      await this.taskService.updateTasksWithContact(contactId, newName, newInitials);
+      console.log('Kontakt und zugehörige Aufgaben erfolgreich aktualisiert.');
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren des Kontakts und der Aufgaben:', error);
     }
   }
 
@@ -232,6 +256,7 @@ export class ContactCardComponent {
   private async editUserContact(userId: User['userId'], newContact: Contact): Promise<void> {
     try {
       await this.contactService.updateUserContact(userId, newContact);
+      await this.onContactUpdate(newContact.userId, newContact.name, newContact.initials);
       await this.updateCurrentUser(newContact);
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Kontakts:', error);
