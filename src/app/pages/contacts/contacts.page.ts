@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
 import { ContactService } from 'src/app/services/contact.service';
+import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class ContactsPage implements OnInit {
   public isAnimation = false;
   public isDialog = false;
 
-  constructor(private userService: UserService, private contactService: ContactService) { }
+  constructor(private userService: UserService, private contactService: ContactService, private taskService: TaskService) { }
 
 
   /**
@@ -113,7 +114,7 @@ export class ContactsPage implements OnInit {
 
 
   /**
-   * Deletes a contact from the current user's contact list.
+   * Deletes a contact from the current user's contact list and task.
    *
    * @param {User} currentUser - The current user performing the deletion.
    * @param {Contact} contact - The contact to be deleted.
@@ -122,6 +123,7 @@ export class ContactsPage implements OnInit {
   private deleteContact(currentUser: User, contact: Contact): void {
     this.contactService.deleteUserContact(currentUser.userId, contact.userId)
       .then(() => {
+        this.removeContactFromTask(contact);
         this.removeContactFromList(contact);
       })
       .catch((error) => {
@@ -131,7 +133,7 @@ export class ContactsPage implements OnInit {
 
 
   /**
-   * Hides a user contact from the current user's contact list.
+   * Hides a user contact from the current user's contact list and task.
    *
    * @param {User} currentUser - The current user performing the action.
    * @param {Contact} contact - The contact to be hidden.
@@ -140,12 +142,35 @@ export class ContactsPage implements OnInit {
   private hiddeUserContact(currentUser: User, contact: Contact): void {
     this.contactService.hideUserForCurrentUser(currentUser.userId, contact)
       .then(() => {
+        this.removeContactFromTask(contact);
         this.removeContactFromList(contact);
-
       })
       .catch((error) => {
         console.error('Fehler beim Verstecken des Benutzers:', error);
       });
+  }
+
+
+  /**
+   * Removes a contact from all tasks they are assigned to.
+   *
+   * This method fetches all tasks and iterates through them to check if the specified contact
+   * is assigned to any of them. If the contact is found in the assigned list of a task, they are
+   * removed from the list, and the task is updated.
+   *
+   * @param {Contact} contact - The contact to be removed from all tasks.
+   * @returns {void}
+   */
+  private removeContactFromTask(contact: Contact): void {
+    this.taskService.getAllTasks().subscribe(tasks => {
+      const allTasks = tasks;
+      allTasks.forEach(task => {
+        if (task.assignedTo?.some(assignedContact => assignedContact.userId === contact?.userId)) {
+          task.assignedTo = task.assignedTo.filter(assignedContact => assignedContact.userId !== contact?.userId);
+          this.taskService.updateTask(task);
+        }
+      });
+    });
   }
 
 
