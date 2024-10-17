@@ -3,7 +3,7 @@
   <span *ngIf="fieldRequired" class="text-lightRed -ml-1">*</span>
 </ion-label>
 <div class="flex relative">
-  <ion-input (click)="isClicked = true" [(ngModel)]="newSubtask.title" type="text" class="inputField cursor-pointer z-10"
+  <ion-input (click)="isClicked = true" (keyup.enter)="addSubtask()" [(ngModel)]="newSubtask.title" type="text" class="inputField cursor-pointer z-10"
     placeholder="{{placeholder}}">
   </ion-input>
 
