@@ -1,5 +1,5 @@
-<div [ngClass]="{ 'bg-normalBlue text-white': contact === selectedContact }"
-  class="flex gap-4 p-2 2xl:px-6 items-center rounded-[10px] cursor-pointer">
+<div [ngClass]="contact === selectedContact ? 'bg-normalBlue text-white' : 'hover:bg-slate-100'"
+  class="flex gap-4 p-2 2xl:px-6 items-center rounded-[10px] cursor-pointer ">
   <app-user-bubble [text]="contact?.initials" [color]="contact?.color" [borderColor]="'white'"></app-user-bubble>
   <div class="flex flex-col w-full overflow-hidden">
     <span class="text-ellipsis text-nowrap overflow-hidden w-full">{{ contact?.userId === currentUser?.userId ? (contact?.name + ' (You)') : contact?.name }}</span>
