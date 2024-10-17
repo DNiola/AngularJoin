@@ -27,6 +27,8 @@
           [size]="'70px'"
           [fontSize]="'18px'"
           [borderWidth]="'2px'"
+          [text]="isEditContact ? contact.initials : undefined"
+          [color]="isEditContact ? contact.color : undefined"
           class="-mt-9 lg:hidden">
         </app-user-bubble>
 
@@ -38,6 +40,8 @@
             [size]="'70px'"
             [fontSize]="'18px'"
             [borderWidth]="'2px'"
+            [text]="isEditContact ? contact.initials : undefined" 
+            [color]="isEditContact ? contact.color : undefined"
             class="hidden mb-8 lg:block 2xl:hidden">
           </app-user-bubble>
 
@@ -46,6 +50,8 @@
             [size]="'100px'"
             [fontSize]="'20px'"
             [borderWidth]="'4px'"
+            [text]="isEditContact ? contact.initials : undefined" 
+            [color]="isEditContact ? contact.color : undefined"
             class="hidden mb-8 2xl:block 2xl:pl-14">
           </app-user-bubble>
 

@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class UserBubbleComponent {
 
-  @Input() color: string | undefined = 'gray';
+  @Input() color: string | undefined = '#D1D1D1';
   @Input() text: string | undefined = 'X X';
   @Input() size: string = '48px';
   @Input() borderWidth: string = '2px';
@@ -25,7 +25,7 @@ export class UserBubbleComponent {
    */
   public get bubbleStyles(): { [key: string]: string } {
     return {
-      'background-color': this.color ?? 'gray',
+      'background-color': this.color ?? '#D1D1D1',
       'border-color': this.borderColor ?? '',
       'width': this.size,
       'height': this.size,
