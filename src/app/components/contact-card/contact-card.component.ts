@@ -19,6 +19,7 @@ export class ContactCardComponent {
   @ViewChild('emailField') emailField!: AuthInputFieldsComponent;
   @ViewChild('phoneField') phoneField!: AuthInputFieldsComponent;
 
+  @Input() public isLoading = false;
   @Input() public isEditContact = false;
   @Input() public currentUser: User | null = null;
   @Input() public contact: Contact = { name: '', color: '', initials: '', userId: '' };
@@ -213,11 +214,14 @@ export class ContactCardComponent {
    * @returns {Promise<void>} A promise that resolves when the contact is updated.
    */
   private async editContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
+    this.isLoading = true;
     try {
       await this.contactService.updateCreatorContact(creatorId, newContact);
       await this.onContactUpdate(newContact.userId, newContact.name, newContact.initials);
       await this.updateCurrentUser(newContact);
+      this.isLoading = false;
     } catch (error) {
+      this.isLoading = false;
       console.error('Fehler beim Aktualisieren des Kontakts:', error);
     }
   }
@@ -254,11 +258,14 @@ export class ContactCardComponent {
    * @returns {Promise<void>} A promise that resolves when the contact is updated.
    */
   private async editUserContact(userId: User['userId'], newContact: Contact): Promise<void> {
+    this.isLoading = true;
     try {
       await this.contactService.updateUserContact(userId, newContact);
       await this.onContactUpdate(newContact.userId, newContact.name, newContact.initials);
       await this.updateCurrentUser(newContact);
+      this.isLoading = false;
     } catch (error) {
+      this.isLoading = false;
       console.error('Fehler beim Aktualisieren des Kontakts:', error);
     }
   }
@@ -273,10 +280,13 @@ export class ContactCardComponent {
    * @returns {Promise<void>} A promise that resolves when the contact is created.
    */
   private async createContact(creatorId: Contact['creatorId'], newContact: Contact): Promise<void> {
+    this.isLoading = true;
     try {
       await this.contactService.saveContact(creatorId, newContact);
       await this.updateCurrentUser(newContact);
+      this.isLoading = false;
     } catch (error) {
+      this.isLoading = false;
       console.error('Fehler beim Speichern des Kontakts:', error);
     }
   }

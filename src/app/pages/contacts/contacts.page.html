@@ -32,7 +32,7 @@
   </div>
 </ion-content>
  
-<app-contact-card *ngIf="isContactCardOpen" (closeCard)="onContactCreated($event)" (deleteContact)="handleContact($event)" [isEditContact]="isEditContact" [currentUser]="currentUser" [contact]="selectedContact!"></app-contact-card>
+<app-contact-card *ngIf="isContactCardOpen" [isLoading]="isLoading" (closeCard)="onContactCreated($event)" (deleteContact)="handleContact($event)" [isEditContact]="isEditContact" [currentUser]="currentUser" [contact]="selectedContact!"></app-contact-card>
 
 <app-animated-badge *ngIf="isAnimation" [text]="'Contact was successfully created'" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-20 left-0 top-0"></app-animated-badge>
 

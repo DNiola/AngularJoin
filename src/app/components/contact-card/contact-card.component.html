@@ -90,6 +90,7 @@
                   <app-button-edge
                     [text]="'Cancel'"
                     [iconName]="'close-outline'"
+                    [disabled]="isLoading"
                     (click)="onHandleDialog('cancel')"
                     class="hidden lg:block"
                     >
@@ -98,6 +99,8 @@
                   <app-button-filled
                     [text]="'Create contact'"
                     [iconName]="'checkmark-outline'"
+                    [disabled]="isLoading"
+                    [isLoading]="isLoading"
                     [disabled]="isFieldsEmpty()"
                     type="submit">
                   </app-button-filled>
@@ -107,12 +110,15 @@
 
                   <app-button-edge
                     [text]="'Delete'"
+                    [disabled]="isLoading"
                     (click)="onHandleDialog('delete')">
                   </app-button-edge>
 
                   <app-button-filled
                     [text]="'Save'"
                     [iconName]="'checkmark-outline'"
+                    [disabled]="isLoading"
+                    [isLoading]="isLoading"
                     [disabled]="isFieldsEmpty()"
                     type="submit">
                   </app-button-filled>

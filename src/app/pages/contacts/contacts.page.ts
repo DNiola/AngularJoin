@@ -21,6 +21,7 @@ export class ContactsPage implements OnInit {
   public isEditContact = false;
   public isAnimation = false;
   public isDialog = false;
+  public isLoading = false;
 
   constructor(private userService: UserService, private contactService: ContactService, private taskService: TaskService) { }
 
@@ -121,14 +122,18 @@ export class ContactsPage implements OnInit {
    * @returns {void}
    */
   private deleteContact(currentUser: User, contact: Contact): void {
+    this.isLoading = true;
     this.contactService.deleteUserContact(currentUser.userId, contact.userId)
       .then(() => {
         this.removeContactFromTask(contact);
         this.removeContactFromList(contact);
+        this.isLoading = false;
       })
       .catch((error) => {
+        this.isLoading = false;
         console.error('Fehler beim Löschen des Kontakts:', error);
       });
+    this.closeContactCard();
   }
 
 
@@ -140,14 +145,18 @@ export class ContactsPage implements OnInit {
    * @returns {void}
    */
   private hiddeUserContact(currentUser: User, contact: Contact): void {
+    this.isLoading = true;
     this.contactService.hideUserForCurrentUser(currentUser.userId, contact)
       .then(() => {
         this.removeContactFromTask(contact);
         this.removeContactFromList(contact);
+        this.isLoading = false;
       })
       .catch((error) => {
+        this.isLoading = false;
         console.error('Fehler beim Verstecken des Benutzers:', error);
       });
+    this.closeContactCard();
   }
 
 
@@ -289,5 +298,17 @@ export class ContactsPage implements OnInit {
   public onDeleteContact(contact: Contact): void {
     this.handleContact({ action: 'delete', contact });
     this.isDialog = false;
+  }
+
+
+  /**
+   * Closes the contact card and resets the animation and dialog states.
+   *
+   * @returns {void}
+   */
+  public closeContactCard(): void {
+    this.isContactCardOpen = false;
+    this.isAnimation = false
+    this.isDialog = false
   }
 }
