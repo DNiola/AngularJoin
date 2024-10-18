@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 import { Subtask } from 'src/app/models/task.model';
 import { SubtaskService } from 'src/app/services/subtask.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-task',
@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddTaskPage implements OnInit {
   public subtasks: Subtask[] = [];
-  public isAnimation = false;
+  public badgeAnimation: BadgeMessage = { status: false, message: '' };
 
   constructor(private subtaskService: SubtaskService) { }
 
@@ -30,13 +30,15 @@ export class AddTaskPage implements OnInit {
 
 
   /**
-   * Change the animation state of the AddTaskPage component.
+   * Changes the animation state of the AddTaskPage component.
    *
-   * @param {boolean} animationStatus - The new animation state.
+   * This method updates the badge animation state to the provided badge message.
+   *
+   * @param {BadgeMessage} badge - The new animation state containing the status, message, and error flag.
    * @returns {void}
    */
-  public triggerAnimation(animationStatus: boolean): void {
-    this.isAnimation = animationStatus;
+  public triggerAnimation(badge: BadgeMessage): void {
+    this.badgeAnimation = badge;
   }
 
 }

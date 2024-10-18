@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
 import { Router } from '@angular/router';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 import { Category, Categorys } from 'src/app/models/category.model';
 import { Contact } from 'src/app/models/contact.model';
 import { Subtask, Task } from 'src/app/models/task.model';
@@ -24,7 +25,7 @@ export class TaskCardAddComponent implements OnInit {
   @Input() public isEditTask = false;
 
   @Output() isCardOpen = new EventEmitter<void>();
-  @Output() isAnimation = new EventEmitter<boolean>(false);
+  @Output() badgeAnimation = new EventEmitter<BadgeMessage>();
 
   public categories: Categorys = [
     { name: 'Technical Task', selected: false, color: '#1FD7C1' },
@@ -123,11 +124,12 @@ export class TaskCardAddComponent implements OnInit {
   public editTaskData(): void {
     this.isLoading = true;
     this.taskService.updateTask(this.currentTask).then(() => {
+      this.badgeAnimation.emit({ status: true, message: 'Task was sucessfully edited' });
       this.onCloseCard();
     }).catch(error => {
-      console.error('Fehler beim Aktualisieren des Tasks:', error);
+      this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
+      this.isLoading = false;
     });
-    this.isLoading = false;
   }
 
 
@@ -181,7 +183,7 @@ export class TaskCardAddComponent implements OnInit {
     this.isLoading = true;
     this.taskService.createTask(this.currentTask)
       .then(() => {
-        this.isAnimation.emit(true);
+        this.badgeAnimation.emit({ status: true, message: 'Task was sucessfully created' });
         this.onCloseCard();
         setTimeout(() => {
           this.isLoading = false;
@@ -190,7 +192,7 @@ export class TaskCardAddComponent implements OnInit {
       })
       .catch(error => {
         this.isLoading = false;
-        console.error('Fehler beim Speichern des Tasks:', error);
+        this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
       });
   }
 
@@ -210,7 +212,7 @@ export class TaskCardAddComponent implements OnInit {
     this.currentTask = { title: '', dueDate: '', category: { name: '', selected: false, color: '' }, creatorId: this.currentUser?.userId ?? '', status: 'todo', id: '' };
     setTimeout(() => {
       this.resetTrigger = false;
-      this.isAnimation.emit(false);
+      this.badgeAnimation.emit({ status: false, message: '', error: false });
     }, 1000);
   }
 
