@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 import { AuthData } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
 
@@ -16,10 +17,11 @@ export class SignUpPage implements OnInit {
     message: 'Please do not use real credentials to log in to this site. This site was created for educational and training purposes and the security of the data cannot be fully guaranteed. Please also note that all data stored on this site can only be deleted manually by the administrators. For more information, please see our legal notice.',
   };
 
+  public badgeAnimation: BadgeMessage = { status: false, message: '' };
+
   public isError = false;
   public showAgain = false
   public isLoading = false;
-  public isAnimation = false;
   public emptyInputFields = false;
 
   public isDialogOpen = true;
@@ -48,16 +50,16 @@ export class SignUpPage implements OnInit {
       const color = this.helperService.getRandomColor();
 
       await this.saveUserToFirestore(userId, userData.name as string, userData.email, initials, color);
-
-      this.isAnimation = true;
+      this.badgeAnimation = { status: true, message: 'You Signed Up sucessfully' };
+      this.finishAnimation();
+      this.emptyInputFields = true;
       setTimeout(() => {
-        this.isLoading = false;
-        this.emptyInputFields = true;
         this.router.navigate(['/login']);
       }, 1000);
     }
     catch (error) {
-      this.isLoading = false;
+      this.badgeAnimation = { status: true, message: 'Uups, somthing goes wrong!', error: true };
+      this.finishAnimation();
       this.firebaseErrorPhat = error as string;
       return;
     }
@@ -72,5 +74,19 @@ export class SignUpPage implements OnInit {
       initials: initials,
       color: color
     });
+  }
+
+
+  public triggerAnimation(badge: BadgeMessage): void {
+    this.badgeAnimation = badge;
+    this.finishAnimation();
+  }
+
+
+  private finishAnimation(): void {
+    setTimeout(() => {
+      this.isLoading = false;
+      this.badgeAnimation = { status: false, message: '', error: false };
+    }, 1000);
   }
 }

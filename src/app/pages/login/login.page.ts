@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 import { AuthData, User } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
@@ -14,10 +15,11 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginPage {
   public isError = false;
   public isLoading = false;
-  public isAnimation = false;
-  public isForgotPassword = false;
+  public emptyFildsEmpty = false; 
 
   public firebaseErrorPhat = '';
+
+  public badgeAnimation: BadgeMessage = { status: false, message: '' };
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -51,11 +53,12 @@ export class LoginPage {
         color: userData.color,
         contacts: userData.contacts
       });
-      
+
       this.isLoading = false;
       this.router.navigate(['/summary']);
     } catch (error) {
-      this.isLoading = false;
+      this.badgeAnimation = { status: true, message: 'Uups, somthing goes wrong!', error: true };
+      this.finishAnimation();
       this.firebaseErrorPhat = error as string;
     }
   }
@@ -71,17 +74,28 @@ export class LoginPage {
     this.isLoading = true;
     this.userService.resetPassword(email)
       .then(() => {
-        this.isAnimation = true;
-        this.isForgotPassword = false;
-        setTimeout(() => {
-          this.isLoading = false;
-          this.isAnimation = false;
-        }, 1000);
+        this.emptyFildsEmpty = true;
+        this.badgeAnimation = { status: true, message: 'Email was sucessfully send'};
+        this.finishAnimation();
       })
       .catch((error) => {
-        this.isLoading = false;
+        this.badgeAnimation = { status: true, message: 'Uups, somthing goes wrong!', error: true };
+        this.finishAnimation();
         this.firebaseErrorPhat = error as string;
       });
   }
 
+
+  public triggerAnimation(badge: BadgeMessage): void {
+    this.badgeAnimation = badge;
+    this.finishAnimation();
+  }
+
+
+  private finishAnimation(): void {
+    setTimeout(() => {
+      this.isLoading = false;
+      this.badgeAnimation = { status: false, message: '', error: false };
+    }, 1000);
+  }
 }

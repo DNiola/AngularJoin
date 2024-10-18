@@ -5,7 +5,6 @@
     <app-auth-form (tryToSignUp)="onSignUp($event)" 
       [errorPhat]="firebaseErrorPhat"
       [emptyFildsEmpty]="emptyInputFields"
-      [isAnimation]="isAnimation"
       [isLoading]="isLoading" 
       [isLogin]="false">
     </app-auth-form>
@@ -20,3 +19,5 @@
   </div>
   <app-auth-footer [leftFooter]="false"></app-auth-footer>
 </ion-content>
+
+<app-animated-badge *ngIf="badgeAnimation.status" [text]="badgeAnimation.message" [error]="badgeAnimation.error!" class="h-dvh w-dvw absolute flex justify-center items-center bg-[#00000042] z-20 left-0 top-0"></app-animated-badge>
