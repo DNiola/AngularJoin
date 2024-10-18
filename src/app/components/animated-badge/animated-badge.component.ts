@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 export class AnimatedBadgeComponent {
   @Input() text = '';
   @Input() icon = '';
+  @Input() error = false;
 
 }
