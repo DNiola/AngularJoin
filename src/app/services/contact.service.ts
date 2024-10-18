@@ -53,7 +53,7 @@ export class ContactService {
     return userRef.update(updatedContact)
       .then(() => {})
       .catch((error) => {
-        console.error("Fehler beim Aktualisieren des Benutzerprofils:", error);
+       throw error
       });
   }
 

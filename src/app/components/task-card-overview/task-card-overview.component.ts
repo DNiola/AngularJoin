@@ -13,7 +13,8 @@ export class TaskCardOverviewComponent implements OnInit {
 
   @Output() isCardOpen = new EventEmitter<void>();
   @Output() editTask = new EventEmitter<Task>();
-
+  @Output() badgeAnimation = new EventEmitter<{ status: boolean, message: string, error: boolean }>();
+  
   public category: Category | null = null;
   public isDialog = false;
   public isDropdownOpen = false;
@@ -77,9 +78,7 @@ export class TaskCardOverviewComponent implements OnInit {
       if (this.selectedItem === 'Done') {
         this.task.status = 'done';
       }
-      this.taskService.updateTask(this.task).then(() => { }).catch(error => {
-        console.error('Fehler beim Aktualisieren des Tasks:', error);
-      });
+      this.taskService.updateTask(this.task)
     }
     this.isDropdownOpen = false;
   }
@@ -128,10 +127,7 @@ export class TaskCardOverviewComponent implements OnInit {
   public onSubtaskStatusChange(subtaskIndex: number, event: any): void {
     const done = event.detail.checked;
     if (this.task && this.task.id) {
-      this.taskService.updateSubtaskStatus(this.task.id, subtaskIndex, done).then(() => { })
-      .catch(error => {
-        console.error('Fehler beim Aktualisieren des Subtask-Status:', error);
-      });
+      this.taskService.updateSubtaskStatus(this.task.id, subtaskIndex, done)
     }
   }
 
@@ -158,7 +154,7 @@ export class TaskCardOverviewComponent implements OnInit {
       this.taskService.deleteTask(this.task.id).then(() => {
         this.onCloseCard();
       }).catch(error => {
-        console.error('Fehler beim Löschen des Tasks:', error);
+        this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
       });
     }
   }
