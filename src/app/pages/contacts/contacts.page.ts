@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 import { Contact } from 'src/app/models/contact.model';
 import { User } from 'src/app/models/user.model';
 import { ContactService } from 'src/app/services/contact.service';
@@ -16,10 +17,10 @@ export class ContactsPage implements OnInit {
 
   public selectedContact: Contact | null = null;
   public groupedContacts: { [key: string]: Contact[] } = {};
+  public badgeAnimation: BadgeMessage = { status: false, message: '' };
 
   public isContactCardOpen = false;
   public isEditContact = false;
-  public isAnimation = false;
   public isDialog = false;
   public isLoading = false;
 
@@ -127,11 +128,12 @@ export class ContactsPage implements OnInit {
       .then(() => {
         this.removeContactFromTask(contact);
         this.removeContactFromList(contact);
-        this.isLoading = false;
+        this.badgeAnimation = { status: true, message: 'Contact was successfully deleted' };
+        this.finishAnimation();
       })
       .catch((error) => {
-        this.isLoading = false;
-        console.error('Fehler beim Löschen des Kontakts:', error);
+        this.badgeAnimation = { status: true, message: 'Uups, somthing goes wrong!', error: true };
+        this.finishAnimation();
       });
     this.closeContactCard();
   }
@@ -150,11 +152,12 @@ export class ContactsPage implements OnInit {
       .then(() => {
         this.removeContactFromTask(contact);
         this.removeContactFromList(contact);
-        this.isLoading = false;
+        this.badgeAnimation = { status: true, message: 'Contact was successfully deleted' };
+        this.finishAnimation();
       })
       .catch((error) => {
-        this.isLoading = false;
-        console.error('Fehler beim Verstecken des Benutzers:', error);
+        this.badgeAnimation = { status: true, message: 'Contact was successfully deleted' };
+        this.finishAnimation();
       });
     this.closeContactCard();
   }
@@ -223,7 +226,6 @@ export class ContactsPage implements OnInit {
     if (this.isEditContact) {
       this.editContact(newContact);
     } else {
-      this.isAnimation = true;
       this.pushNewContact(newContact);
     }
     this.selectedContact = newContact;
@@ -251,9 +253,6 @@ export class ContactsPage implements OnInit {
    */
   public pushNewContact(newContact: Contact): void {
     this.contacts.push(newContact);
-    setTimeout(() => {
-      this.isAnimation = false;
-    }, 1000);
   }
 
 
@@ -308,7 +307,20 @@ export class ContactsPage implements OnInit {
    */
   public closeContactCard(): void {
     this.isContactCardOpen = false;
-    this.isAnimation = false
-    this.isDialog = false
+    this.isDialog = false;
+  }
+
+
+  public triggerAnimation(badge: BadgeMessage): void {
+    this.badgeAnimation = badge;
+    this.finishAnimation();
+  }
+
+
+  private finishAnimation(): void {
+    setTimeout(() => {
+      this.isLoading = false;
+      this.badgeAnimation = { status: false, message: '', error: false };
+    }, 1000);
   }
 }

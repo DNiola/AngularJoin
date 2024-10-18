@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { TaskService } from 'src/app/services/task.service';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 
 @Component({
   selector: 'app-contact-card',
@@ -26,6 +27,7 @@ export class ContactCardComponent {
 
   @Output() closeCard = new EventEmitter<Contact>();
   @Output() deleteContact = new EventEmitter<{ action: 'delete'; contact: Contact }>();
+  @Output() badgeAnimation = new EventEmitter<BadgeMessage>();
 
   public dialogMessage = { title: '', message: '', action: '' };
   public isDialog = false;
@@ -131,6 +133,9 @@ export class ContactCardComponent {
       const creatorId = this.contact.creatorId ? this.contact.creatorId : '';
       const { userId, newContact } = this.getEditContactData(creatorId);
       creatorId ? await this.editContact(creatorId, newContact) : await this.editUserContact(userId, newContact);
+    } else {
+      this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
+      this.finishAnimation();
     }
   }
 
@@ -174,6 +179,9 @@ export class ContactCardComponent {
       const creatorId = user.uid;
       const newContact = this.getCreateContactData(creatorId);
       await this.createContact(creatorId, newContact);
+    } else {
+      this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
+      this.finishAnimation();
     }
   }
 
@@ -217,34 +225,17 @@ export class ContactCardComponent {
     this.isLoading = true;
     try {
       await this.contactService.updateCreatorContact(creatorId, newContact);
-      await this.onContactUpdate(newContact.userId, newContact.name, newContact.initials);
-      await this.updateCurrentUser(newContact);
-      this.isLoading = false;
-    } catch (error) {
-      this.isLoading = false;
-      console.error('Fehler beim Aktualisieren des Kontakts:', error);
-    }
-  }
+      await this.taskService.updateTasksWithContact(newContact.userId, newContact.name, newContact.initials);
+      await this.userService.loadUserData(this.currentUser?.userId as User['userId']);
 
+      this.badgeAnimation.emit({ status: true, message: 'Contact was successfully edited' });
+      this.closeCard.emit(newContact);
+      this.emptyField();
+      this.finishAnimation();
 
-  /**
-   * Updates the contact information in all tasks associated with the given contact ID.
-   *
-   * This method updates the name and initials of a contact in all tasks where the contact is involved.
-   * It logs a success message upon successful update and logs an error message if the update fails.
-   *
-   * @async
-   * @param {string} contactId - The ID of the contact to be updated.
-   * @param {string} newName - The new name of the contact.
-   * @param {string} newInitials - The new initials of the contact.
-   * @returns {Promise<void>} A promise that resolves when the contact information is updated in all tasks.
-   */
-  async onContactUpdate(contactId: string, newName: string, newInitials: string): Promise<void> {
-    try {
-      await this.taskService.updateTasksWithContact(contactId, newName, newInitials);
-      console.log('Kontakt und zugehörige Aufgaben erfolgreich aktualisiert.');
     } catch (error) {
-      console.error('Fehler beim Aktualisieren des Kontakts und der Aufgaben:', error);
+      this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
+      this.finishAnimation();
     }
   }
 
@@ -261,12 +252,17 @@ export class ContactCardComponent {
     this.isLoading = true;
     try {
       await this.contactService.updateUserContact(userId, newContact);
-      await this.onContactUpdate(newContact.userId, newContact.name, newContact.initials);
-      await this.updateCurrentUser(newContact);
-      this.isLoading = false;
+      await this.taskService.updateTasksWithContact(newContact.userId, newContact.name, newContact.initials);
+      await this.userService.loadUserData(this.currentUser?.userId as User['userId']);
+
+      this.badgeAnimation.emit({ status: true, message: 'Contact was successfully edited' });
+      this.closeCard.emit(newContact);
+      this.emptyField();
+      this.finishAnimation();
+
     } catch (error) {
-      this.isLoading = false;
-      console.error('Fehler beim Aktualisieren des Kontakts:', error);
+      this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
+      this.finishAnimation();
     }
   }
 
@@ -283,29 +279,16 @@ export class ContactCardComponent {
     this.isLoading = true;
     try {
       await this.contactService.saveContact(creatorId, newContact);
-      await this.updateCurrentUser(newContact);
-      this.isLoading = false;
-    } catch (error) {
-      this.isLoading = false;
-      console.error('Fehler beim Speichern des Kontakts:', error);
-    }
-  }
-
-
-  /**
-   * Updates the current user's data and emits the updated contact.
-   *
-   * @private
-   * @param {Contact} newContact - The new contact information.
-   * @returns {Promise<void>} A promise that resolves when the user's data is updated.
-   */
-  private async updateCurrentUser(newContact: Contact): Promise<void> {
-    try {
       await this.userService.loadUserData(this.currentUser?.userId as User['userId']);
+
+      this.badgeAnimation.emit({ status: true, message: 'Contact was successfully created' });
       this.closeCard.emit(newContact);
       this.emptyField();
+      this.finishAnimation();
+
     } catch (error) {
-      console.error('Fehler beim Speichern des Kontakts:', error);
+      this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
+      this.finishAnimation();
     }
   }
 
@@ -359,5 +342,16 @@ export class ContactCardComponent {
     };
     this.dialogMessage = dialogMessages[action];
     this.isDialog = true;
+  }
+
+
+  private finishAnimation(): void {
+    this.isDialog = false;
+    setTimeout(() => {
+      this.isLoading = false;
+      this.isDialog = false;
+      this.closeCard.emit();
+      this.badgeAnimation.emit({ status: false, message: '', error: false });
+    }, 1000);
   }
 }

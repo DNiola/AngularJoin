@@ -19,14 +19,14 @@ export class BoardPage implements OnInit {
   public doneTasks: Task[] = [];
   public subtasks: Subtask[] = [];
 
+  public badgeAnimation: BadgeMessage = { status: false, message: '' };
   public currentOpenedTask: Task | null = null;
-
+  public taskStatus: Task['status'] = 'todo';
+  
   public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
   public isEditTask = false;
-  public badgeAnimation: BadgeMessage = { status: false, message: '' };
-
-  public taskStatus: Task['status'] = 'todo';
+ 
 
   private searchTerm: string = '';
 
