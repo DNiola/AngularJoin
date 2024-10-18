@@ -11,13 +11,12 @@ import { HelperService } from './helper.service';
 export class UserService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
-  
+
   /**
    * Initializes the UserService and sets up authentication state subscription.
    *
    * @param {AngularFireAuth} afAuth - The Firebase Authentication service.
    * @param {AngularFirestore} firestore - The Firestore database service.
-   * @param {HelperService} helperService - Helper service for utility functions.
    */
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {
     this.afAuth.authState.subscribe(user => {
@@ -93,7 +92,7 @@ export class UserService {
     this.afAuth.signOut().then(() => {
       this.currentUserSubject.next(null);
     }).catch((error) => {
-      console.error('Error signing out:', error);
+      throw error;
     });
   }
 
@@ -118,7 +117,7 @@ export class UserService {
         } as User);
       })
       .catch((error) => {
-        console.error('Fehler beim Gast-Login:', error);
+        throw error;
       });
   }
 
@@ -133,7 +132,6 @@ export class UserService {
     return this.afAuth.sendPasswordResetEmail(email)
       .then(() => { })
       .catch((error) => {
-        console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', error);
         throw error;
       });
   }
