@@ -22,6 +22,16 @@
     </app-big-title>
 
     <div *ngFor="let task of tasks; let i = index" cdkDrag [cdkDragStartDelay]="{ touch: 200, mouse: 0 }">
+      <!-- Draggin Taskcard -->
+      <ng-template cdkDragPreview class="w-full">
+        <div class="p-2 w-96">
+          <app-task-card 
+            [task]="task" 
+            class="bg-white flex flex-col justify-between shadow-taskShadow p-3 xl:p-4 border-0 rounded-3xl min-h-72 w-56 lg:w-[unset]">
+          </app-task-card>
+        </div>
+      </ng-template>
+      <!-- Original Taskcard -->
       <app-task-card 
         [task]="task" 
         (click)="onOpenTaskCard(task)"
@@ -33,6 +43,5 @@
       class="rounded-lg p-4 border-dashed border-2 text-center border-lightGray bg-[#E7E7E7] text-lightGray text-nowrap w-full">
       No tasks {{title}}
     </div>
-
   </div>
 </div>
