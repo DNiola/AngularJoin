@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 import { Contact } from 'src/app/models/contact.model';
 import { Subtask, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
@@ -23,7 +24,7 @@ export class BoardPage implements OnInit {
   public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
   public isEditTask = false;
-  public isAnimation = false;
+  public badgeAnimation: BadgeMessage = { status: false, message: '' };
 
   public taskStatus: Task['status'] = 'todo';
 
@@ -173,17 +174,16 @@ export class BoardPage implements OnInit {
 
 
   /**
-   * Triggers the task creation animation.
-   * Sets the animation flag to true and resets it after a delay.
+   * Triggers the badge animation.
+   * Sets the badge animation state to the provided badge message and resets it after a delay.
    *
-   * @param {boolean} animationStatus - The animation state to set.
+   * @param {BadgeMessage} badge - The badge message containing the animation state, message, and error status.
    * @returns {void}
    */
-  public triggerAnimation(animationStatus: boolean): void {
-    this.isAnimation = animationStatus;
+  public triggerAnimation(badge: BadgeMessage): void {
+    this.badgeAnimation = badge;
     setTimeout(() => {
-      this.isAnimation = false;
+      this.badgeAnimation = { status: false, message: '', error: false };
     }, 1000);
   }
-
 }

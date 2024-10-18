@@ -69,7 +69,7 @@
     >
       <app-task-card-add
       (isCardOpen)="closeAddTask()"
-      (isAnimation)="triggerAnimation($event)"
+      (badgeAnimation)="triggerAnimation($event)"
       [subtasks]="subtasks"
       [taskStatus]="taskStatus"
       [isCard]="true"
@@ -81,5 +81,5 @@
   </div>
 </ion-content>
 
-<app-animated-badge *ngIf="isAnimation" [text]="'Task was sucessfully created'" class="absolute flex justify-center items-center h-dvh w-dvw bg-[#00000042] z-20 left-0 top-0"></app-animated-badge>
+<app-animated-badge *ngIf="badgeAnimation.status" [text]="badgeAnimation.message" [error]="badgeAnimation.error!" class="absolute flex justify-center items-center h-dvh w-dvw bg-[#00000042] z-20 left-0 top-0"></app-animated-badge>
  
