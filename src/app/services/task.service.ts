@@ -105,7 +105,7 @@ export class TaskService {
     tasksSnapshot?.forEach(doc => {
       const taskData = doc.data() as any;
 
-      const updatedAssignedTo = taskData.assignedTo.map((contact: any) => {
+      const updatedAssignedTo = taskData.assignedTo?.map((contact: any) => {
         if (contact.userId === contactId) {
           return {
             ...contact,
