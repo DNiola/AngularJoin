@@ -3,10 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthInputFieldsComponent } from '../auth-input-fields/auth-input-fields.component';
 import { AuthCheckboxComponent } from '../auth-checkbox/auth-checkbox.component';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/services/user.service';
 import { AuthData } from 'src/app/models/user.model';
 import { HelperService } from 'src/app/services/helper.service';
+import { BadgeMessage } from 'src/app/models/badge-messages.model';
 
 @Component({
   selector: 'app-auth-form',
@@ -24,7 +24,6 @@ export class AuthFormComponent {
 
   @Input() public isLogin = false;
   @Input() public isLoading = false;
-  @Input() public isAnimation = false;
   @Input() public emptyFildsEmpty = false;
   @Input() public isForgotPassword = false;
   @Input() public errorPhat = '';
@@ -38,8 +37,10 @@ export class AuthFormComponent {
   @Output() public tryToSignUp = new EventEmitter<AuthData>();
   @Output() public tryToLogin = new EventEmitter<AuthData>();
   @Output() public tryToResetPW = new EventEmitter<string>();
+  @Output() badgeAnimation = new EventEmitter<BadgeMessage>();
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router, private userService: UserService, public helperService: HelperService) { }
+
+  constructor(private afAuth: AngularFireAuth, private router: Router, private userService: UserService, public helperService: HelperService) { }
 
 
   /**
@@ -62,13 +63,13 @@ export class AuthFormComponent {
   /**
    * Handles changes in the input properties of the component.
    * 
-   * If emptyFildsEmpty or isAnimation changes, calls emptyInputFields().
+   * If emptyFildsEmpty changes, calls emptyInputFields().
    * If errorPhat changes, handles Firebase errors.
    * 
    * @param {SimpleChanges} SimpleChange - The changes in input properties.
    */
   public ngOnChanges(SimpleChange: SimpleChanges): void {
-    if (this.emptyFildsEmpty && SimpleChange['emptyFildsEmpty'] || this.isAnimation) {
+    if (this.emptyFildsEmpty && SimpleChange['emptyFildsEmpty']) {
       this.emptyInputFields();
     }
     if (this.errorPhat && SimpleChange['errorPhat']) {
@@ -88,7 +89,7 @@ export class AuthFormComponent {
     if (this.isForgotPassword) {
       this.resetPassword();
     }
-    if (!this.isLogin) {
+    else if (!this.isLogin) {
       this.getSignUpData();
     } else {
       this.getLoginData();
@@ -170,8 +171,8 @@ export class AuthFormComponent {
         this.router.navigate(['/summary']);
       })
       .catch((error) => {
+        this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
         this.isLoading = false;
-        console.error('Fehler beim Gast-Login:', error);
       });
   }
 
@@ -310,7 +311,7 @@ export class AuthFormComponent {
       this.showPassword = false;
       this.showConfirmPassword = false;
       this.privacyCheckbox.checkboxValue = false;
-      this.isAnimation = false;
+      this.badgeAnimation.emit({ status: false, message: '', error: false })
       this.isLoading = false;
     }
   }
