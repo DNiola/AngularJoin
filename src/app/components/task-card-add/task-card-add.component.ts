@@ -240,6 +240,7 @@ export class TaskCardAddComponent implements OnInit {
         break;
       case 'category':
         this.currentTask.category = data as Category;
+        this.checkRequiredFields()
         break;
       default:
         console.warn(`Unbekanntes Feld: ${section}`);
