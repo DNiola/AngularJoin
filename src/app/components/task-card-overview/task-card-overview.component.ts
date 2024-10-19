@@ -13,7 +13,7 @@ export class TaskCardOverviewComponent implements OnInit {
 
   @Output() isCardOpen = new EventEmitter<void>();
   @Output() editTask = new EventEmitter<Task>();
-  @Output() badgeAnimation = new EventEmitter<{ status: boolean, message: string, error: boolean }>();
+  @Output() badgeAnimation = new EventEmitter<{ status: boolean, message: string, error?: boolean }>();
   
   public category: Category | null = null;
   public isDialog = false;
@@ -153,6 +153,7 @@ export class TaskCardOverviewComponent implements OnInit {
     if (this.task && this.task.id) {
       this.taskService.deleteTask(this.task.id).then(() => {
         this.onCloseCard();
+        this.badgeAnimation.emit({ status: true, message: 'Task was successfully deleted' });
       }).catch(error => {
         this.badgeAnimation.emit({ status: true, message: 'Uups, somthing goes wrong!', error: true });
       });
