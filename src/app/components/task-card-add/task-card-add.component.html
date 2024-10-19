@@ -41,7 +41,7 @@
           <app-dropdown-input-field-single-select [preselectedItems]="currentTask.category" [label]="'Category'" [items]="categories" [fieldRequired]="true" [placeholder]="'Select task category'" [resetTrigger]="resetTrigger" [errorMessage]="isError.category" (selectedItemsChange)="setTaskData($event, 'category')"></app-dropdown-input-field-single-select>
           <!-- Subtasks -->
           <app-creator-input-field (selectedData)="onDisplayedSubtask($event)" [subtasks]="subtasks" [fieldRequired]="false" [label]="'Subtasks'" [placeholder]="'Add new subtask'"></app-creator-input-field>
-          <div class="-mt-6">
+          <div class="-mt-6 max-h-48 overflow-y-auto">
             <app-subtask-list [subtasks]="subtasks"></app-subtask-list>
           </div>
         </div>
