@@ -22,11 +22,11 @@ export class BoardPage implements OnInit {
   public badgeAnimation: BadgeMessage = { status: false, message: '' };
   public currentOpenedTask: Task | null = null;
   public taskStatus: Task['status'] = 'todo';
-  
+
   public isTaskOverviewOpen = false;
   public isAddTaskOpen = false;
   public isEditTask = false;
- 
+
 
   private searchTerm: string = '';
 
@@ -185,5 +185,13 @@ export class BoardPage implements OnInit {
     setTimeout(() => {
       this.badgeAnimation = { status: false, message: '', error: false };
     }, 1000);
+  }
+
+
+  closeOverlay() {
+    if (!this.isEditTask) {
+      this.closeAddTask();
+      this.isTaskOverviewOpen = false;
+    }
   }
 }
