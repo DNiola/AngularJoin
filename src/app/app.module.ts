@@ -11,8 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { SharedModule } from './shared/shared.module';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth'; 
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,8 +19,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     IonicModule.forRoot({ mode: 'ios', animated: false }),
     AppRoutingModule,
-    FormsModule,
-    SharedModule,
+    FormsModule, 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
