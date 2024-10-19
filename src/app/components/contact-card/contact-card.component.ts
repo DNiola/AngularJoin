@@ -354,4 +354,9 @@ export class ContactCardComponent {
       this.badgeAnimation.emit({ status: false, message: '', error: false });
     }, 1000);
   }
+
+  
+  public closeOverlay() {
+    this.closeCard.emit();
+  }
 }

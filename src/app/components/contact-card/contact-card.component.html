@@ -1,6 +1,6 @@
-<div class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-20 ">
+<div class="absolute flex w-dvw h-dvh justify-center items-center top-0 left-0 right-0 bg-[#00000080] z-20 " (click)="closeOverlay()" >
   <div class="absolute z-[12] bg-whiteSmoke shadow-taskShadow w-4/5 sm:w-4/6 1xl:w-1/2 rounded-3xl slide">
-    <div class="h-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8 bg-normalBlue rounded-3xl relative">
+    <div class="h-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8 bg-normalBlue rounded-3xl relative" (click)="$event.stopPropagation()">
 
       <div class="text-white pt-4 pb-8 px-5 gap-2 flex flex-col w-full h-auto justify-center lg:w-1/2 lg:pt-0 lg:pb-20 2xl:px-16 ">
         <img class="h-14 w-14 hidden lg:block" src="../../../assets/img/sideLogo.svg">
