@@ -36,7 +36,8 @@ import { DropdownInputFieldSingleSelectComponent } from '../components/dropdown-
 import { DropdownInputFieldMultiSelectComponent } from '../components/dropdown-input-field-multi-select/dropdown-input-field-multi-select.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
-  declarations: [DropdownInputFieldMultiSelectComponent,
+  declarations: [
+    DropdownInputFieldMultiSelectComponent,
     DropdownInputFieldSingleSelectComponent,
     AnimatedBadgeComponent,
     DialogComponent,
@@ -69,13 +70,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ButtonFilledComponent,
     ButtonEdgeComponent],
 
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     IonicModule,
     FormsModule,
     RouterModule,
     DragDropModule],
 
-  exports: [DropdownInputFieldMultiSelectComponent,
+  exports: [
+    DropdownInputFieldMultiSelectComponent,
     DropdownInputFieldSingleSelectComponent,
     AnimatedBadgeComponent,
     DialogComponent,
